@@ -1,0 +1,4 @@
+#!/bin/bash
+ADDPATH="/home/ellie/.cargo/bin:/home/ellie/.scripts"
+export PATH="$PATH:$ADDPATH"
+
