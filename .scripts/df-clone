@@ -1,0 +1,5 @@
+#!/bin/bash
+
+git clone "--separate-git-dir=$HOME/.dotfiles" "git@gitlab.com:ehllie/dotfiles.git" $HOME/.dotfiles-tmp
+rm -r $HOME/.dotfiles-tmp
+alias config="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME
