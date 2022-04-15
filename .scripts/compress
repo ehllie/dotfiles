@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ffmpeg -i "$1" -vcodec libx265 -crf 25 "${1%.*}.mkv"

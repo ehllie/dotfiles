@@ -1,4 +1,0 @@
-#!/bin/bash
-##ssfull script
-DATE=$(date +%Y-%m-%d_%H-%M-%S)
-gnome-screenshot -f ~/Pictures/Screenshots/ScSh-$DATE.png
