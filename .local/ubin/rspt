@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! $(pgrep "spotifyd") ]; then
+if [ ! "$(pgrep spotifyd)" ]; then
 	spotifyd
 fi
 

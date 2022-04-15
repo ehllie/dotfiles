@@ -13,6 +13,7 @@ zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
+unsetopt completealiases		# Include aliases.
 
 # vi mode
 bindkey -v

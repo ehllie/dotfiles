@@ -1,8 +1,8 @@
 #!/bin/bash
 
-git clone "--separate-git-dir=$HOME/.dotfiles" "git@gitlab.com:ehllie/dotfiles.git" $HOME/.dotfiles-tmp
-rm -r $HOME/.dotfiles-tmp
-alias config="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+git clone "--separate-git-dir=$HOME/.dotfiles" "git@gitlab.com:ehllie/dotfiles.git" "$HOME/.dotfiles-tmp"
+rm -r "$HOME/.dotfiles-tmp"
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 config config status.showUntrackedFiles no
 config status
 echo "Run 'config reset --hard' to fully sync local files with the ones in the repo"
