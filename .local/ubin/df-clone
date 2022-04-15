@@ -1,8 +1,35 @@
 #!/bin/bash
 
+#Make sure user is not root
+if [ "$(id -u)" == "0" ]; then
+    echo "This script should not be run as root"
+    exit 1
+fi
+
+#Install git and xclip
+sudo dfn install -y git xclip firefox
+
+#Ensure ssh key is setup
+if [ ! -f ~/.ssh/id_ed25519 ]; then
+    echo "Generating SSH key..."
+    ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
+else
+    echo "SSH key found, skipping..."
+fi
+
+echo "$HOME/.ssh/id_ed25519.pub" | xclip -selection clipboard
+echo "SSH key copied to clipboard. Add it to GitLab and then press enter to continue."
+sleep 1
+firefox "https://gitlab.com/-/profile/keys"
+read -r
+
 git clone "--separate-git-dir=$HOME/.dotfiles" "git@gitlab.com:ehllie/dotfiles.git" "$HOME/.dotfiles-tmp"
 rm -r "$HOME/.dotfiles-tmp"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 config config status.showUntrackedFiles no
 config status
-echo "Run 'config reset --hard' to fully sync local files with the ones in the repo"
+echo "Force sync with remote? y/n"
+read -r force
+if [ "$force" == "y" ]; then
+    config pull
+fi
