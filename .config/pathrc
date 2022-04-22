@@ -1,4 +1,4 @@
 #!/bin/bash
-ADDPATH="/home/ellie/.cargo/bin:/home/ellie/.scripts:/home/ellie/.local/bin"
+ADDPATH="/home/ellie/.cargo/bin:/home/ellie/.local/ubin:/home/ellie/.local/bin"
 export PATH="$PATH:$ADDPATH"
 
