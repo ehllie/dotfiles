@@ -1,4 +1,33 @@
 #!/bin/bash
-ADDPATH="/home/ellie/.cargo/bin:/home/ellie/.local/ubin:/home/ellie/.local/bin"
-export PATH="$PATH:$ADDPATH"
+APPEND_PATHS=(
+	"$HOME/.local/ubin"
+	"$HOME/.local/bin"
+	"$HOME/.cabal/bin"
+	"$Home/.ghcup/bin"
+)
 
+PREPEND_PATHS=(
+	"$HOME/.cargo/bin"
+)
+
+for loc in "${APPEND_PATHS[@]}"
+do
+	case ":$PATH:" in
+		*:"$loc":*)
+			;;
+		*)
+			export PATH="$PATH:$loc"
+			;;
+	esac
+done
+
+for loc in "${PREPEND_PATHS[@]}" 
+do
+	case ":$PATH:" in
+		*:"$loc":*)
+			;;
+		*)
+			export PATH="$loc:$PATH"
+			;;
+	esac
+done
