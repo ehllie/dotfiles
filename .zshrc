@@ -1,6 +1,14 @@
+# Enable VCS info in command prompt
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:*' formats ' <%F{cyan}%b%f>'
+setopt prompt_subst
+
+
 # Enable colors and change prompt:
 autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+PS1="%B%{$fg[red]%}╭─[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$reset_color%}\${vcs_info_msg_0_} %{$fg[red]%}]
+╰─>%{$reset_color%}%b $ "
 
 # History in cache directory:
 HISTSIZE=10000
