@@ -1,3 +1,0 @@
-#!/bin/sh
-xrandr --output HDMI-0 --off
-cp ~/.local/ubin/dblmon ~/.local/ubin/tglmon

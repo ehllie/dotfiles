@@ -1,3 +1,0 @@
-#!/bin/sh
-xrandr --output HDMI-0 --auto --rotate left --right-of DP-0
-cp ~/.local/ubin/sglmon ~/.local/ubin/tglmon
