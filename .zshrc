@@ -15,6 +15,7 @@ compinit
 _comp_options+=(globdots)		# Include hidden files.
 unsetopt completealiases		# Include aliases.
 
+
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
@@ -68,6 +69,9 @@ bindkey '^e' edit-command-line
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 [ -f "$HOME/.config/pathrc" ] && source "$HOME/.config/pathrc"
 
+# Load stack auto competion, needs to be ran after pathrc is loaded
+autoload -U +X bashcompinit && bashcompinit
+eval "$(stack --bash-completion-script stack)"
 
 # Export ranger variables
 export EDITOR=nvim

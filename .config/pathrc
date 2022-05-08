@@ -3,7 +3,7 @@ APPEND_PATHS=(
 	"$HOME/.local/ubin"
 	"$HOME/.local/bin"
 	"$HOME/.cabal/bin"
-	"$Home/.ghcup/bin"
+	"$HOME/.ghcup/bin"
 )
 
 PREPEND_PATHS=(
