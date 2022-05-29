@@ -1,3 +1,6 @@
+# Set locale to avoid diplicate characters in cmd prompt
+export LANG=en_US.utf8
+
 # Enable VCS info in command prompt
 autoload -Uz vcs_info
 precmd() { vcs_info }
