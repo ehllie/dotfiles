@@ -8,6 +8,7 @@ APPEND_PATHS=(
 
 PREPEND_PATHS=(
 	"$HOME/.cargo/bin"
+	"$HOME/.local/share/pnpm"
 )
 
 for loc in "${APPEND_PATHS[@]}"

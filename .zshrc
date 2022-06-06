@@ -1,5 +1,5 @@
 # Set locale to avoid diplicate characters in cmd prompt
-export LANG=en_US.utf8
+# export LANG=en_IE.UTF-8
 
 # Enable VCS info in command prompt
 autoload -Uz vcs_info
@@ -93,3 +93,7 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/nul
 
 
 # [ -f "/home/ellie/.ghcup/env" ] && source "/home/ellie/.ghcup/env" # ghcup-env
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+# pnpm end
