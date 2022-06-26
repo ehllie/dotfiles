@@ -9,6 +9,9 @@ Plug 'francoiscabrol/ranger.vim'
 Plug 'tmsvg/pear-tree'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'ehllie/argtextobj.vim'
+Plug 'sbdchd/neoformat'
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
 call plug#end()
 
 " pear-tree config
@@ -21,3 +24,4 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-L> <C-W><C-L>
+
