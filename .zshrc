@@ -84,9 +84,6 @@ bindkey '^e' edit-command-line
 autoload -U +X bashcompinit && bashcompinit
 eval "$(stack --bash-completion-script stack)"
 
-# Load rustup and cargo syntax comptetion
-source ~/.config/zfunc/*
-
 # Export ranger variables
 export EDITOR=nvim
 export VISUAL=nvim
