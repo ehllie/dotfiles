@@ -1,5 +1,8 @@
-# Set locale to avoid diplicate characters in cmd prompt
-# export LANG=en_IE.UTF-8
+# XDG Base Directory Specification
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_STATE_HOME=$HOME/.local/state
+export XDG_CACHE_HOME=$HOME/.cache
 
 # Enable VCS info in command prompt
 autoload -Uz vcs_info
@@ -75,10 +78,11 @@ bindkey -s '^o' 'rangercd\n'
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# Load aliases, shortcuts and paths if existent.
-[ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
-[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
-[ -f "$HOME/.config/pathrc" ] && source "$HOME/.config/pathrc"
+# Load aliases, shortcuts, paths and xdg config files if exist.
+[ -f "$XDG_CONFIG_HOME/shortcutrc" ] && source "$XDG_CONFIG_HOME/shortcutrc"
+[ -f "$XDG_CONFIG_HOME/aliasrc" ] && source "$XDG_CONFIG_HOME/aliasrc"
+[ -f "$XDG_CONFIG_HOME/pathrc" ] && source "$XDG_CONFIG_HOME/pathrc"
+[ -f "$XDG_CONFIG_HOME/xdgrc" ] && source "$XDG_CONFIG_HOME/xdgrc"
 
 # Load stack auto competion, needs to be ran after pathrc is loaded
 autoload -U +X bashcompinit && bashcompinit
@@ -94,6 +98,3 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/nul
 
 # [ -f "/home/ellie/.ghcup/env" ] && source "/home/ellie/.ghcup/env" # ghcup-env
 
-# pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
-# pnpm end
