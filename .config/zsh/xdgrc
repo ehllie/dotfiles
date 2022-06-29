@@ -3,3 +3,54 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.cache
 
+# For SDDM also set
+# /etc/sddm.conf.d/xorg_settings.conf:
+# [X11]
+# UserAuthFile=.local/share/sddm/Xauthority
+export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
+
+# $HOME/.ghcup
+export GHCUP_USE_XDG_DIRS=true
+
+# $HOME/.stack
+export STACK_ROOT="$XDG_DATA_HOME"/stack
+
+# $HOME/.cabal
+export CABAL_CONFIG="$XDG_CONFIG_HOME"/cabal/config
+export CABAL_DIR="$XDG_DATA_HOME"/cabal
+
+# $HOME/.rustup
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+
+# $HOME/.cargo
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+
+# $HOME/.python_history
+export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc.py"
+
+# $HOME/.npmrc
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc 
+
+# $HOME/.pnpmrc
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+
+# $HOME/.yarnrc
+alias yarn=yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config
+
+# $HOME/.lesshst
+export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
+
+# $HOME/.kde4
+export KDEHOME="$XDG_CONFIG_HOME"/kde
+
+# $HOME/.gtkrc-2.0
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+
+# $HOME/.gnupg
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+
+# $HOME/.nv
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+
+# $HOME/wget-hsts
+alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"

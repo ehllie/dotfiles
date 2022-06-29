@@ -1,3 +1,6 @@
+# Add _export ZDOTDIR="$HOME"/.config/zsh_ to _/etc/zsh/zshenv_
+# In order to have this file be sourced
+
 # XDG Base Directory Specification
 source $ZDOTDIR/xdgrc
 
@@ -16,7 +19,7 @@ PS1="%B%{$fg[red]%}╭─[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+HISTFILE=$XDG_CACHE_HOME/zsh/history
 
 # Basic auto/tab complete:
 autoload -U compinit
