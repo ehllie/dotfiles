@@ -79,10 +79,9 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 # Load aliases, shortcuts, paths and xdg config files if exist.
-[ -f "$XDG_CONFIG_HOME/shortcutrc" ] && source "$XDG_CONFIG_HOME/shortcutrc"
-[ -f "$XDG_CONFIG_HOME/aliasrc" ] && source "$XDG_CONFIG_HOME/aliasrc"
-[ -f "$XDG_CONFIG_HOME/pathrc" ] && source "$XDG_CONFIG_HOME/pathrc"
-[ -f "$XDG_CONFIG_HOME/xdgrc" ] && source "$XDG_CONFIG_HOME/xdgrc"
+[ -f "$ZDOTDIR/shortcutrc" ] && source "$ZDOTDIR/shortcutrc"
+[ -f "$ZDOTDIR/aliasrc" ] && source "$ZDOTDIR/aliasrc"
+[ -f "$ZDOTDIR/pathrc" ] && source "$ZDOTDIR/pathrc"
 
 # Load stack auto competion, needs to be ran after pathrc is loaded
 autoload -U +X bashcompinit && bashcompinit
