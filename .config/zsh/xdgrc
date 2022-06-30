@@ -7,7 +7,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 # /etc/sddm.conf.d/xorg_settings.conf:
 # [X11]
 # UserAuthFile=.local/share/sddm/Xauthority
-export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
+export XAUTHORITY="$XDG_DATA_HOME"/sddm/Xauthority
 
 # $HOME/.ghcup
 export GHCUP_USE_XDG_DIRS=true
