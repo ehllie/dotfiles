@@ -1,6 +1,5 @@
 #!/bin/bash
 APPEND_PATHS=(
-	"$HOME/.local/ubin"
 	"$HOME/.local/bin"
 	"$HOME/.cabal/bin"
 	"$HOME/.ghcup/bin"
