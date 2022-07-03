@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd /mnt/HDD/Projects/twitch-stream-recorder/
-
-nohup /usr/bin/python twitch-recorder.py > /dev/null 2>&1 &
