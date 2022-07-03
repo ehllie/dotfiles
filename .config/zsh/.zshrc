@@ -1,5 +1,8 @@
-# Set locale to avoid diplicate characters in cmd prompt
-# export LANG=en_IE.UTF-8
+# Add _export ZDOTDIR="$HOME"/.config/zsh_ to _/etc/zsh/zshenv_
+# In order to have this file be sourced
+
+# XDG Base Directory Specification
+source $ZDOTDIR/xdgrc
 
 # Enable VCS info in command prompt
 autoload -Uz vcs_info
@@ -16,7 +19,7 @@ PS1="%B%{$fg[red]%}╭─[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+HISTFILE=$XDG_CACHE_HOME/zsh/history
 
 # Basic auto/tab complete:
 autoload -U compinit
@@ -75,10 +78,10 @@ bindkey -s '^o' 'rangercd\n'
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# Load aliases, shortcuts and paths if existent.
-[ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
-[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
-[ -f "$HOME/.config/pathrc" ] && source "$HOME/.config/pathrc"
+# Load aliases, shortcuts, paths and xdg config files if exist.
+[ -f "$ZDOTDIR/shortcutrc" ] && source "$ZDOTDIR/shortcutrc"
+[ -f "$ZDOTDIR/aliasrc" ] && source "$ZDOTDIR/aliasrc"
+[ -f "$ZDOTDIR/pathrc" ] && source "$ZDOTDIR/pathrc"
 
 # Load stack auto competion, needs to be ran after pathrc is loaded
 autoload -U +X bashcompinit && bashcompinit
@@ -94,6 +97,3 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/nul
 
 # [ -f "/home/ellie/.ghcup/env" ] && source "/home/ellie/.ghcup/env" # ghcup-env
 
-# pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
-# pnpm end
