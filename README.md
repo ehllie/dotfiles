@@ -11,6 +11,6 @@ curl "https://raw.githubusercontent.com/ehllie/my-dotfiles/main/bootstrap.sh" | 
 This will clone this repo and forcefully sync the contents, so could be destructive to existing configurations.
 Only here for my own convinience when setting up a new system.
 Again, for my own convinience of not having to look this up later:
-```
+```bash
 config remote set-url origin git@github.com:ehllie/my-dotfiles.git
 ```
