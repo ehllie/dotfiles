@@ -10,4 +10,5 @@ rm -r "${XDG_CACHE_HOME:-$HOME/.cache}/dotfile-gitdir"
 git --git-dir=${XDG_CONFIG_HOME:-$HOME/.config}/dotfile-gitdir --work-tree=$HOME update-index --assume-unchanged $HOME/{README.md,bootstrap.sh}
 git --git-dir=${XDG_CONFIG_HOME:-$HOME/.config}/dotfile-gitdir --work-tree=$HOME config status.showUntrackedFiles no
 git --git-dir=${XDG_CONFIG_HOME:-$HOME/.config}/dotfile-gitdir --work-tree=$HOME status
+git --git-dir=${XDG_CONFIG_HOME:-$HOME/.config}/dotfile-gitdir --work-tree=$HOME reset --hard origin/main
 rm $HOME/{README.md,bootstrap.sh}
