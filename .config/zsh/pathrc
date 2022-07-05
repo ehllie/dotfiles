@@ -1,13 +1,13 @@
 #!/bin/bash
 APPEND_PATHS=(
-	"$HOME/.local/bin"
-	"$HOME/.cabal/bin"
-	"$HOME/.ghcup/bin"
+	"$XDG_DATA_HOME/bin"
+	"$XDG_DATA_HOME/cabal/bin"
+  "$HOME/.local/bin"
 )
 
 PREPEND_PATHS=(
-	"$HOME/.cargo/bin"
-	"$HOME/.local/share/pnpm"
+	"$XDG_DATA_HOME/cargo/bin"
+	"$XDG_DATA_HOME/pnpm"
 )
 
 for loc in "${APPEND_PATHS[@]}"

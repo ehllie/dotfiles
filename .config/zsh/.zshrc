@@ -83,17 +83,10 @@ bindkey '^e' edit-command-line
 [ -f "$ZDOTDIR/aliasrc" ] && source "$ZDOTDIR/aliasrc"
 [ -f "$ZDOTDIR/pathrc" ] && source "$ZDOTDIR/pathrc"
 
-# Load stack auto competion, needs to be ran after pathrc is loaded
-autoload -U +X bashcompinit && bashcompinit
-eval "$(stack --bash-completion-script stack)"
-
 # Export ranger variables
 export EDITOR=nvim
 export VISUAL=nvim
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-
-
-# [ -f "/home/ellie/.ghcup/env" ] && source "/home/ellie/.ghcup/env" # ghcup-env
 
