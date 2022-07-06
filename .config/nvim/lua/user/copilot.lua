@@ -6,7 +6,7 @@ end
 copilot.setup({
   cmp = {
     enabled = true,
-    metho = "getPanelCompletions",
+    method = "getPanelCompletions",
   },
   panel = {
     enabled = true,
