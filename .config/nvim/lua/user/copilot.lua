@@ -3,12 +3,14 @@ if not status_ok then
   return
 end
 
-copilot.setup({
-  cmp = {
-    enabled = true,
-    method = "getPanelCompletions",
-  },
-  panel = {
-    enabled = true,
-  },
-})
+vim.defer_fn(function()
+  copilot.setup({
+    cmp = {
+      enabled = true,
+      method = "getPanelCompletions",
+    },
+    panel = {
+      enabled = true,
+    },
+  })
+end, 100)

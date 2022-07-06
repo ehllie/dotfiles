@@ -61,15 +61,7 @@ return packer.startup(function(use)
   use({ "michaeljsmith/vim-indent-object" })
   use({ "vim-scripts/argtextobj.vim" })
   -- use { "github/copilot.vim" }
-  use({
-    "zbirenbaum/copilot.lua",
-    event = { "VimEnter" },
-    config = function()
-      vim.defer_fn(function()
-        require("copilot").setup()
-      end, 100)
-    end,
-  })
+  use({ "zbirenbaum/copilot.lua" })
   use({
     "zbirenbaum/copilot-cmp",
     module = "copilot_cmp",
