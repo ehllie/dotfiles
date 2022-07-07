@@ -21,6 +21,9 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=$XDG_CACHE_HOME/zsh/history
 
+#Load fpath from $XDG_CONFIG_HOME/zsh/zfunc
+fpath+=($XDG_CONFIG_HOME/zsh/zfunc)
+
 # Basic auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
