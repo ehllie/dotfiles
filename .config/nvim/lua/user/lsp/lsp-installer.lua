@@ -37,6 +37,12 @@ for _, server in pairs(servers) do
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
   end
 
+  if server == "pylsp" then
+    goto continue
+    local pylsp_opts = require("user.lsp.settings.pylsp")
+    opts = vim.tbl_deep_extend("force", pylsp_opts, opts)
+  end
+
   if server == "pyright" then
     local pyright_opts = require("user.lsp.settings.pyright")
     opts = vim.tbl_deep_extend("force", pyright_opts, opts)
@@ -48,4 +54,5 @@ for _, server in pairs(servers) do
   end
 
   lspconfig[server].setup(opts)
+  ::continue::
 end

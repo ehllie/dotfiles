@@ -2,8 +2,8 @@ return {
   settings = {
     python = {
       analysis = {
-        typeCheckingMode = "strict",
-        extraPaths = { ".local/lib/python3.10/site-packages" },
+        typeCheckingMode = "off",
+        extraPaths = { "$HOME/.local/lib/python3.10/site-packages" },
       },
     },
   },

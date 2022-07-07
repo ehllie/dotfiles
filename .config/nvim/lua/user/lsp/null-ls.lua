@@ -20,6 +20,7 @@ null_ls.setup({
     formatting.stylua.with({ extra_args = { "--indent-type", "spaces", "--indent-width", "2" } }),
     formatting.google_java_format,
     formatting.rustfmt,
-    diagnostics.flake8.with({ extra_args = { "--max-line-length", "--extend-ignore", "E203" } }),
+    diagnostics.flake8.with({ extra_args = { "--max-line-length", "88", "--extend-ignore", "E203" } }),
+    diagnostics.mypy,
   },
 })
