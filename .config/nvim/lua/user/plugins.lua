@@ -63,7 +63,7 @@ return packer.startup(function(use)
   use({ "phaazon/hop.nvim", branch = "v2" })
 
   -- Copilot plugins
-  use({ "github/copilot.vim" }) -- Uncomment to setup copilot
+  -- use({ "github/copilot.vim" }) -- Uncomment to setup copilot
   use({ "zbirenbaum/copilot.lua" })
   use({ "zbirenbaum/copilot-cmp", module = "copilot_cmp" })
 
