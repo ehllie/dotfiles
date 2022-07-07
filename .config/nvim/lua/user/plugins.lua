@@ -60,22 +60,20 @@ return packer.startup(function(use)
   use({ "tpope/vim-surround" })
   use({ "michaeljsmith/vim-indent-object" })
   use({ "vim-scripts/argtextobj.vim" })
-  -- use { "github/copilot.vim" }
+  use({ "phaazon/hop.nvim", branch = "v2" })
+
+  -- Copilot plugins
+  use({ "github/copilot.vim" }) -- Uncomment to setup copilot
   use({ "zbirenbaum/copilot.lua" })
-  use({
-    "zbirenbaum/copilot-cmp",
-    module = "copilot_cmp",
-  })
+  use({ "zbirenbaum/copilot-cmp", module = "copilot_cmp" })
+
   use({ "Xuyuanp/scrollbar.nvim" })
   use({ "folke/which-key.nvim" })
 
   -- Colorschemes
   use({ "folke/tokyonight.nvim" })
   use({ "lunarvim/darkplus.nvim" })
-  use({
-    "catppuccin/nvim",
-    as = "catppuccin",
-  })
+  use({ "catppuccin/nvim", as = "catppuccin" })
 
   -- cmp plugins
   use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
