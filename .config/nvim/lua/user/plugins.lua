@@ -62,6 +62,7 @@ return packer.startup(function(use)
   use({ "michaeljsmith/vim-indent-object" })
   use({ "vim-scripts/argtextobj.vim" })
   use({ "phaazon/hop.nvim", branch = "v2" })
+  use({ "norcalli/nvim-colorizer.lua" })
 
   -- Copilot plugins
   -- use({ "github/copilot.vim" }) -- Uncomment to setup copilot
