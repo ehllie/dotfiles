@@ -7,7 +7,6 @@ local servers = {
   "sumneko_lua",
   "cssls",
   "html",
-  "tsserver",
   "pyright",
   "rust_analyzer",
   "volar",
