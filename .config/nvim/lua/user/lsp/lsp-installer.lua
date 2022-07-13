@@ -11,6 +11,7 @@ local servers = {
   "pyright",
   "rust_analyzer",
   "volar",
+  "tailwindcss",
   "hls",
   "bashls",
   "jsonls",
@@ -31,6 +32,7 @@ for _, server in pairs(servers) do
     on_attach = require("user.lsp.handlers").on_attach,
     capabilities = require("user.lsp.handlers").capabilities,
   }
+  local do_setup = true
 
   if server == "sumneko_lua" then
     local sumneko_opts = require("user.lsp.settings.sumneko_lua")
@@ -38,7 +40,7 @@ for _, server in pairs(servers) do
   end
 
   if server == "pylsp" then
-    goto continue
+    do_setup = false
     local pylsp_opts = require("user.lsp.settings.pylsp")
     opts = vim.tbl_deep_extend("force", pylsp_opts, opts)
   end
@@ -96,9 +98,15 @@ for _, server in pairs(servers) do
       },
     })
 
-    goto continue
+    do_setup = false
   end
 
-  lspconfig[server].setup(opts)
-  ::continue::
+  if server == "volar" then
+    local volar_opts = require("user.lsp.settings.volar")
+    opts = vim.tbl_deep_extend("force", volar_opts, opts)
+  end
+
+  if do_setup then
+    lspconfig[server].setup(opts)
+  end
 end

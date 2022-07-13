@@ -87,6 +87,14 @@ M.on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = false
   end
 
+  if client.name == "volar" then
+    client.resolved_capabilities.document_formatting = false
+  end
+
+  if client.name == "html" then
+    client.resolved_capabilities.document_formatting = false
+  end
+
   lsp_keymaps(bufnr)
   local status_ok, illuminate = pcall(require, "illuminate")
   if not status_ok then
