@@ -63,6 +63,7 @@ return packer.startup(function(use)
   use({ "vim-scripts/argtextobj.vim" })
   use({ "phaazon/hop.nvim", branch = "v2" })
   use({ "norcalli/nvim-colorizer.lua" })
+  use({ "andweeb/presence.nvim" })
 
   -- Copilot plugins
   -- use({ "github/copilot.vim" }) -- Uncomment to setup copilot
