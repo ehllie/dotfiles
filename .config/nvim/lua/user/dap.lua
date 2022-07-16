@@ -13,32 +13,21 @@ if not dap_install_status_ok then
   return
 end
 
+local dap_python_ok, dap_python = pcall(require, "dap-python")
+if not dap_python_ok then
+  return
+end
+
+dap_python.setup("python")
+
 dap_install.setup({})
 
-dap_install.config("python", {})
--- add other configs here
--- require('dapui').setup(
---   layouts = {
---     {
---       elements = {
---         'scopes',
---         'breakpoints',
---         'stacks',
---         'watches',
---       },
---       size = 40,
---       position = 'left',
---     },
---     {
---       elements = {
---         'repl',
---         'console',
---       },
---       size = 10,
---       position = 'bottom',
---     },
---   },
--- )
+local custom_configs = {}
+
+for debugger, config in pairs(custom_configs) do
+  dap_install.config(debugger, config)
+end
+
 dapui.setup({
   layouts = {
     {
