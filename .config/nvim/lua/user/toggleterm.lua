@@ -30,9 +30,11 @@ local function setup(toggleterm, terminal)
   local Terminal = terminal.Terminal
   local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 
-  function _LAZYGIT_TOGGLE()
+  local keymap = vim.keymap.set
+  local opts = { silent = true }
+  keymap("n", "<leader>gg", function()
     lazygit:toggle()
-  end
+  end, opts)
 end
 
 return { deps = { "toggleterm", "toggleterm.terminal" }, setup = setup }

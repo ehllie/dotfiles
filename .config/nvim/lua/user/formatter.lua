@@ -84,12 +84,6 @@ local function setup(formatter, util)
       },
     },
   })
-
-  vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-    callback = function()
-      vim.cmd("FormatWrite")
-    end,
-  })
 end
 
 return { deps = { "formatter", "formatter.util" }, setup = setup }

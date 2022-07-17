@@ -1,3 +1,5 @@
+-- Autocommands that rely on the vim.cmd API
+
 -- Use 'q' to quit from common plugins
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "lir" },
@@ -42,5 +44,12 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   callback = function()
     vim.highlight.on_yank({ higroup = "Visual", timeout = 200 })
+  end,
+})
+
+-- Format after write
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    vim.cmd("FormatWrite")
   end,
 })

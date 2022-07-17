@@ -1,4 +1,4 @@
-local function setup(comment, util)
+local function setup(comment, util, api)
   comment.setup({
     pre_hook = function(ctx)
       local location = nil
@@ -14,6 +14,14 @@ local function setup(comment, util)
       })
     end,
   })
+
+  local keymap = vim.keymap.set
+  local opts = { silent = true }
+
+  keymap("n", "<leader>/", api.toggle_current_linewise, opts)
+  keymap("x", "<leader>/", function()
+    api.toggle_linewise_op(vim.fn.visualmode())
+  end, opts)
 end
 
-return { deps = { "Comment", "Comment.utils" }, setup = setup }
+return { deps = { "Comment", "Comment.utils", "Comment.api" }, setup = setup }
