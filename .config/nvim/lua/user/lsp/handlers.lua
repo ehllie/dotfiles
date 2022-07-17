@@ -71,30 +71,7 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-  if client.name == "tsserver" then
-    client.resolved_capabilities.document_formatting = false
-  end
-
-  if client.name == "sumneko_lua" then
-    client.resolved_capabilities.document_formatting = false
-  end
-
-  if client.name == "jsonls" then
-    client.resolved_capabilities.document_formatting = false
-  end
-
-  if client.name == "pylsp" then
-    client.resolved_capabilities.document_formatting = false
-  end
-
-  if client.name == "volar" then
-    client.resolved_capabilities.document_formatting = false
-  end
-
-  if client.name == "html" then
-    client.resolved_capabilities.document_formatting = false
-  end
-
+  client.resolved_capabilities.document_formatting = false
   lsp_keymaps(bufnr)
   local status_ok, illuminate = pcall(require, "illuminate")
   if not status_ok then
