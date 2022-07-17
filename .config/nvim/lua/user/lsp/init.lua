@@ -1,8 +1,50 @@
-local status_ok, _ = pcall(require, "lspconfig")
-if not status_ok then
-  return
-end
+local function setup(lsp_installer, lspconfig, cmp_nvim_lsp, null_ls)
+  local servers = {
+    "sumneko_lua",
+    "cssls",
+    "html",
+    "pyright",
+    "rust_analyzer",
+    "volar",
+    "tailwindcss",
+    "hls",
+    "bashls",
+    "jsonls",
+    "yamlls",
+  }
 
-require("user.lsp.lsp-installer")
-require("user.lsp.handlers").setup()
-require("user.lsp.null-ls")
+  lsp_installer.setup()
+
+  local handlers = require("user.lsp.handlers").init(cmp_nvim_lsp)
+  local opts = {}
+
+  for _, server in pairs(servers) do
+    opts = {
+      on_attach = handlers.on_attach,
+      capabilities = handlers.capabilities,
+    }
+
+    local opts_ok, server_opts = pcall(require, "user.lsp.settings." .. server)
+    if opts_ok then
+      local opt_type = type(server_opts)
+      if opt_type == "table" then
+        opts = vim.tbl_deep_extend("force", server_opts, opts)
+        lspconfig[server].setup(opts)
+      elseif opt_type == "function" then
+        server_opts(lspconfig, opts)
+      end
+    end
+  end
+
+  handlers.setup()
+
+  local diagnostics = null_ls.builtins.diagnostics
+  null_ls.setup({
+    debug = false,
+    sources = {
+      diagnostics.flake8.with({ extra_args = { "--max-line-length", "--extend-ignore", "E203" } }),
+      diagnostics.mypy,
+    },
+  })
+end
+return { deps = { "nvim-lsp-installer", "lspconfig", "cmp_nvim_lsp", "null-ls" }, setup = setup }

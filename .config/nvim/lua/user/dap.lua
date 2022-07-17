@@ -1,59 +1,43 @@
-local dap_status_ok, dap = pcall(require, "dap")
-if not dap_status_ok then
-  return
-end
+local function setup(dap, dapui, dap_install, dap_python)
+  dap_python.setup("python")
 
-local dap_ui_status_ok, dapui = pcall(require, "dapui")
-if not dap_ui_status_ok then
-  return
-end
+  dap_install.setup({})
 
-local dap_install_status_ok, dap_install = pcall(require, "dap-install")
-if not dap_install_status_ok then
-  return
-end
+  local custom_configs = {}
 
-local dap_python_ok, dap_python = pcall(require, "dap-python")
-if not dap_python_ok then
-  return
-end
+  for debugger, config in pairs(custom_configs) do
+    dap_install.config(debugger, config)
+  end
 
-dap_python.setup("python")
-
-dap_install.setup({})
-
-local custom_configs = {}
-
-for debugger, config in pairs(custom_configs) do
-  dap_install.config(debugger, config)
-end
-
-dapui.setup({
-  layouts = {
-    {
-      elements = {
-        {
-          id = "scopes",
-          size = 0.25, -- Can be float or integer > 1
+  dapui.setup({
+    layouts = {
+      {
+        elements = {
+          {
+            id = "scopes",
+            size = 0.25, -- Can be float or integer > 1
+          },
+          { id = "breakpoints", size = 0.25 },
         },
-        { id = "breakpoints", size = 0.25 },
+        size = 40,
+        position = "right", -- Can be "left", "right", "top", "bottom"
       },
-      size = 40,
-      position = "right", -- Can be "left", "right", "top", "bottom"
     },
-  },
-})
+  })
 
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+  vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
 
-dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+  end
+
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
+
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
 end
 
-dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
-end
-
-dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
-end
+return { deps = { "dap", "dapui", "dap-install", "dap-python" }, setup = setup }
