@@ -1,4 +1,8 @@
 return function(_, opts)
+  local status_ok, rust_tools = pcall(require, "rust-tools")
+  if not status_ok then
+    return
+  end
   local keymap = vim.keymap.set
   local key_opts = { silent = true }
 
@@ -21,7 +25,7 @@ return function(_, opts)
   keymap("n", "<leader>rss", "<cmd>RustSSR<Cr>", key_opts)
   keymap("n", "<leader>rxd", "<cmd>RustOpenExternalDocs<Cr>", key_opts)
 
-  require("rust-tools").setup({
+  rust_tools.setup({
     tools = {
       on_initialized = function()
         vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave", "BufWritePost" }, {

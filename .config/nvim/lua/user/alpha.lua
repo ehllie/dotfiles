@@ -1,5 +1,4 @@
-local function setup(alpha)
-  local dashboard = require("alpha.themes.dashboard")
+local function setup(alpha, dashboard)
   dashboard.section.header.val = {
     [[                               __                ]],
     [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
@@ -18,7 +17,7 @@ local function setup(alpha)
     dashboard.button("q", " " .. " Quit", ":qa<CR>"),
   }
   local function footer()
-    return "chrisatmachine.com"
+    return "github.com/ehllie"
   end
 
   dashboard.section.footer.val = footer()
@@ -31,4 +30,4 @@ local function setup(alpha)
   alpha.setup(dashboard.opts)
 end
 
-return { deps = "alpha", setup = setup }
+return { deps = { "alpha", "alpha.themes.dashboard" }, setup = setup }
