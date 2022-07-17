@@ -52,28 +52,28 @@ return {
       })
     end,
   },
-  -- {
-  --   deps = "scrollbar",
-  --   setup = function(scrollbar)
-  --     vim.api.nvim_create_autocmd({ "WinScrolled", "VimResized", "QuitPre" }, {
-  --       callback = function()
-  --         scrollbar.show()
-  --       end,
-  --     })
-  --
-  --     vim.api.nvim_create_autocmd({ "WinEnter", "FocusGained" }, {
-  --       callback = function()
-  --         scrollbar.show()
-  --       end,
-  --     })
-  --
-  --     vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "BufWinLeave", "FocusLost" }, {
-  --       callback = function()
-  --         scrollbar.clear()
-  --       end,
-  --     })
-  --   end,
-  -- },
+  {
+    deps = "scrollbar",
+    setup = function(scrollbar)
+      vim.api.nvim_create_autocmd({ "WinScrolled", "VimResized", "QuitPre" }, {
+        callback = function()
+          scrollbar.show()
+        end,
+      })
+
+      vim.api.nvim_create_autocmd({ "WinEnter", "FocusGained" }, {
+        callback = function()
+          scrollbar.show()
+        end,
+      })
+
+      vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "BufWinLeave", "FocusLost" }, {
+        callback = function()
+          scrollbar.clear()
+        end,
+      })
+    end,
+  },
   {
     deps = "nvim-ts-autotag",
     setup = function(autotag)
