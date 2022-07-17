@@ -64,6 +64,8 @@ return packer.startup(function(use)
   use({ "phaazon/hop.nvim", branch = "v2" })
   use({ "norcalli/nvim-colorizer.lua" })
   use({ "andweeb/presence.nvim" })
+  use({ "simrat39/symbols-outline.nvim" })
+  use({ "sunjon/shade.nvim" })
 
   -- Copilot plugins
   -- use({ "github/copilot.vim" }) -- Uncomment to setup copilot

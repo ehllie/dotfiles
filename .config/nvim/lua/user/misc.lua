@@ -31,6 +31,7 @@ return {
         "typescript",
         "vue",
         "html",
+        "lua",
       })
     end,
   },
@@ -134,6 +135,15 @@ return {
             linehl = "GitSignsChangeLn",
           },
         },
+      })
+    end,
+  },
+  {
+    deps = "shade",
+    setup = function(shade)
+      shade.setup({
+        overlay_opacity = 50,
+        opacity_step = 1,
       })
     end,
   },
