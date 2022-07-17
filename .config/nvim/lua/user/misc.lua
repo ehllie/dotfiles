@@ -11,27 +11,17 @@ if not status_ok then
   return
 end
 
-vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
-vim.g.Illuminate_highlightUnderCursor = 0
-vim.api.nvim_set_keymap("n", "<a-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', { noremap = true })
-vim.api.nvim_set_keymap(
-  "n",
-  "<a-p>",
-  '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
-  { noremap = true }
-)
-
 return {
   {
     deps = "colorizer",
     setup = function(colorizer)
       colorizer.setup({
         "css",
+        "html",
         "javascript",
+        "lua",
         "typescript",
         "vue",
-        "html",
-        "lua",
       })
     end,
   },
@@ -46,9 +36,9 @@ return {
         show_current_context = true,
         buftype_exclude = { "terminal", "nofile" },
         filetype_exclude = {
+          "NvimTree",
           "help",
           "packer",
-          "NvimTree",
         },
       })
     end,
@@ -139,12 +129,16 @@ return {
     end,
   },
   {
-    deps = "shade",
-    setup = function(shade)
-      shade.setup({
-        overlay_opacity = 50,
-        opacity_step = 1,
-      })
+    deps = "illuminate",
+    setup = function(illuminate)
+      vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
+      vim.g.Illuminate_highlightUnderCursor = 0
+      vim.keymap.set("n", "<a-n>", function()
+        illuminate.next_reference({ wrap = true })
+      end, { noremap = true })
+      vim.keymap.set("n", "<a-p>", function()
+        illuminate.next_reference({ reverse = true, wrap = true })
+      end, { noremap = true })
     end,
   },
 }

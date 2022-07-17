@@ -40,67 +40,64 @@ packer.init({
 
 -- Install your plugins here
 return packer.startup(function(use)
-  -- My plugins here
   use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
-  use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
-  use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
-  use({ "windwp/nvim-ts-autotag" })
-  use({ "numToStr/Comment.nvim" })
+
   use({ "JoosepAlviste/nvim-ts-context-commentstring" })
-  use({ "kyazdani42/nvim-web-devicons" })
-  use({ "kyazdani42/nvim-tree.lua" })
-  use({ "akinsho/bufferline.nvim" })
-  use({ "moll/vim-bbye" })
-  use({ "nvim-lualine/lualine.nvim" })
-  use({ "akinsho/toggleterm.nvim" })
+  use({ "Xuyuanp/scrollbar.nvim" })
   use({ "ahmedkhalf/project.nvim" })
+  use({ "akinsho/bufferline.nvim" })
+  use({ "akinsho/toggleterm.nvim" })
+  use({ "andweeb/presence.nvim" })
+  use({ "folke/which-key.nvim" })
+  use({ "goolord/alpha-nvim" })
+  use({ "kyazdani42/nvim-tree.lua" })
+  use({ "kyazdani42/nvim-web-devicons" })
+  use({ "lambdalisue/suda.vim" })
   use({ "lewis6991/impatient.nvim" })
   use({ "lukas-reineke/indent-blankline.nvim" })
-  use({ "goolord/alpha-nvim" })
-  use({ "lambdalisue/suda.vim" })
-  use({ "tpope/vim-surround" })
   use({ "michaeljsmith/vim-indent-object" })
-  use({ "vim-scripts/argtextobj.vim" })
-  use({ "phaazon/hop.nvim", branch = "v2" })
+  use({ "moll/vim-bbye" })
   use({ "norcalli/nvim-colorizer.lua" })
-  use({ "andweeb/presence.nvim" })
+  use({ "numToStr/Comment.nvim" })
+  use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
+  use({ "nvim-lualine/lualine.nvim" })
+  use({ "phaazon/hop.nvim", branch = "v2" })
   use({ "simrat39/symbols-outline.nvim" })
-  use({ "sunjon/shade.nvim" })
+  use({ "tpope/vim-surround" })
+  use({ "vim-scripts/argtextobj.vim" })
+  use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
+  use({ "windwp/nvim-ts-autotag" })
+
+  -- Colorschemes
+  use({ "catppuccin/nvim", as = "catppuccin" })
+  use({ "folke/tokyonight.nvim" })
+  use({ "lunarvim/darkplus.nvim" })
+
+  -- cmp plugins
+  use({ "hrsh7th/cmp-buffer" }) -- buffer completions
+  use({ "hrsh7th/cmp-nvim-lsp" })
+  use({ "hrsh7th/cmp-nvim-lsp-signature-help" })
+  use({ "hrsh7th/cmp-nvim-lua" })
+  use({ "hrsh7th/cmp-path" }) -- path completions
+  use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
+  use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
 
   -- Copilot plugins
   -- use({ "github/copilot.vim" }) -- Uncomment to setup copilot
   use({ "zbirenbaum/copilot.lua" })
   use({ "zbirenbaum/copilot-cmp", module = "copilot_cmp" })
 
-  use({ "Xuyuanp/scrollbar.nvim" })
-  use({ "folke/which-key.nvim" })
-
-  -- Colorschemes
-  use({ "folke/tokyonight.nvim" })
-  use({ "lunarvim/darkplus.nvim" })
-  use({ "catppuccin/nvim", as = "catppuccin" })
-
-  -- cmp plugins
-  use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
-  use({ "hrsh7th/cmp-buffer" }) -- buffer completions
-  use({ "hrsh7th/cmp-path" }) -- path completions
-  use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
-  use({ "hrsh7th/cmp-nvim-lsp" })
-  use({ "hrsh7th/cmp-nvim-lua" })
-  use({ "hrsh7th/cmp-nvim-lsp-signature-help" })
-
   -- snippets
   use({ "L3MON4D3/LuaSnip" }) --snippet engine
   use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
 
   -- LSP
-  use({ "neovim/nvim-lspconfig" }) -- enable LSP
-  use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
-  use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
   use({ "RRethy/vim-illuminate" })
-  use({ "simrat39/rust-tools.nvim" })
-
+  use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
   use({ "mhartington/formatter.nvim" })
+  use({ "neovim/nvim-lspconfig" }) -- enable LSP
+  use({ "simrat39/rust-tools.nvim" })
+  use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
 
   -- Telescope
   use({ "nvim-telescope/telescope.nvim" })
@@ -113,9 +110,9 @@ return packer.startup(function(use)
 
   -- DAP
   use({ "mfussenegger/nvim-dap" })
-  use({ "rcarriga/nvim-dap-ui" })
-  use({ "ravenxrz/DAPInstall.nvim" })
   use({ "mfussenegger/nvim-dap-python" })
+  use({ "ravenxrz/DAPInstall.nvim" })
+  use({ "rcarriga/nvim-dap-ui" })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

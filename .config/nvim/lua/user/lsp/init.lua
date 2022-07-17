@@ -1,19 +1,21 @@
 local function setup(lsp_installer, lspconfig, cmp_nvim_lsp, null_ls)
   local servers = {
-    "sumneko_lua",
+    "bashls",
     "cssls",
+    "hls",
     "html",
+    "jsonls",
     "pyright",
     "rust_analyzer",
-    "volar",
+    "sumneko_lua",
     "tailwindcss",
-    "hls",
-    "bashls",
-    "jsonls",
+    "volar",
     "yamlls",
   }
 
-  lsp_installer.setup()
+  lsp_installer.setup({
+    automatic_installation = true,
+  })
 
   local handlers = require("user.lsp.handlers").init(cmp_nvim_lsp)
   local opts = {}
