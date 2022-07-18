@@ -3,6 +3,9 @@ require("user.keymaps")
 require("user.plugins")
 require("user.autocommands")
 
+-- I can probably use packer's functinality to do this
+-- That might imporve startup time as well
+
 local function setup_plugin(config_module)
   local returned_configs = nil
 

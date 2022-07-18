@@ -65,7 +65,6 @@ return packer.startup(function(use)
   use({ "phaazon/hop.nvim", branch = "v2" })
   use({ "simrat39/symbols-outline.nvim" })
   use({ "tpope/vim-surround" })
-  use({ "vim-scripts/argtextobj.vim" })
   use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
   use({ "windwp/nvim-ts-autotag" })
 
