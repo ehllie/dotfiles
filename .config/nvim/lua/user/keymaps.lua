@@ -36,6 +36,14 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
 
 -- Save buffer
+keymap("n", "<leader>s", function()
+  vim.g.do_auto_format = not vim.g.do_auto_format
+  if vim.g.do_auto_format then
+    print("Auto-formatting enabled")
+  else
+    print("Auto-formatting disabled")
+  end
+end)
 keymap("n", "<leader><leader>", "<cmd>:w<CR>")
 
 -- Close buffers
