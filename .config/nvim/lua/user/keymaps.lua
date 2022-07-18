@@ -1,4 +1,4 @@
----comment Reusable short keymap function to reduce code repetition
+---Reusable short keymap function to reduce code repetition
 ---@param mode string
 ---@param lhs string
 ---@param rhs string | function
@@ -51,7 +51,7 @@ keymap("n", "<leader>s", function()
   else
     print("Auto-formatting disabled")
   end
-end, {silent = false})
+end, { silent = false })
 keymap("n", "<leader><leader>", "<cmd>:w<CR>")
 
 -- Close buffers
