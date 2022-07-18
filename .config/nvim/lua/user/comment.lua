@@ -15,13 +15,11 @@ local function setup(comment, util, api)
     end,
   })
 
-  local keymap = vim.keymap.set
-  local opts = { silent = true }
-
-  keymap("n", "<leader>/", api.toggle_current_linewise, opts)
+  local keymap = require("user.keymaps").set
+  keymap("n", "<leader>/", api.toggle_current_linewise)
   keymap("x", "<leader>/", function()
     api.toggle_linewise_op(vim.fn.visualmode())
-  end, opts)
+  end)
 end
 
-return { deps = { "Comment", "Comment.utils", "Comment.api" }, setup = setup }
+return { deps = { "Comment", "Comment.utils", "Comment.api"}, setup = setup }

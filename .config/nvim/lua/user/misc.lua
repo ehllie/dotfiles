@@ -133,12 +133,13 @@ return {
     setup = function(illuminate)
       vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
       vim.g.Illuminate_highlightUnderCursor = 0
-      vim.keymap.set("n", "<a-n>", function()
+      local keymap = require("user.keymaps").set
+      keymap("n", "<a-n>", function()
         illuminate.next_reference({ wrap = true })
-      end, { noremap = true })
-      vim.keymap.set("n", "<a-p>", function()
+      end)
+      keymap("n", "<a-p>", function()
         illuminate.next_reference({ reverse = true, wrap = true })
-      end, { noremap = true })
+      end)
     end,
   },
 }

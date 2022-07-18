@@ -3,6 +3,9 @@ require("user.keymaps")
 require("user.plugins")
 require("user.autocommands")
 
+local function does_setup(module)
+end
+
 local function setup_plugin(config_module)
   local deps = {}
   local declare_type = type(config_module.deps)

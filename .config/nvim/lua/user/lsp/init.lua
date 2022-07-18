@@ -35,6 +35,8 @@ local function setup(lsp_installer, lspconfig, cmp_nvim_lsp, null_ls)
       elseif opt_type == "function" then
         server_opts(lspconfig, opts)
       end
+    else
+      lspconfig[server].setup(opts)
     end
   end
 

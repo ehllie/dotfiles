@@ -43,17 +43,15 @@ local function setup(formatter, util)
   end
 
   local function prettier()
-    return function()
-      return {
-        exe = "prettier",
-        args = {
-          "--single-quote",
-          "--stdin-filepath",
-          path(),
-        },
-        stdin = true,
-      }
-    end
+    return {
+      exe = "prettier",
+      args = {
+        "--single-quote",
+        "--stdin-filepath",
+        path(),
+      },
+      stdin = true,
+    }
   end
 
   local function rustfmt()

@@ -77,18 +77,18 @@ local function setup(dap, dapui, dap_install, dap_python)
     dapui.close()
   end
 
-  local keymap = vim.keymap.set
-  local opts = { silent = true }
-  keymap("n", "<leader>db", dap.toggle_breakpoint, opts)
-  keymap("n", "<leader>dc", dap.continue, opts)
-  keymap("n", "<leader>di", dap.step_into, opts)
-  keymap("n", "<leader>do", dap.step_over, opts)
-  keymap("n", "<leader>dO", dap.step_out, opts)
-  keymap("n", "<leader>dr", dap.repl.toggle, opts)
-  keymap("n", "<leader>dl", dap.run_last, opts)
-  keymap("n", "<leader>du", dapui.toggle, opts)
-  keymap("n", "<leader>dt", dap.terminate, opts)
-  keymap("n", "<leader>de", dapui.eval, opts)
+  local keymap = require("user.keymaps").set
+
+  keymap("n", "<leader>db", dap.toggle_breakpoint)
+  keymap("n", "<leader>dc", dap.continue)
+  keymap("n", "<leader>di", dap.step_into)
+  keymap("n", "<leader>do", dap.step_over)
+  keymap("n", "<leader>dO", dap.step_out)
+  keymap("n", "<leader>dr", dap.repl.toggle)
+  keymap("n", "<leader>dl", dap.run_last)
+  keymap("n", "<leader>du", dapui.toggle)
+  keymap("n", "<leader>dt", dap.terminate)
+  keymap("n", "<leader>de", dapui.eval)
 end
 
-return { deps = { "dap", "dapui", "dap-install", "dap-python" }, setup = setup }
+return { deps = { "dap", "dapui", "dap-install", "dap-python"}, setup = setup }
