@@ -1,17 +1,25 @@
 -- Setup for minor plugins
 
-local colorscheme = "catppuccin"
+local M = {}
 
-if colorscheme == "catppuccin" then
-  vim.g.catppuccin_flavour = "macchiato"
-end
+M.deps = {}
 
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-if not status_ok then
-  print("Failed to load colorscheme " .. colorscheme)
-end
+M.nested = {
+  {
+    deps = {},
+    setup = function()
+      local colorscheme = "catppuccin"
 
-return {
+      if colorscheme == "catppuccin" then
+        vim.g.catppuccin_flavour = "macchiato"
+      end
+
+      local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+      if not status_ok then
+        print("Failed to load colorscheme " .. colorscheme)
+      end
+    end,
+  },
   {
     deps = "colorizer",
     setup = function(colorizer)
@@ -143,3 +151,9 @@ return {
     end,
   },
 }
+
+M.setup = function()
+  return M.nested
+end
+
+return M

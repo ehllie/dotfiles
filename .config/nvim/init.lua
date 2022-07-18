@@ -3,12 +3,12 @@ require("user.keymaps")
 require("user.plugins")
 require("user.autocommands")
 
-local function does_setup(module)
-end
-
 local function setup_plugin(config_module)
+  local returned_configs = nil
+
   local deps = {}
   local declare_type = type(config_module.deps)
+
   if declare_type == "table" then
     for _, dep_name in pairs(config_module.deps) do
       local ok, dep = pcall(require, dep_name)
@@ -17,13 +17,19 @@ local function setup_plugin(config_module)
       end
       table.insert(deps, dep)
     end
-    config_module.setup(unpack(deps))
+    returned_configs = config_module.setup(unpack(deps))
   elseif declare_type == "string" then
     local ok, dep = pcall(require, config_module.deps)
     if not ok then
       return
     end
-    config_module.setup(dep)
+    returned_configs = config_module.setup(dep)
+  end
+
+  if returned_configs then
+    for _, nested in pairs(returned_configs) do
+      setup_plugin(nested)
+    end
   end
 end
 
@@ -43,6 +49,4 @@ setup_plugin(require("user.toggleterm"))
 setup_plugin(require("user.treesitter"))
 setup_plugin(require("user.which-key"))
 
-for _, misc in pairs(require("user.misc")) do
-  setup_plugin(misc)
-end
+setup_plugin(require("user.misc"))
