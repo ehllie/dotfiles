@@ -48,5 +48,4 @@ setup_plugin(require("user.telescope"))
 setup_plugin(require("user.toggleterm"))
 setup_plugin(require("user.treesitter"))
 setup_plugin(require("user.which-key"))
-
 setup_plugin(require("user.misc"))

@@ -1,4 +1,4 @@
-local function setup(comment, util, api)
+local function setup(comment, util, api, keymap)
   comment.setup({
     pre_hook = function(ctx)
       local location = nil
@@ -15,11 +15,10 @@ local function setup(comment, util, api)
     end,
   })
 
-  local keymap = require("user.keymaps").set
   keymap("n", "<leader>/", api.toggle_current_linewise)
   keymap("x", "<leader>/", function()
     api.toggle_linewise_op(vim.fn.visualmode())
   end)
 end
 
-return { deps = { "Comment", "Comment.utils", "Comment.api"}, setup = setup }
+return { deps = { "Comment", "Comment.utils", "Comment.api", "user.keymaps" }, setup = setup }

@@ -1,4 +1,4 @@
-local function setup(toggleterm, terminal)
+local function setup(toggleterm, terminal, keymap)
   toggleterm.setup({
     size = 20,
     open_mapping = [[<c-\>]],
@@ -30,11 +30,10 @@ local function setup(toggleterm, terminal)
   local Terminal = terminal.Terminal
   local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 
-  local keymap = vim.keymap.set
   local opts = { silent = true }
   keymap("n", "<leader>gg", function()
     lazygit:toggle()
   end, opts)
 end
 
-return { deps = { "toggleterm", "toggleterm.terminal" }, setup = setup }
+return { deps = { "toggleterm", "toggleterm.terminal", "user.keymaps" }, setup = setup }

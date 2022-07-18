@@ -83,7 +83,4 @@ keymap("n", "<leader>ft", ":Telescope live_grep<CR>")
 keymap("n", "<leader>fp", ":Telescope projects<CR>")
 keymap("n", "<leader>fb", ":Telescope buffers<CR>")
 
-local M = {}
-M.set = keymap
-
-return M
+return keymap

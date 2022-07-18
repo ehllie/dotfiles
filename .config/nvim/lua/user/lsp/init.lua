@@ -1,4 +1,6 @@
 local function setup(lsp_installer, lspconfig, cmp_nvim_lsp, null_ls)
+  local nested = {}
+
   local servers = {
     "bashls",
     "cssls",
@@ -33,7 +35,7 @@ local function setup(lsp_installer, lspconfig, cmp_nvim_lsp, null_ls)
         opts = vim.tbl_deep_extend("force", server_opts, opts)
         lspconfig[server].setup(opts)
       elseif opt_type == "function" then
-        server_opts(lspconfig, opts)
+        table.insert(nested, server_opts(lspconfig, opts))
       end
     else
       lspconfig[server].setup(opts)
@@ -50,5 +52,7 @@ local function setup(lsp_installer, lspconfig, cmp_nvim_lsp, null_ls)
       diagnostics.mypy,
     },
   })
+
+  return nested
 end
 return { deps = { "nvim-lsp-installer", "lspconfig", "cmp_nvim_lsp", "null-ls" }, setup = setup }

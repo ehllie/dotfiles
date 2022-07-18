@@ -137,11 +137,10 @@ M.nested = {
     end,
   },
   {
-    deps = "illuminate",
-    setup = function(illuminate)
+    deps = { "illuminate", "user.keymaps" },
+    setup = function(illuminate, keymap)
       vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
       vim.g.Illuminate_highlightUnderCursor = 0
-      local keymap = require("user.keymaps").set
       keymap("n", "<a-n>", function()
         illuminate.next_reference({ wrap = true })
       end)

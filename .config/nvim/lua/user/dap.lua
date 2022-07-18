@@ -1,4 +1,4 @@
-local function setup(dap, dapui, dap_install, dap_python)
+local function setup(dap, dapui, dap_install, dap_python, keymap)
   dap_python.setup("python")
 
   dap_install.setup({})
@@ -77,7 +77,6 @@ local function setup(dap, dapui, dap_install, dap_python)
     dapui.close()
   end
 
-  local keymap = require("user.keymaps").set
 
   keymap("n", "<leader>db", dap.toggle_breakpoint)
   keymap("n", "<leader>dc", dap.continue)
@@ -91,4 +90,4 @@ local function setup(dap, dapui, dap_install, dap_python)
   keymap("n", "<leader>de", dapui.eval)
 end
 
-return { deps = { "dap", "dapui", "dap-install", "dap-python"}, setup = setup }
+return { deps = { "dap", "dapui", "dap-install", "dap-python", "user.keymaps"}, setup = setup }
