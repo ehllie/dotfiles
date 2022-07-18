@@ -32,6 +32,7 @@ local function setup(formatter, util)
         "spaces",
         "--indent-width",
         "2",
+        "--search-parent-directories",
         "--stdin-filepath",
         path(),
         "--",
