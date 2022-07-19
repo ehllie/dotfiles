@@ -1,5 +1,6 @@
-local function setup(toggleterm, terminal, keymap)
-  toggleterm.setup({
+local function config()
+  local register = require("which-key").register
+  require("toggleterm").setup({
     size = 20,
     open_mapping = [[<c-\>]],
     hide_numbers = true,
@@ -16,24 +17,35 @@ local function setup(toggleterm, terminal, keymap)
     },
   })
 
-  function _G.set_terminal_keymaps()
-    local opts = { noremap = true }
-    -- vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
-  end
+  --   function _G.set_terminal_keymaps()
+  --     local opts = { noremap = true }
+  --     -- vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
+  --     register(
+  -- )
+  --     vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
+  --     vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
+  --     vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
+  --     vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+  --   end
+  --
+  --   vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
-  vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-
-  local Terminal = terminal.Terminal
+  local Terminal = require("toggleterm.terminal").Terminal
   local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 
-  local opts = { silent = true }
-  keymap("n", "<leader>gg", function()
-    lazygit:toggle()
-  end, opts)
+  register({
+    ["<leader>g"] = {
+      function()
+        lazygit:toggle()
+      end,
+      "Open lazygit",
+    },
+    [ [[<C-\>]] ] = "Open terminal",
+  })
 end
 
-return { deps = { "toggleterm", "toggleterm.terminal", "user.keymaps" }, setup = setup }
+return {
+  "akinsho/toggleterm.nvim",
+  config = config,
+  requires = "folke/which-key.nvim",
+}

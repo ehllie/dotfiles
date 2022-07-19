@@ -1,5 +1,5 @@
-local function setup(configs)
-  configs.setup({
+local function config()
+  require("nvim-treesitter.configs").setup({
     ensure_installed = "all", -- one of "all" or a list of languages
     ignore_install = { "" }, -- List of parsers to ignore installing
     highlight = {
@@ -16,4 +16,4 @@ local function setup(configs)
   })
 end
 
-return { deps = "nvim-treesitter.configs", setup = setup }
+return { "nvim-treesitter/nvim-treesitter", config = config }

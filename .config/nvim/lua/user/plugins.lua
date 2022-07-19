@@ -45,11 +45,10 @@ return packer.startup(function(use)
 
   use({ "JoosepAlviste/nvim-ts-context-commentstring" })
   use({ "Xuyuanp/scrollbar.nvim" })
-  use({ "ahmedkhalf/project.nvim" })
   use({ "akinsho/bufferline.nvim" })
-  use({ "akinsho/toggleterm.nvim" })
-  use({ "andweeb/presence.nvim" })
-  use({ "folke/which-key.nvim" })
+  use(require("user.toggleterm"))
+  use(require("user.presence"))
+  use(require("user.which-key"))
   use({ "goolord/alpha-nvim" })
   use({ "kyazdani42/nvim-tree.lua" })
   use({ "kyazdani42/nvim-web-devicons" })
@@ -101,10 +100,10 @@ return packer.startup(function(use)
   use({ "folke/lua-dev.nvim" })
 
   -- Telescope
-  use({ "nvim-telescope/telescope.nvim" })
+  use(require("user.telescope"))
 
   -- Treesitter
-  use({ "nvim-treesitter/nvim-treesitter" })
+  use(require("user.treesitter"))
 
   -- Git
   use({ "lewis6991/gitsigns.nvim" })

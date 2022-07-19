@@ -1,11 +1,11 @@
-local function setup(presence)
+local function config()
   local function const(output)
     return function(_)
       return output
     end
   end
 
-  presence:setup({
+  require("presence"):setup({
     -- General options
     auto_update = true, -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
     neovim_image_text = "It's actually Neovim plus Linux", -- Text displayed when hovered over the Neovim image
@@ -28,4 +28,4 @@ local function setup(presence)
   })
 end
 
-return { deps = "presence", setup = setup }
+return { "andweeb/presence.nvim", config = config }

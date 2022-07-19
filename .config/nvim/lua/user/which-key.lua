@@ -1,4 +1,5 @@
-local function setup(which_key)
+local function config()
+  local which_key = require("which-key")
   which_key.setup({
     plugins = {
       marks = true, -- shows a list of your marks on ' and `
@@ -65,4 +66,4 @@ local function setup(which_key)
     },
   })
 end
-return { deps = "which-key", setup = setup }
+return { "folke/which-key.nvim", config = config }
