@@ -1,5 +1,7 @@
-local function setup(comment, util, api, keymap)
-  comment.setup({
+local function config()
+  local util = require("Comment.utils")
+  local api = require("Comment.api")
+  require("Comment").setup({
     pre_hook = function(ctx)
       local location = nil
       if ctx.ctype == util.ctype.block then
@@ -15,10 +17,21 @@ local function setup(comment, util, api, keymap)
     end,
   })
 
-  keymap("n", "<leader>/", api.toggle_current_linewise)
-  keymap("x", "<leader>/", function()
-    api.toggle_linewise_op(vim.fn.visualmode())
-  end)
+  local register = require("which-key").register
+  register({ ["<leader>/"] = { api.toggle_current_linewise, "Comment out" } })
+  register({
+    ["<leader>/"] = {
+      function()
+        api.toggle_linewise_op(vim.fn.visualmode())
+      end,
+      "Comment out",
+      mode = "x",
+    },
+  })
 end
 
-return { deps = { "Comment", "Comment.utils", "Comment.api", "user.keymaps" }, setup = setup }
+return {
+  "numToStr/Comment.nvim",
+  config = config,
+  requires = { "JoosepAlviste/nvim-ts-context-commentstring", "folke/which-key.nvim" },
+}

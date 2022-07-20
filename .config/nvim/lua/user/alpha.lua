@@ -1,4 +1,5 @@
-local function setup(alpha, dashboard)
+local function config()
+  local dashboard = require("alpha.themes.dashboard")
   dashboard.section.header.val = {
     [[                               __                ]],
     [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
@@ -7,6 +8,7 @@ local function setup(alpha, dashboard)
     [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
     [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
   }
+
   dashboard.section.buttons.val = {
     dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
     dashboard.button("e", " " .. " New file", ":ene <BAR> startinsert <CR>"),
@@ -27,7 +29,9 @@ local function setup(alpha, dashboard)
   dashboard.section.buttons.opts.hl = "Keyword"
 
   dashboard.opts.opts.noautocmd = true
-  alpha.setup(dashboard.opts)
+  require("alpha").setup(dashboard.opts)
 end
+-- "goolord/alpha-nvim"
+return { "goolord/alpha-nvim", config = config }
 
-return { deps = { "alpha", "alpha.themes.dashboard" }, setup = setup }
+-- Lua Diagnostics.: This function requires 4 argument(s) but instead it is receiving 3.

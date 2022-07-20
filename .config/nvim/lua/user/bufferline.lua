@@ -1,5 +1,5 @@
-local function setup(bufferline)
-  bufferline.setup({
+local function config()
+  require("bufferline").setup({
     options = {
       close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
       right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
@@ -88,4 +88,4 @@ local function setup(bufferline)
   })
 end
 
-return { deps = "bufferline", setup = setup }
+return { "akinsho/bufferline.nvim", config = config }

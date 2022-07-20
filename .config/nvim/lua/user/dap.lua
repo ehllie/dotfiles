@@ -1,13 +1,7 @@
-local function setup(dap, dapui, dap_install, dap_python, keymap)
-  dap_python.setup("python")
-
-  dap_install.setup({})
-
-  local custom_configs = {}
-
-  for debugger, config in pairs(custom_configs) do
-    dap_install.config(debugger, config)
-  end
+local function config_dapui()
+  local dap = require("dap")
+  local dapui = require("dapui")
+  local register = require("which-key").register
 
   dapui.setup({
     icons = { expanded = "▾", collapsed = "▸" },
@@ -66,28 +60,63 @@ local function setup(dap, dapui, dap_install, dap_python, keymap)
   })
 
   dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
+    dapui.open({})
   end
 
   dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
+    dapui.close({})
   end
 
   dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
+    dapui.close({})
   end
 
-
-  keymap("n", "<leader>db", dap.toggle_breakpoint)
-  keymap("n", "<leader>dc", dap.continue)
-  keymap("n", "<leader>di", dap.step_into)
-  keymap("n", "<leader>do", dap.step_over)
-  keymap("n", "<leader>dO", dap.step_out)
-  keymap("n", "<leader>dr", dap.repl.toggle)
-  keymap("n", "<leader>dl", dap.run_last)
-  keymap("n", "<leader>du", dapui.toggle)
-  keymap("n", "<leader>dt", dap.terminate)
-  keymap("n", "<leader>de", dapui.eval)
+  register({
+    d = {
+      name = "Debug",
+      b = { dap.toggle_breakpoint, "Toggle breakpoint" },
+      c = { dap.continue, "Continue" },
+      i = { dap.step_into, "Step into" },
+      o = { dap.step_over, "Step over" },
+      O = { dap.step_out, "Step out" },
+      r = { dap.repl.toggle, "Toggle repl" },
+      l = { dap.run_last, "Run last" },
+      u = { dapui.toggle, "Toggle UI" },
+      t = { dap.terminate, "Terminate" },
+      e = { dapui.eval, "Evaluate variable" },
+    },
+  }, { prefix = "<leader>" })
 end
 
-return { deps = { "dap", "dapui", "dap-install", "dap-python", "user.keymaps"}, setup = setup }
+--"mfussenegger/nvim-dap"
+-- "mfussenegger/nvim-dap-python"
+-- "ravenxrz/DAPInstall.nvim"
+-- "rcarriga/nvim-dap-ui"
+return {
+  {
+    "rcarriga/nvim-dap-ui",
+    config = config_dapui,
+    requires = { "mfussenegger/nvim-dap", "folke/which-key.nvim" },
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    config = function()
+      require("dap-python").setup("python")
+    end,
+    requires = "mfussenegger/nvim-dap",
+  },
+  {
+    "ravenxrz/DAPInstall.nvim",
+    config = function()
+      local dap_install = require("dap-install")
+      dap_install.setup({})
+
+      local custom_configs = {}
+
+      for debugger, config in pairs(custom_configs) do
+        dap_install.config(debugger, config)
+      end
+    end,
+    requires = "mfussenegger/nvim-dap",
+  },
+}

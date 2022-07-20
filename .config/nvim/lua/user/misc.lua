@@ -1,29 +1,18 @@
 -- Setup for minor plugins
 
-local M = {}
-
-M.deps = {}
-
-M.nested = {
+return {
   {
-    deps = {},
-    setup = function()
-      local colorscheme = "catppuccin"
-
-      if colorscheme == "catppuccin" then
-        vim.g.catppuccin_flavour = "macchiato"
-      end
-
-      local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-      if not status_ok then
-        print("Failed to load colorscheme " .. colorscheme)
-      end
+    "catppuccin/nvim",
+    as = "catppuccin",
+    config = function()
+      vim.g.catppuccin_flavour = "macchiato"
+      vim.cmd("colorscheme catppuccin")
     end,
   },
   {
-    deps = "colorizer",
-    setup = function(colorizer)
-      colorizer.setup({
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({
         "css",
         "html",
         "javascript",
@@ -34,9 +23,9 @@ M.nested = {
     end,
   },
   {
-    deps = "indent_blankline",
-    setup = function(indent_blankline)
-      indent_blankline.setup({
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("indent_blankline").setup({
         char = "▏",
         show_trailing_blankline_indent = false,
         show_first_indent_level = true,
@@ -52,8 +41,9 @@ M.nested = {
     end,
   },
   {
-    deps = "scrollbar",
-    setup = function(scrollbar)
+    "Xuyuanp/scrollbar.nvim",
+    config = function()
+      local scrollbar = require("scrollbar")
       vim.api.nvim_create_autocmd({ "WinScrolled", "VimResized", "QuitPre" }, {
         callback = function()
           scrollbar.show()
@@ -74,53 +64,15 @@ M.nested = {
     end,
   },
   {
-    deps = "nvim-ts-autotag",
-    setup = function(autotag)
-      autotag.setup()
+    "lewis6991/impatient.nvim",
+    config = function()
+      require("impatient").enable_profile()
     end,
   },
   {
-    deps = "nvim-autopairs",
-    setup = function(npairs)
-      npairs.setup({
-        check_ts = true, -- treesitter integration
-        disable_filetype = { "TelescopePrompt" },
-      })
-
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      local cmp_status_ok, cmp = pcall(require, "cmp")
-      if not cmp_status_ok then
-        return
-      end
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))
-    end,
-  },
-  {
-    deps = "copilot",
-    setup = function(copilot)
-      vim.defer_fn(function()
-        copilot.setup({
-          cmp = {
-            enabled = true,
-            method = "getPanelCompletions",
-          },
-          panel = {
-            enabled = true,
-          },
-        })
-      end, 100)
-    end,
-  },
-  {
-    deps = "impatient",
-    setup = function(impatient)
-      impatient.enable_profile()
-    end,
-  },
-  {
-    deps = "gitsigns",
-    setup = function(gitsigns)
-      gitsigns.setup({
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup({
         signs = {
           add = { hl = "GitSignsAdd", text = "▎", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
           change = { hl = "GitSignsChange", text = "▎", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
@@ -137,22 +89,42 @@ M.nested = {
     end,
   },
   {
-    deps = { "illuminate", "user.keymaps" },
-    setup = function(illuminate, keymap)
+    "RRethy/vim-illuminate",
+    config = function()
+      local illuminate = require("illuminate")
       vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
       vim.g.Illuminate_highlightUnderCursor = 0
-      keymap("n", "<a-n>", function()
-        illuminate.next_reference({ wrap = true })
-      end)
-      keymap("n", "<a-p>", function()
-        illuminate.next_reference({ reverse = true, wrap = true })
-      end)
+      local register = require("which-key").register
+      register({
+        ["<a-n>"] = {
+          function()
+            illuminate.next_reference({ wrap = true })
+          end,
+          "Next reference",
+        },
+        ["<a-p>"] = {
+          function()
+            illuminate.next_reference({ reverse = true, wrap = true })
+          end,
+          "Previous reference",
+        },
+      })
+    end,
+    requires = "folke/which-key.nvim",
+  },
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup({
+        check_ts = true, -- treesitter integration
+        disable_filetype = { "TelescopePrompt" },
+      })
+
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      local cmp_status_ok, cmp = pcall(require, "cmp")
+      if not cmp_status_ok then
+        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))
+      end
     end,
   },
 }
-
-M.setup = function()
-  return M.nested
-end
-
-return M

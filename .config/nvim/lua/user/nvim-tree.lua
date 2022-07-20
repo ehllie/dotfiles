@@ -1,7 +1,7 @@
-local function setup(nvim_tree, tree_cfg)
-  local tree_cb = tree_cfg.nvim_tree_callback
+local function config()
+  local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
-  nvim_tree.setup({
+  require("nvim-tree").setup({
     update_focused_file = {
       enable = true,
       update_cwd = true,
@@ -59,4 +59,4 @@ local function setup(nvim_tree, tree_cfg)
   })
 end
 
-return { deps = { "nvim-tree", "nvim-tree.config" }, setup = setup }
+return { "kyazdani42/nvim-tree.lua", config = config }

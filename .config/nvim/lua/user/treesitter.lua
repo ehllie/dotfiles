@@ -16,4 +16,4 @@ local function config()
   })
 end
 
-return { "nvim-treesitter/nvim-treesitter", config = config }
+return { "nvim-treesitter/nvim-treesitter", config = config, requires = { "windwp/nvim-ts-autotag" } }

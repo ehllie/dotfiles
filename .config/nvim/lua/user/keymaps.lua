@@ -77,10 +77,4 @@ keymap("c", "w!!", "SudaWrite")
 -- NvimTree
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>")
 
--- Telescope
-keymap("n", "<leader>ff", ":Telescope find_files<CR>")
-keymap("n", "<leader>ft", ":Telescope live_grep<CR>")
-keymap("n", "<leader>fp", ":Telescope projects<CR>")
-keymap("n", "<leader>fb", ":Telescope buffers<CR>")
-
 return keymap

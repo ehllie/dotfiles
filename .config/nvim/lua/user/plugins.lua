@@ -39,80 +39,53 @@ packer.init({
   },
 })
 
+vim.keymap.set("n", "<leader>p", function()
+  packer.sync()
+end)
+
 -- Install your plugins here
 return packer.startup(function(use)
   use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
 
-  use({ "JoosepAlviste/nvim-ts-context-commentstring" })
-  use({ "Xuyuanp/scrollbar.nvim" })
-  use({ "akinsho/bufferline.nvim" })
-  use(require("user.toggleterm"))
-  use(require("user.presence"))
-  use(require("user.which-key"))
-  use({ "goolord/alpha-nvim" })
-  use({ "kyazdani42/nvim-tree.lua" })
-  use({ "kyazdani42/nvim-web-devicons" })
-  use({ "lambdalisue/suda.vim" })
-  use({ "lewis6991/impatient.nvim" })
-  use({ "lukas-reineke/indent-blankline.nvim" })
-  use({ "michaeljsmith/vim-indent-object" })
-  use({ "moll/vim-bbye" })
-  use({ "norcalli/nvim-colorizer.lua" })
-  use({ "numToStr/Comment.nvim" })
-  use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
-  use({ "nvim-lualine/lualine.nvim" })
-  use({ "phaazon/hop.nvim", branch = "v2" })
+  use({
+    "kyazdani42/nvim-web-devicons",
+    "lambdalisue/suda.vim",
+    "michaeljsmith/vim-indent-object",
+    "moll/vim-bbye",
+    "nvim-lua/plenary.nvim", -- Useful lua functions used by lots of plugins
+    "tpope/vim-surround",
+  })
+
+  -- TODO: Configure symbols-outline
   use({ "simrat39/symbols-outline.nvim" })
-  use({ "tpope/vim-surround" })
-  use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
-  use({ "windwp/nvim-ts-autotag" })
-
-  -- Colorschemes
-  use({ "catppuccin/nvim", as = "catppuccin" })
-  use({ "folke/tokyonight.nvim" })
-  use({ "lunarvim/darkplus.nvim" })
-
-  -- cmp plugins
-  use({ "hrsh7th/cmp-buffer" }) -- buffer completions
-  use({ "hrsh7th/cmp-nvim-lsp" })
-  use({ "hrsh7th/cmp-nvim-lsp-signature-help" })
-  use({ "hrsh7th/cmp-nvim-lua" })
-  use({ "hrsh7th/cmp-path" }) -- path completions
-  use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
-  use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
-
-  -- Copilot plugins
-  -- use({ "github/copilot.vim" }) -- Uncomment to setup copilot
-  use({ "zbirenbaum/copilot.lua" })
-  use({ "zbirenbaum/copilot-cmp", module = "copilot_cmp" })
-
-  -- snippets
-  use({ "L3MON4D3/LuaSnip" }) --snippet engine
-  use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
 
   -- LSP
-  use({ "RRethy/vim-illuminate" })
   use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
-  use({ "mhartington/formatter.nvim" })
   use({ "neovim/nvim-lspconfig" }) -- enable LSP
   use({ "simrat39/rust-tools.nvim" })
   use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
   use({ "folke/lua-dev.nvim" })
 
-  -- Telescope
+  -- use({ "github/copilot.vim" }) -- Uncomment to setup copilot
+
+  -- Depencancy and config setup for plugins in separate files
+  use(require("user.alpha"))
+  use(require("user.bufferline"))
+  use(require("user.cmp"))
+  use(require("user.comment"))
+  use(require("user.dap"))
+  use(require("user.formatter"))
+  use(require("user.hop"))
+  use(require("user.lualine"))
+  use(require("user.misc"))
+  use(require("user.nvim-tree"))
+  use(require("user.presence"))
   use(require("user.telescope"))
-
-  -- Treesitter
+  use(require("user.toggleterm"))
   use(require("user.treesitter"))
-
-  -- Git
-  use({ "lewis6991/gitsigns.nvim" })
-
-  -- DAP
-  use({ "mfussenegger/nvim-dap" })
-  use({ "mfussenegger/nvim-dap-python" })
-  use({ "ravenxrz/DAPInstall.nvim" })
-  use({ "rcarriga/nvim-dap-ui" })
+  -- TODO: Load keybinds declared in a global table at the end of init
+  -- That way each plugin that sets up keybibds won't depend on which-key
+  use(require("user.which-key"))
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

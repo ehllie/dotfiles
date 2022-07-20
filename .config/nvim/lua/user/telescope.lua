@@ -31,10 +31,20 @@ local function config_telescope()
       },
     },
   })
+  local register = require("which-key").register
+  register({
+    f = {
+      name = "Telescope",
+      f = { ":Telescope find_files<CR>", "Find files" },
+      t = { ":Telescope live_grep<CR>", "Live grep" },
+      p = { ":Telescope projects<CR>", "Find projects" },
+      b = { ":Telescope buffers<CR>", "Find buffers" },
+    },
+  }, { prefix = "<leader>" })
 end
 
 return {
-  { "nvim-telescope/telescope.nvim", config = config_telescope },
+  { "nvim-telescope/telescope.nvim", config = config_telescope, requires = "folke/which-key.nvim" },
   {
     "ahmedkhalf/project.nvim",
     config = config_project,

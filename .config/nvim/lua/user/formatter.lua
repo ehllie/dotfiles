@@ -1,4 +1,5 @@
-local function setup(formatter, util)
+local function config()
+  local util = require("formatter.util")
   local function path()
     return util.escape_path(util.get_current_buffer_file_path())
   end
@@ -61,7 +62,7 @@ local function setup(formatter, util)
     }
   end
 
-  formatter.setup({
+  require("formatter").setup({
     logging = true,
     log_level = vim.log.levels.ERROR,
     filetype = {
@@ -85,4 +86,4 @@ local function setup(formatter, util)
   })
 end
 
-return { deps = { "formatter", "formatter.util" }, setup = setup }
+return { "mhartington/formatter.nvim", config = config }

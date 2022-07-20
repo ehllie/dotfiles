@@ -1,5 +1,6 @@
-local function setup(cmp, luasnip)
-  require("luasnip/loaders/from_vscode").lazy_load()
+local function config_cmp()
+  local cmp = require("cmp")
+  require("luasnip.loaders.from_vscode").lazy_load()
 
   vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#A29BF1" })
 
@@ -34,7 +35,7 @@ local function setup(cmp, luasnip)
   cmp.setup({
     snippet = {
       expand = function(args)
-        luasnip.lsp_expand(args.body) -- For `luasnip` users.
+        require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
       end,
     },
 
@@ -96,4 +97,45 @@ local function setup(cmp, luasnip)
   })
 end
 
-return { deps = { "cmp", "luasnip" }, setup = setup }
+local function config_copilot()
+  vim.defer_fn(function()
+    require("copilot").setup({
+      cmp = {
+        enabled = true,
+        method = "getPanelCompletions",
+      },
+      panel = {
+        enabled = true,
+      },
+    })
+  end, 100)
+end
+
+return {
+  {
+    "zbirenbaum/copilot.lua",
+    event = { "VimEnter" },
+    config = config_copilot,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    module = "copilot_cmp",
+    requires = "zbirenbaum/copilot.lua",
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    deps = { "cmp", "luasnip" },
+    config = config_cmp,
+    requires = {
+      "L3MON4D3/LuaSnip",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-path",
+      "rafamadriz/friendly-snippets",
+      "saadparwaiz1/cmp_luasnip",
+      "zbirenbaum/copilot-cmp",
+    },
+  },
+}

@@ -1,4 +1,4 @@
-local function setup(lualine)
+local function config()
   local function hide_in_width()
     return vim.fn.winwidth(0) > 80
   end
@@ -45,7 +45,7 @@ local function setup(lualine)
     return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
   end
 
-  lualine.setup({
+  require("lualine").setup({
     options = {
       globalstatus = true,
       icons_enabled = true,
@@ -65,4 +65,4 @@ local function setup(lualine)
   })
 end
 
-return { deps = "lualine", setup = setup }
+return { "nvim-lualine/lualine.nvim", config = config, requires = "lewis6991/gitsigns.nvim" }
