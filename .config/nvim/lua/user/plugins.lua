@@ -60,11 +60,11 @@ return packer.startup(function(use)
   use({ "simrat39/symbols-outline.nvim" })
 
   -- LSP
-  use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
-  use({ "neovim/nvim-lspconfig" }) -- enable LSP
-  use({ "simrat39/rust-tools.nvim" })
-  use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
-  use({ "folke/lua-dev.nvim" })
+  -- use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
+  -- use({ "neovim/nvim-lspconfig" }) -- enable LSP
+  -- use({ "simrat39/rust-tools.nvim" })
+  -- use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
+  -- use({ "folke/lua-dev.nvim" })
 
   -- use({ "github/copilot.vim" }) -- Uncomment to setup copilot
 
@@ -87,6 +87,7 @@ return packer.startup(function(use)
   -- That way each plugin that sets up keybibds won't depend on which-key
   use(require("user.which-key"))
 
+  use(require("user.lsp"))
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then

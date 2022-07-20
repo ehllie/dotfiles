@@ -1,48 +1,56 @@
-local function setup(lsp_installer, lspconfig, cmp_nvim_lsp, null_ls)
-  local nested = {}
+local servers = {
+  "bashls",
+  "cssls",
+  "hls",
+  "html",
+  "jsonls",
+  "pyright",
+  "rust_analyzer",
+  "sumneko_lua",
+  "tailwindcss",
+  "volar",
+  "yamlls",
+}
 
-  local servers = {
-    "bashls",
-    "cssls",
-    "hls",
-    "html",
-    "jsonls",
-    "pyright",
-    "rust_analyzer",
-    "sumneko_lua",
-    "tailwindcss",
-    "volar",
-    "yamlls",
-  }
+---@type table<table>
+Basic = {}
+---@type table<table>
+local extended = {}
 
-  lsp_installer.setup({
+for _, server in ipairs(servers) do
+  local opts_ok, server_opts = pcall(require, "user.lsp.settings." .. server)
+  if opts_ok and server_opts.extended then
+    table.insert(extended, server_opts.extended)
+  else
+    Basic[server] = opts_ok and server_opts or {}
+  end
+end
+
+local function config_lspistall()
+  require("nvim-lsp-installer").setup({
     automatic_installation = true,
   })
 
-  local handlers = require("user.lsp.handlers").init(cmp_nvim_lsp)
+  local lspconfig = require("lspconfig")
+
+  local handlers = require("user.lsp.handlers")
   local opts = {}
 
-  for _, server in pairs(servers) do
+  for server, server_opts in pairs(Basic) do
     opts = {
       on_attach = handlers.on_attach,
       capabilities = handlers.capabilities,
     }
 
-    local opts_ok, server_opts = pcall(require, "user.lsp.settings." .. server)
-    if opts_ok then
-      local opt_type = type(server_opts)
-      if opt_type == "table" then
-        opts = vim.tbl_deep_extend("force", server_opts, opts)
-        lspconfig[server].setup(opts)
-      elseif opt_type == "function" then
-        table.insert(nested, server_opts(lspconfig, opts))
-      end
-    else
-      lspconfig[server].setup(opts)
-    end
+    opts = vim.tbl_deep_extend("force", opts, server_opts)
+    lspconfig[server].setup(opts)
   end
 
   handlers.setup()
+end
+
+local function config_nls()
+  local null_ls = require("null-ls")
 
   local diagnostics = null_ls.builtins.diagnostics
   null_ls.setup({
@@ -52,7 +60,17 @@ local function setup(lsp_installer, lspconfig, cmp_nvim_lsp, null_ls)
       diagnostics.mypy,
     },
   })
-
-  return nested
 end
-return { deps = { "nvim-lsp-installer", "lspconfig", "cmp_nvim_lsp", "null-ls" }, setup = setup }
+
+return {
+  {
+    "williamboman/nvim-lsp-installer",
+    config = config_lspistall,
+    requires = { "neovim/nvim-lspconfig", "folke/which-key.nvim" },
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = config_nls,
+  },
+  unpack(extended),
+}
