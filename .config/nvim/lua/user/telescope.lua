@@ -8,11 +8,14 @@ local function config_project()
     patterns = { ".git", "Makefile", "package.json" },
   })
   require("telescope").load_extension("projects")
+
+  require("which-key").register({ ["<leader>fp"] = { ":Telescope projects<CR>", "Find projects" } })
 end
 
 local function config_telescope()
   local telescope = require("telescope")
   local actions = require("telescope.actions")
+  local builtin = require("telescope.builtin")
   telescope.setup({
     defaults = {
 
@@ -23,7 +26,7 @@ local function config_telescope()
 
       mappings = {
         i = {
-          ["<esc>"] = actions.close,
+          ["<C-c>"] = actions.close,
           ["<Down>"] = actions.cycle_history_next,
           ["<Up>"] = actions.cycle_history_prev,
           ["<C-j>"] = actions.move_selection_next,
@@ -39,10 +42,11 @@ local function config_telescope()
   register({
     f = {
       name = "Telescope",
-      f = { ":Telescope find_files<CR>", "Find files" },
-      t = { ":Telescope live_grep<CR>", "Live grep" },
-      p = { ":Telescope projects<CR>", "Find projects" },
-      b = { ":Telescope buffers<CR>", "Find buffers" },
+      f = { builtin.find_files, "Find files" },
+      t = { builtin.live_grep, "Live grep" },
+      b = { builtin.buffers, "Find buffers" },
+      h = { builtin.help_tags, "Neovim documentation" },
+      l = { builtin.diagnostics, "LSP diagnostics" },
     },
   }, { prefix = "<leader>" })
 end
