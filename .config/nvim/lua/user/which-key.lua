@@ -66,6 +66,5 @@ local function config()
     },
   })
 
-  which_key.register({ ["<leader>p"] = "Reload packer" })
 end
 return { "folke/which-key.nvim", config = config }

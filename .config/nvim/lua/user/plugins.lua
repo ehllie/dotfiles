@@ -17,12 +17,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]])
+-- vim.cmd([[
+--   augroup packer_user_config
+--     autocmd!
+--     autocmd BufWritePost plugins.lua source <afile> | PackerSync
+--   augroup end
+-- ]])
 
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
@@ -39,17 +39,19 @@ packer.init({
   },
 })
 
-vim.keymap.set("n", "<leader>p", function()
-  packer.sync()
-end)
-
 -- Install your plugins here
 return packer.startup(function(use)
   use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
 
   use({
     "kyazdani42/nvim-web-devicons",
-    "lambdalisue/suda.vim",
+    {
+      "lambdalisue/suda.vim",
+      config = function()
+        require("which-key").register({ ["w!!"] = { "SudaWrite", "Write as superuser" } }, { mode = "c" })
+      end,
+      requires = "folke/which-key.nvim",
+    },
     "michaeljsmith/vim-indent-object",
     "moll/vim-bbye",
     "nvim-lua/plenary.nvim", -- Useful lua functions used by lots of plugins

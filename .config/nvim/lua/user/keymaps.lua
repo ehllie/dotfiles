@@ -1,18 +1,8 @@
----Reusable short keymap function to reduce code repetition
----@param mode string
----@param lhs string
----@param rhs string | function
----@param opts? table
----@return nil
-local function keymap(mode, lhs, rhs, opts)
-  if not opts then
-    opts = { silent = true }
-  end
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
+local packer_ok, packer = pcall(require, "packer")
+local which_key_ok, wk = pcall(require, "which-key")
 
 --Remap space as leader key
-keymap("", "<Space>", "<Nop>")
+vim.keymap.set("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 
 -- Modes
@@ -23,58 +13,57 @@ vim.g.mapleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
--- Normal --
--- Better window navigation
-keymap("n", "<C-h>", "<C-w>h")
-keymap("n", "<C-j>", "<C-w>j")
-keymap("n", "<C-k>", "<C-w>k")
-keymap("n", "<C-l>", "<C-w>l")
+if not which_key_ok then
+  if packer_ok then
+    vim.keymap.set("n", "<leader>p", packer.sync)
+  end
+  return
+end
+local register = wk.register
 
--- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>")
-keymap("n", "<C-Down>", ":resize +2<CR>")
-keymap("n", "<C-Left>", ":vertical resize -2<CR>")
-keymap("n", "<C-Right>", ":vertical resize +2<CR>")
-
--- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>")
-keymap("n", "<S-h>", ":bprevious<CR>")
-
--- Clear highlights
-keymap("n", "<leader>h", "<cmd>nohlsearch<CR>")
-
--- Save buffer
-keymap("n", "<leader>s", function()
+local function toggle_format()
   vim.g.do_auto_format = not vim.g.do_auto_format
   if vim.g.do_auto_format then
     print("Auto-formatting enabled")
   else
     print("Auto-formatting disabled")
   end
-end, { silent = false })
-keymap("n", "<leader><leader>", "<cmd>:w<CR>")
+end
 
--- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>")
+-- Normal --
+register({
+  ["<C-h>"] = { "<C-w>h", "Move to left window" },
+  ["<C-j>"] = { "<C-w>j", "Move to bottom window" },
+  ["<C-k>"] = { "<C-w>k", "Move to top window" },
+  ["<C-l>"] = { "<C-w>l", "Move to right window" },
 
--- Better paste
-keymap("v", "p", '"_dP')
+  ["<C-Up>"] = { ":resize +2<CR>", "Grow window vertical" },
+  ["<C-Down>"] = { ":resize -2<CR>", "Shrink window vertical" },
+  ["<C-Left>"] = { ":vertical resize -2<CR>", "Shrink window horizontal" },
+  ["<C-Right>"] = { ":vertical resize +2<CR>", "Grow window horizontal" },
+
+  ["<S-l>"] = { ":bnext<CR>", "Next buffer" },
+  ["<S-h>"] = { ":bprevious<CR>", "Previous window" },
+  ["<S-q>"] = { "<cmd>Bdelete!<CR>", "Close buffer" },
+
+  ["<leader>h"] = { "<cmd>nohlsearch<CR>", "Clear search highlighting" },
+  ["<leader><leader>"] = { "<cmd>:w<CR>", "Quick save" },
+  ["<leader>s"] = { toggle_format, "Toggle auto formatting" },
+  ["<leader>p"] = { packer.sync, "Reload packer" },
+})
 
 -- Insert --
--- Press jk fast to enter
-keymap("i", "jk", "<ESC>")
+register({
+  ["jk"] = { "<ESC>", "Exit insert mode" },
+  ["<C-s>"] = { "<cmd>:w<CR>", "Save" },
+}, { mode = "i" })
 
 -- Visual --
--- Stay in indent mode
-keymap("v", "<", "<gv")
-keymap("v", ">", ">gv")
+register({
+  p = { [["_dP]], "Paste" }, -- Doesn't overwrite the clipboard with the replaced text
+  ["<"] = { "<gv", "Reduce indent" },
+  [">"] = { ">gv", "Increase indent" },
+}, { mode = "v" })
 
--- Plugins --
-
--- SudaVim --
-keymap("c", "w!!", "SudaWrite")
-
--- NvimTree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>")
-
-return keymap
+-- Command --
+register({}, { mode = "c" })

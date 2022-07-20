@@ -48,7 +48,6 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 })
 
 -- Format after write
-vim.g.do_auto_format = true
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   callback = function()
     if vim.g.do_auto_format then
