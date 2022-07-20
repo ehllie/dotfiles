@@ -76,6 +76,7 @@ return packer.startup(function(use)
   use(require("user.dap"))
   use(require("user.formatter"))
   use(require("user.hop"))
+  use(require("user.lsp"))
   use(require("user.lualine"))
   use(require("user.misc"))
   use(require("user.nvim-tree"))
@@ -87,7 +88,6 @@ return packer.startup(function(use)
   -- That way each plugin that sets up keybibds won't depend on which-key
   use(require("user.which-key"))
 
-  use(require("user.lsp"))
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
