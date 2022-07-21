@@ -17,10 +17,15 @@ local function config()
     dashboard.button("t", " " .. " Find text", ":Telescope live_grep <CR>"),
     dashboard.button("c", " " .. " Config", ":e " .. vim.fn.stdpath("config") .. " <CR>"),
     dashboard.button("z", " " .. " Config zsh", ":e " .. vim.fn.stdpath("config") .. "/../zsh <CR>"),
+    dashboard.button("p", "勒 " .. " Update plugins", ":PackerSync<CR>"),
     dashboard.button("q", " " .. " Quit", ":qa<CR>"),
   }
   local function footer()
-    return "github.com/ehllie"
+    local plugin_count = 0
+    for _, _ in pairs(packer_plugins) do
+      plugin_count = plugin_count + 1
+    end
+    return string.format("%d plugins installed\nNeovim is pretty cool actually", plugin_count)
   end
 
   dashboard.section.footer.val = footer()

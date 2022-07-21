@@ -49,7 +49,7 @@ register({
   ["<leader>h"] = { "<cmd>nohlsearch<CR>", "Clear search highlighting" },
   ["<leader><leader>"] = { "<cmd>:w<CR>", "Quick save" },
   ["<leader>s"] = { toggle_format, "Toggle auto formatting" },
-  ["<leader>p"] = { packer.sync, "Reload packer" },
+  -- ["<leader>p"] = { packer.sync, "Reload packer" },
 })
 
 -- Insert --
