@@ -1,5 +1,5 @@
 local function config()
-  local handlers = require("user.lsp.handlers")
+  local handlers = require("lsp-conf.handlers")
   local opts = {
     on_attach = handlers.on_attach,
     capabilities = handlers.capabilities,

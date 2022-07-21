@@ -18,7 +18,7 @@ Basic = {}
 local extended = {}
 
 for _, server in ipairs(servers) do
-  local opts_ok, server_opts = pcall(require, "user.lsp.settings." .. server)
+  local opts_ok, server_opts = pcall(require, "lsp-conf.settings." .. server)
   if opts_ok and server_opts.extended then
     table.insert(extended, server_opts.extended)
   else
@@ -33,7 +33,7 @@ local function config_lspistall()
 
   local lspconfig = require("lspconfig")
 
-  local handlers = require("user.lsp.handlers")
+  local handlers = require("lsp-conf.handlers")
   local opts = {}
 
   for server, server_opts in pairs(Basic) do

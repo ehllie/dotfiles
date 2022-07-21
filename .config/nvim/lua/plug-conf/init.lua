@@ -55,25 +55,25 @@ return packer.startup({
     use({ "simrat39/symbols-outline.nvim" })
 
     -- Depencancy and config setup for plugins in separate files
-    use(require("user.alpha"))
-    use(require("user.bufferline"))
-    use(require("user.cmp"))
-    use(require("user.comment"))
-    use(require("user.dap"))
-    use(require("user.formatter"))
-    use(require("user.hop"))
-    use(require("user.lsp"))
-    use(require("user.lualine"))
-    use(require("user.misc"))
-    use(require("user.nvim-tree"))
-    use(require("user.presence"))
-    use(require("user.telescope"))
-    use(require("user.toggleterm"))
-    use(require("user.treesitter"))
+    use(require("lsp-conf"))
+    use(require("plug-conf.alpha"))
+    use(require("plug-conf.bufferline"))
+    use(require("plug-conf.cmp"))
+    use(require("plug-conf.comment"))
+    use(require("plug-conf.dap"))
+    use(require("plug-conf.formatter"))
+    use(require("plug-conf.hop"))
+    use(require("plug-conf.lualine"))
+    use(require("plug-conf.misc"))
+    use(require("plug-conf.nvim-tree"))
+    use(require("plug-conf.presence"))
+    use(require("plug-conf.telescope"))
+    use(require("plug-conf.toggleterm"))
+    use(require("plug-conf.treesitter"))
     -- TODO: Load keybinds declared in a global table at the end of init
     -- That way each plugin that sets up keybibds won't depend on which-key
-    use(require("user.which-key"))
-    use(require("user.theme"))
+    use(require("plug-conf.which-key"))
+    use(require("plug-conf.theme"))
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
