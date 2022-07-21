@@ -88,10 +88,6 @@ local function config_dapui()
   }, { prefix = "<leader>" })
 end
 
---"mfussenegger/nvim-dap"
--- "mfussenegger/nvim-dap-python"
--- "ravenxrz/DAPInstall.nvim"
--- "rcarriga/nvim-dap-ui"
 return {
   {
     "rcarriga/nvim-dap-ui",
