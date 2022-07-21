@@ -47,6 +47,7 @@ local function config_telescope()
       b = { builtin.buffers, "Find buffers" },
       h = { builtin.help_tags, "Neovim documentation" },
       l = { builtin.diagnostics, "LSP diagnostics" },
+      a = { builtin.builtin, "Select a builtin picker" },
     },
   }, { prefix = "<leader>" })
 end
