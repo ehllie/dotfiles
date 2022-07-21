@@ -16,7 +16,7 @@ local function config()
     dashboard.button("t", " " .. " Find text", ":Telescope live_grep <CR>"),
     dashboard.button("c", " " .. " Config", ":e " .. vim.fn.stdpath("config") .. " <CR>"),
     dashboard.button("z", " " .. " Config zsh", ":e " .. vim.fn.stdpath("config") .. "/../zsh <CR>"),
-    dashboard.button("p", " " .. " Update plugins", ":PackerSync<CR>"),
+    dashboard.button("u", " " .. " Update plugins", ":PackerSync<CR>"),
     dashboard.button("q", " " .. " Quit", ":qa<CR>"),
   }
 
