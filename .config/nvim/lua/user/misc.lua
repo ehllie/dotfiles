@@ -2,14 +2,6 @@
 
 return {
   {
-    "catppuccin/nvim",
-    as = "catppuccin",
-    config = function()
-      vim.g.catppuccin_flavour = "macchiato"
-      vim.cmd("colorscheme catppuccin")
-    end,
-  },
-  {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup({

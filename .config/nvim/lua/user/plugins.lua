@@ -73,6 +73,7 @@ return packer.startup({
     -- TODO: Load keybinds declared in a global table at the end of init
     -- That way each plugin that sets up keybibds won't depend on which-key
     use(require("user.which-key"))
+    use(require("user.theme"))
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
