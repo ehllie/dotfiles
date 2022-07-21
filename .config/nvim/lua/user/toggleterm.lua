@@ -32,13 +32,23 @@ local function config()
 
   local Terminal = require("toggleterm.terminal").Terminal
   local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+  local lgconf = Terminal:new({
+    cmd = "lazygit --git-dir=${XDG_CONFIG_HOME:-$HOME/.config}/dotfile-gitdir --work-tree=$HOME",
+    hidden = true,
+  })
 
   register({
-    ["<leader>g"] = {
+    ["<leader>gg"] = {
       function()
         lazygit:toggle()
       end,
       "Open lazygit",
+    },
+    ["<leader>gc"] = {
+      function()
+        lgconf:toggle()
+      end,
+      "Manage dotfile repo",
     },
     [ [[<C-\>]] ] = "Open terminal",
   })
