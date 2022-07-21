@@ -56,4 +56,4 @@ local function config()
   })
 end
 
-return { extended = { "simrat39/rust-tools.nvim", config = config } }
+return { extended = { "simrat39/rust-tools.nvim", config = config, after = "nvim-lsp-installer" } }

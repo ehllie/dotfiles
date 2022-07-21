@@ -31,4 +31,4 @@ local function config()
   }))
 end
 
-return { extended = { "folke/lua-dev.nvim", config = config } }
+return { extended = { "folke/lua-dev.nvim", config = config, after = "nvim-lsp-installer" } }
