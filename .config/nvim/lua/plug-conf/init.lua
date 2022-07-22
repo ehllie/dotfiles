@@ -71,8 +71,6 @@ return packer.startup({
     use(require("plug-conf.theme"))
     use(require("plug-conf.toggleterm"))
     use(require("plug-conf.treesitter"))
-    -- TODO: Load keybinds declared in a global table at the end of init
-    -- That way each plugin that sets up keybibds won't depend on which-key
     use(require("plug-conf.which-key"))
 
     -- Automatically set up your configuration after cloning packer.nvim
