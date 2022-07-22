@@ -34,6 +34,15 @@ local function config()
         },
       },
     },
+    actions = {
+      open_file = {
+        window_picker = {
+          exclude = {
+            buftype = { "nofile", "terminal", "help", "prompt" },
+          },
+        },
+      },
+    },
     diagnostics = {
       enable = true,
       show_on_dirs = true,
