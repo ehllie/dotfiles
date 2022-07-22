@@ -2,34 +2,32 @@ local function config_cmp()
   local cmp = require("cmp")
   require("luasnip.loaders.from_vscode").lazy_load()
 
-  vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#A29BF1" })
-
   local kind_icons = {
-    Class = "",
-    Color = "",
-    Constant = "",
-    Constructor = "",
-    Enum = "",
-    EnumMember = "",
-    Event = "",
-    Field = "",
-    File = "",
-    Folder = "",
-    Function = "",
-    Interface = "",
-    Keyword = "",
-    Method = "",
-    Module = "",
-    Operator = "",
-    Property = "",
-    Reference = "",
-    Snippet = "",
-    Struct = "",
-    Text = "",
-    TypeParameter = "",
-    Unit = "",
-    Value = "",
-    Variable = "",
+    Class = symbols.Class,
+    Color = symbols.Color,
+    Constant = symbols.Constant,
+    Constructor = symbols.Constructor,
+    Enum = symbols.Enum,
+    EnumMember = symbols.EnumMember,
+    Event = symbols.Event,
+    Field = symbols.Field,
+    File = symbols.File,
+    Folder = symbols.Folder,
+    Function = symbols.Function,
+    Interface = symbols.Interface,
+    Keyword = symbols.Keyword,
+    Method = symbols.Method,
+    Module = symbols.Module,
+    Operator = symbols.Operator,
+    Property = symbols.Property,
+    Reference = symbols.Reference,
+    Snippet = symbols.Snippet,
+    Struct = symbols.Struct,
+    Text = symbols.Text,
+    TypeParameter = symbols.TypeParameter,
+    Unit = symbols.Unit,
+    Value = symbols.Value,
+    Variable = symbols.Variable,
   }
 
   cmp.setup({
@@ -67,7 +65,7 @@ local function config_cmp()
         })[entry.source.name]
 
         if entry.source.name == "copilot" then
-          vim_item.kind = ""
+          vim_item.kind = symbols.Copilot
           vim_item.kind_hl_group = "CmpItemKindCopilot"
         end
 

@@ -94,6 +94,12 @@ local catppuccin = {
         beacon = false,
       },
     })
+    vim.api.nvim_create_autocmd("ColorScheme", {
+      callback = function()
+        local colors = require("catppuccin.palettes").get_palette()
+        vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = colors.lavender })
+      end,
+    })
     vim.cmd("colorscheme catppuccin")
   end,
 }

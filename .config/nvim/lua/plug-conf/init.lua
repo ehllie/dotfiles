@@ -51,9 +51,6 @@ return packer.startup({
       "tpope/vim-surround",
     })
 
-    -- TODO: Configure symbols-outline
-    use({ "simrat39/symbols-outline.nvim" })
-
     -- Depencancy and config setup for plugins in separate files
     use(require("lsp-conf"))
     use(require("plug-conf.alpha"))
@@ -67,6 +64,7 @@ return packer.startup({
     use(require("plug-conf.misc"))
     use(require("plug-conf.nvim-tree"))
     use(require("plug-conf.presence"))
+    use(require("plug-conf.symbols-outline"))
     use(require("plug-conf.telescope"))
     use(require("plug-conf.theme"))
     use(require("plug-conf.toggleterm"))
