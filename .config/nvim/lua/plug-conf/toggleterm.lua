@@ -25,17 +25,20 @@ local function config()
   })
 
   register({
-    ["<leader>gg"] = {
-      function()
-        lazygit:toggle()
-      end,
-      "Open lazygit",
-    },
-    ["<leader>gc"] = {
-      function()
-        lgconf:toggle()
-      end,
-      "Manage dotfile repo",
+    ["<leader>g"] = {
+      name = "Lazygit",
+      ["g"] = {
+        function()
+          lazygit:toggle()
+        end,
+        "Open lazygit",
+      },
+      ["c"] = {
+        function()
+          lgconf:toggle()
+        end,
+        "Manage dotfile repo",
+      },
     },
     [ [[<C-\>]] ] = "Open terminal",
   })
