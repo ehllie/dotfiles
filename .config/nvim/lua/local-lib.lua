@@ -48,4 +48,47 @@ M.center = function(lines, min_width)
   return result
 end
 
+local function nop() end
+
+M.right_ui = {}
+
+---@type {[string]: {open: function, close: function}}
+M.right_ui.functions = { closed = { open = nop, close = nop } }
+
+M.right_ui.status = "closed"
+
+M.right_ui.restore = nop
+
+---@param name string
+---@param open function
+---@param close function
+M.right_ui.register = function(name, open, close)
+  M.right_ui.functions[name] = { open = open, close = close }
+end
+
+---@param invoked_from string
+---@return nil
+M.right_ui.toggle = function(invoked_from)
+  M.right_ui.functions[M.right_ui.status].close()
+  M.right_ui.restore = nop
+  if invoked_from == M.right_ui.status then
+    M.right_ui.status = "closed"
+  else
+    M.right_ui.functions[invoked_from].open()
+    M.right_ui.status = invoked_from
+  end
+end
+
+---@param invoked_from string
+---@return nil
+M.right_ui.temp_open = function(invoked_from)
+  if invoked_from ~= M.right_ui.status then
+    local old_status = M.right_ui.status
+    M.right_ui.toggle(invoked_from)
+    M.right_ui.restore = function()
+      M.right_ui.toggle(old_status)
+    end
+  end
+end
+
 return M

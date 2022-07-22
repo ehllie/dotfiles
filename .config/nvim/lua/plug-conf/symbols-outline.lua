@@ -1,4 +1,6 @@
 local function config()
+  local ui_funcs = require("local-lib").right_ui
+
   vim.g.symbols_outline = {
     highlight_hovered_item = true,
     show_guides = true,
@@ -52,7 +54,17 @@ local function config()
     },
   }
 
-  require("which-key").register({ ["<leader>o"] = { ":SymbolsOutline<CR>", "Toggle outline" } })
+  ui_funcs.register("symbols", function()
+    vim.cmd("SymbolsOutlineOpen")
+  end, function()
+    vim.cmd("SymbolsOutlineClose")
+  end)
+
+  local function toggle()
+    ui_funcs.toggle("symbols")
+  end
+
+  require("which-key").register({ ["<leader>o"] = { toggle, "Toggle outline" } })
 end
 
 return { "simrat39/symbols-outline.nvim", config = config, requires = "folke/which-key.nvim" }

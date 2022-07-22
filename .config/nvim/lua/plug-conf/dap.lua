@@ -2,6 +2,7 @@ local function config_dapui()
   local dap = require("dap")
   local dapui = require("dapui")
   local register = require("which-key").register
+  local ui_funcs = require("local-lib").right_ui
 
   dapui.setup({
     icons = { expanded = "▾", collapsed = "▸" },
@@ -59,16 +60,26 @@ local function config_dapui()
     numhl = "",
   })
 
-  dap.listeners.after.event_initialized["dapui_config"] = function()
+  ui_funcs.register("dapui", function()
     dapui.open({})
+  end, function()
+    dapui.close({})
+  end)
+
+  local function toggle()
+    ui_funcs.toggle("dapui")
+  end
+
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    ui_funcs.temp_open("dapui")
   end
 
   dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close({})
+    ui_funcs.restore()
   end
 
   dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close({})
+    ui_funcs.restore()
   end
 
   register({
@@ -81,7 +92,7 @@ local function config_dapui()
       O = { dap.step_out, "Step out" },
       r = { dap.repl.toggle, "Toggle repl" },
       l = { dap.run_last, "Run last" },
-      u = { dapui.toggle, "Toggle UI" },
+      u = { toggle, "Toggle UI" },
       t = { dap.terminate, "Terminate" },
       e = { dapui.eval, "Evaluate variable" },
     },
