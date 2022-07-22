@@ -1,7 +1,7 @@
 local function config()
   local dashboard = require("alpha.themes.dashboard")
   local fortune = require("alpha.fortune")
-  local align = require("plenary.strings").align_str
+  local center = require("local-lib").center
   dashboard.section.header.val = {
     [[  ` : | | | |:  ||  :     `  :  |  |+|: | : : :|   .        `              .]],
     [[      ` : | :|  ||  |:  :    `  |  | :| : | : |:   |  .                    :]],
@@ -37,51 +37,6 @@ local function config()
     dashboard.button("u", " " .. " Update plugins", ":PackerSync<CR>"),
     dashboard.button("q", " " .. " Quit", ":qa<CR>"),
   }
-
-  ---@generic T
-  ---@param str `T`
-  ---@return `T`
-  local function id(str)
-    return str
-  end
-
-  ---@param vals table
-  ---@return fun(str: string): string)
-  local function format(vals)
-    ---@param str string
-    return function(str)
-      return string.format(str, unpack(vals))
-    end
-  end
-
-  ---@generic R
-  ---@param funcs table<fun(arg: `T`): `R`>
-  ---@param args table<`T`>
-  ---@return table<`R`>
-  local function zip_map(funcs, args)
-    local results = {}
-    for i, func in ipairs(funcs) do
-      results[i] = func(args[i])
-    end
-    return results
-  end
-
-  ---@param lines table<string>
-  ---@param min_width integer?
-  ---@return table<string>
-  local function center(lines, min_width)
-    local max_len = min_width or 0
-    for _, line in ipairs(lines) do
-      max_len = math.max(max_len, #line)
-    end
-    local result = {}
-    for _, line in ipairs(lines) do
-      local diff = max_len - #line
-      local left_pad = math.floor(diff / 2)
-      result[#result + 1] = align((align(line, #line + left_pad)), max_len, true)
-    end
-    return result
-  end
 
   local function footer()
     local width = 54
