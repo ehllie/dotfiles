@@ -58,7 +58,7 @@ local function config()
     },
   })
 
-  plugin_keybinds.nvim_tree = { mappings = { ["<leader>e"] = { ":NvimTreeToggle<CR>", "Toggle NvimTree" } } }
+  require("which-key").register({ ["<leader>e"] = { ":NvimTreeToggle<CR>", "Toggle NvimTree" } })
 end
 
-return { "kyazdani42/nvim-tree.lua", config = config }
+return { "kyazdani42/nvim-tree.lua", config = config, requires = "folke/which-key.nvim" }

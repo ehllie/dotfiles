@@ -17,22 +17,21 @@ local function config()
     end,
   })
 
-  plugin_keybinds.comment_normal = { mappings = { ["<leader>/"] = { api.toggle_current_linewise, "Comment out" } } }
-  plugin_keybinds.comment_visual = {
-    mappings = {
-      ["<leader>/"] = {
-        function()
-          api.toggle_linewise_op(vim.fn.visualmode())
-        end,
-        "Comment out",
-        mode = "x",
-      },
+  local register = require("which-key").register
+  register({ ["<leader>/"] = { api.toggle_current_linewise, "Comment out" } })
+  register({
+    ["<leader>/"] = {
+      function()
+        api.toggle_linewise_op(vim.fn.visualmode())
+      end,
+      "Comment out",
+      mode = "x",
     },
-  }
+  })
 end
 
 return {
   "numToStr/Comment.nvim",
   config = config,
-  requires = "JoosepAlviste/nvim-ts-context-commentstring",
+  requires = { "JoosepAlviste/nvim-ts-context-commentstring", "folke/which-key.nvim" },
 }

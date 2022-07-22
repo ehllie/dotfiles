@@ -22,8 +22,8 @@ end
 local register = wk.register
 
 local function toggle_format()
-  _G.do_auto_format = not do_auto_format
-  if do_auto_format then
+  vim.g.do_auto_format = not vim.g.do_auto_format
+  if vim.g.do_auto_format then
     print("Auto-formatting enabled")
   else
     print("Auto-formatting disabled")
@@ -67,11 +67,3 @@ register({
 
 -- Command --
 register({}, { mode = "c" })
-
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
-  callback = function()
-    for _, keymaps in pairs(plugin_keybinds) do
-      register(keymaps.mappings, keymaps.opts)
-    end
-  end,
-})

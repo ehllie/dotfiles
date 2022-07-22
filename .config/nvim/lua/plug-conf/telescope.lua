@@ -9,7 +9,7 @@ local function config_project()
   })
   require("telescope").load_extension("projects")
 
-  plugin_keybinds.project_nvim = { mappings = { ["<leader>fp"] = { ":Telescope projects<CR>", "Find projects" } } }
+  require("which-key").register({ ["<leader>fp"] = { ":Telescope projects<CR>", "Find projects" } })
 end
 
 local function config_telescope()
@@ -38,24 +38,22 @@ local function config_telescope()
       },
     },
   })
-  plugin_keybinds.telescope = {
-    mappings = {
-      f = {
-        name = "Telescope",
-        f = { builtin.find_files, "Find files" },
-        t = { builtin.live_grep, "Live grep" },
-        b = { builtin.buffers, "Find buffers" },
-        h = { builtin.help_tags, "Neovim documentation" },
-        l = { builtin.diagnostics, "LSP diagnostics" },
-        a = { builtin.builtin, "Select a builtin picker" },
-      },
+  local register = require("which-key").register
+  register({
+    f = {
+      name = "Telescope",
+      f = { builtin.find_files, "Find files" },
+      t = { builtin.live_grep, "Live grep" },
+      b = { builtin.buffers, "Find buffers" },
+      h = { builtin.help_tags, "Neovim documentation" },
+      l = { builtin.diagnostics, "LSP diagnostics" },
+      a = { builtin.builtin, "Select a builtin picker" },
     },
-    opts = { prefix = "<leader>" },
-  }
+  }, { prefix = "<leader>" })
 end
 
 return {
-  { "nvim-telescope/telescope.nvim", config = config_telescope },
+  { "nvim-telescope/telescope.nvim", config = config_telescope, requires = "folke/which-key.nvim" },
   {
     "ahmedkhalf/project.nvim",
     config = config_project,

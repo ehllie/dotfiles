@@ -1,9 +1,6 @@
 require("impatient")
 
-_G.do_auto_format = true
-
----@type {[string]: {mappings: table, opts: table?}}
-_G.plugin_keybinds = {}
+vim.g.do_auto_format = true
 
 require("options")
 require("plug-conf")
