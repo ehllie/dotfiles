@@ -41,9 +41,11 @@ return packer.startup({
       {
         "lambdalisue/suda.vim",
         config = function()
-          require("which-key").register({ ["w!!"] = { "SudaWrite", "Write as superuser" } }, { mode = "c" })
+          plugin_keybinds.suda_vim = {
+            mappings = { ["w!!"] = { "SudaWrite", "Write as superuser" } },
+            opts = { mode = "c" },
+          }
         end,
-        requires = "folke/which-key.nvim",
       },
       "michaeljsmith/vim-indent-object",
       "moll/vim-bbye",
@@ -70,8 +72,6 @@ return packer.startup({
     use(require("plug-conf.telescope"))
     use(require("plug-conf.toggleterm"))
     use(require("plug-conf.treesitter"))
-    -- TODO: Load keybinds declared in a global table at the end of init
-    -- That way each plugin that sets up keybibds won't depend on which-key
     use(require("plug-conf.which-key"))
     use(require("plug-conf.theme"))
 

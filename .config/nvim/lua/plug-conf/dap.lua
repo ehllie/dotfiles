@@ -1,7 +1,6 @@
 local function config_dapui()
   local dap = require("dap")
   local dapui = require("dapui")
-  local register = require("which-key").register
 
   dapui.setup({
     icons = { expanded = "▾", collapsed = "▸" },
@@ -71,28 +70,31 @@ local function config_dapui()
     dapui.close({})
   end
 
-  register({
-    d = {
-      name = "Debug",
-      b = { dap.toggle_breakpoint, "Toggle breakpoint" },
-      c = { dap.continue, "Continue" },
-      i = { dap.step_into, "Step into" },
-      o = { dap.step_over, "Step over" },
-      O = { dap.step_out, "Step out" },
-      r = { dap.repl.toggle, "Toggle repl" },
-      l = { dap.run_last, "Run last" },
-      u = { dapui.toggle, "Toggle UI" },
-      t = { dap.terminate, "Terminate" },
-      e = { dapui.eval, "Evaluate variable" },
+  plugin_keybinds.dap = {
+    mappings = {
+      d = {
+        name = "Debug",
+        b = { dap.toggle_breakpoint, "Toggle breakpoint" },
+        c = { dap.continue, "Continue" },
+        i = { dap.step_into, "Step into" },
+        o = { dap.step_over, "Step over" },
+        O = { dap.step_out, "Step out" },
+        r = { dap.repl.toggle, "Toggle repl" },
+        l = { dap.run_last, "Run last" },
+        u = { dapui.toggle, "Toggle UI" },
+        t = { dap.terminate, "Terminate" },
+        e = { dapui.eval, "Evaluate variable" },
+      },
     },
-  }, { prefix = "<leader>" })
+    opts = { prefix = "<leader>" },
+  }
 end
 
 return {
   {
     "rcarriga/nvim-dap-ui",
     config = config_dapui,
-    requires = { "mfussenegger/nvim-dap", "folke/which-key.nvim" },
+    requires = "mfussenegger/nvim-dap",
   },
   {
     "mfussenegger/nvim-dap-python",

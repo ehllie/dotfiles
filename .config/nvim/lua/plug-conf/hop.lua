@@ -1,4 +1,4 @@
-local function setup()
+local function config()
   local hop = require("hop")
   local directions = require("hop.hint").HintDirection
   local function next_char()
@@ -27,13 +27,14 @@ local function setup()
     })
   end
 
-  local register = require("which-key").register
-  register({
-    f = { next_char, "Hop forward to char" },
-    F = { prev_char, "Hop back to char" },
-    ["<leader>w"] = { next_word, "Hop forward to word" },
-    ["<leader>W"] = { prev_word, "Hop back to word" },
-  })
+  plugin_keybinds.hop = {
+    mappings = {
+      f = { next_char, "Hop forward to char" },
+      F = { prev_char, "Hop back to char" },
+      ["<leader>w"] = { next_word, "Hop forward to word" },
+      ["<leader>W"] = { prev_word, "Hop back to word" },
+    },
+  }
 
   hop.setup()
 end
@@ -41,6 +42,5 @@ end
 return {
   "phaazon/hop.nvim",
   branch = "v2",
-  config = setup,
-  requires = "folke/which-key.nvim",
+  config = config,
 }

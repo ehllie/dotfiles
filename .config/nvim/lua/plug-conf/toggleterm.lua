@@ -1,5 +1,4 @@
 local function config()
-  local register = require("which-key").register
   require("toggleterm").setup({
     size = 20,
     open_mapping = [[<c-\>]],
@@ -24,25 +23,26 @@ local function config()
     hidden = true,
   })
 
-  register({
-    ["<leader>gg"] = {
-      function()
-        lazygit:toggle()
-      end,
-      "Open lazygit",
+  plugin_keybinds.toggleterm = {
+    mappings = {
+      ["<leader>gg"] = {
+        function()
+          lazygit:toggle()
+        end,
+        "Open lazygit",
+      },
+      ["<leader>gc"] = {
+        function()
+          lgconf:toggle()
+        end,
+        "Manage dotfile repo",
+      },
+      [ [[<C-\>]] ] = "Open terminal",
     },
-    ["<leader>gc"] = {
-      function()
-        lgconf:toggle()
-      end,
-      "Manage dotfile repo",
-    },
-    [ [[<C-\>]] ] = "Open terminal",
-  })
+  }
 end
 
 return {
   "akinsho/toggleterm.nvim",
   config = config,
-  requires = "folke/which-key.nvim",
 }

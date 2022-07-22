@@ -86,23 +86,23 @@ return {
       local illuminate = require("illuminate")
       vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
       vim.g.Illuminate_highlightUnderCursor = 0
-      local register = require("which-key").register
-      register({
-        ["<a-n>"] = {
-          function()
-            illuminate.next_reference({ wrap = true })
-          end,
-          "Next reference",
+      plugin_keybinds.illuminate = {
+        mappings = {
+          ["<a-n>"] = {
+            function()
+              illuminate.next_reference({ wrap = true })
+            end,
+            "Next reference",
+          },
+          ["<a-p>"] = {
+            function()
+              illuminate.next_reference({ reverse = true, wrap = true })
+            end,
+            "Previous reference",
+          },
         },
-        ["<a-p>"] = {
-          function()
-            illuminate.next_reference({ reverse = true, wrap = true })
-          end,
-          "Previous reference",
-        },
-      })
+      }
     end,
-    requires = "folke/which-key.nvim",
   },
   {
     "windwp/nvim-autopairs",
