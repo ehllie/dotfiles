@@ -1,6 +1,6 @@
 require("impatient")
 
-vim.g.do_auto_format = true
+_G.do_auto_format = true
 
 _G.symbols = {
   -- File = "",

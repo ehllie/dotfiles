@@ -22,8 +22,8 @@ end
 local register = wk.register
 
 local function toggle_format()
-  vim.g.do_auto_format = not vim.g.do_auto_format
-  if vim.g.do_auto_format then
+  _G.do_auto_format = not do_auto_format
+  if do_auto_format then
     print("Auto-formatting enabled")
   else
     print("Auto-formatting disabled")
