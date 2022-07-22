@@ -58,9 +58,9 @@ local function config()
 
   dashboard.section.footer.val = footer()
 
-  dashboard.section.footer.opts.hl = "Type"
-  dashboard.section.header.opts.hl = "Include"
-  dashboard.section.buttons.opts.hl = "Identifier"
+  dashboard.section.footer.opts.hl = "Identifier"
+  dashboard.section.header.opts.hl = "Type"
+  dashboard.section.buttons.opts.hl = "Keyword"
 
   dashboard.opts.opts.noautocmd = true
   require("alpha").setup(dashboard.opts)
