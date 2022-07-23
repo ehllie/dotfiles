@@ -32,29 +32,29 @@ return {
       })
     end,
   },
-  {
-    "Xuyuanp/scrollbar.nvim",
-    config = function()
-      local scrollbar = require("scrollbar")
-      vim.api.nvim_create_autocmd({ "WinScrolled", "VimResized", "QuitPre" }, {
-        callback = function()
-          scrollbar.show()
-        end,
-      })
-
-      vim.api.nvim_create_autocmd({ "WinEnter", "FocusGained" }, {
-        callback = function()
-          scrollbar.show()
-        end,
-      })
-
-      vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "BufWinLeave", "FocusLost" }, {
-        callback = function()
-          scrollbar.clear()
-        end,
-      })
-    end,
-  },
+  -- {
+  --   "Xuyuanp/scrollbar.nvim",
+  --   config = function()
+  --     local scrollbar = require("scrollbar")
+  --     vim.api.nvim_create_autocmd({ "WinScrolled", "VimResized", "QuitPre" }, {
+  --       callback = function()
+  --         scrollbar.show()
+  --       end,
+  --     })
+  --
+  --     vim.api.nvim_create_autocmd({ "WinEnter", "FocusGained" }, {
+  --       callback = function()
+  --         scrollbar.show()
+  --       end,
+  --     })
+  --
+  --     vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "BufWinLeave", "FocusLost" }, {
+  --       callback = function()
+  --         scrollbar.clear()
+  --       end,
+  --     })
+  --   end,
+  -- },
   {
     "lewis6991/impatient.nvim",
     config = function()
