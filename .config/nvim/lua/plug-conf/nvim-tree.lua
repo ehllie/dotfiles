@@ -53,6 +53,9 @@ local function config()
         error = "",
       },
     },
+    filters = {
+      custom = { "\\~formatter.*" },
+    },
     view = {
       width = 30,
       height = 30,
