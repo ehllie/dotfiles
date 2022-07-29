@@ -108,7 +108,13 @@ return {
   {
     "mfussenegger/nvim-dap-python",
     config = function()
-      require("dap-python").setup("python")
+      local register = require("which-key").register
+      local dappy = require("dap-python")
+      register({
+        p = { dappy.test_method, "Test python method" },
+      }, { prefix = "<leader>d" })
+      dappy.setup("python")
+      dappy.test_runner = "pytest"
     end,
     requires = "mfussenegger/nvim-dap",
   },
