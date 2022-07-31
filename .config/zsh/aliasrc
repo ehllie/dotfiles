@@ -1,3 +1,4 @@
 alias vim="nvim"
 alias config='git --git-dir=${XDG_CONFIG_HOME:-$HOME/.config}/dotfile-gitdir --work-tree=$HOME'
 alias lgconf='lazygit --git-dir=${XDG_CONFIG_HOME:-$HOME/.config}/dotfile-gitdir --work-tree=$HOME'
+alias nix-pull-rb='sudo git -C /etc/nixos pull && nixos-rebuild switch --flake /etc/nixos#$HOST'

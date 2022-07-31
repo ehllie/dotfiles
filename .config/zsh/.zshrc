@@ -1,9 +1,3 @@
-# Add _export ZDOTDIR="$HOME"/.config/zsh_ to _/etc/zsh/zshenv_
-# In order to have this file be sourced
-
-# XDG Base Directory Specification
-source $ZDOTDIR/xdgrc
-
 # Enable VCS info in command prompt
 autoload -Uz vcs_info
 precmd() { vcs_info }
@@ -85,13 +79,8 @@ bindkey -s '^o' 'rangercd\n'
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# Load aliases, shortcuts, paths and xdg config files if exist.
-[ -f "$ZDOTDIR/shortcutrc" ] && source "$ZDOTDIR/shortcutrc"
-[ -f "$ZDOTDIR/aliasrc" ] && source "$ZDOTDIR/aliasrc"
-[ -f "$ZDOTDIR/pathrc" ] && source "$ZDOTDIR/pathrc"
 
 # Export ranger variables
-export EDITOR=nvim
 export VISUAL=nvim
 
 # Load zsh-syntax-highlighting; should be last.
