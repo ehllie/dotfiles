@@ -31,9 +31,9 @@
     home-manager.enable = true;
     git = {
       enable = true;
-      userName = "ehllie";
+      userName = "Elizabeth Paź";
       userEmail = "me@ehllie.xyz";
-      extraConfig = {
+      extraConfig.init = {
         defaultBranch = "main";
       };
     };

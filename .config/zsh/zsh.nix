@@ -6,7 +6,7 @@
 
     initExtraFirst = builtins.readFile ./xdgrc;
     initExtra = builtins.concatStringsSep "\n" [
-      (builtins.readFile ./zshrc)
+      (builtins.readFile ./.zshrc)
       (builtins.readFile ./pathrc)
       (builtins.readFile ./aliasrc)
     ];

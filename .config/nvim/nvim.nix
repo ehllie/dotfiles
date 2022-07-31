@@ -1,15 +1,15 @@
 { pkgs, home-manager, ... }:
 {
-  home = {
-    xdg.configFile = {
-      "nvim/init.lua".source = ./init.lua;
-      ".luarc.json".source = ./.luarc.json;
-      "lua" = {
-        recursive = true;
-        source = ./lua;
-      };
+  xdg.configFile = {
+    "nvim/init.lua".source = ./init.lua;
+    ".luarc.json".source = ./.luarc.json;
+    "lua" = {
+      recursive = true;
+      source = ./lua;
     };
-    packages = [
+  };
+  home = {
+    packages = with pkgs; [
       stylua
       nixpkgs-fmt
       black
