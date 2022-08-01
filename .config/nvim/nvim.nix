@@ -2,8 +2,8 @@
 {
   xdg.configFile = {
     "nvim/init.lua".source = ./init.lua;
-    ".luarc.json".source = ./.luarc.json;
-    "lua" = {
+    "nvim/.luarc.json".source = ./.luarc.json;
+    "nvim/lua" = {
       recursive = true;
       source = ./lua;
     };
