@@ -62,6 +62,13 @@ local function config()
     }
   end
 
+  local function nixfmt()
+    return {
+      exe = "nixpkgs-fmt",
+      stdin = true,
+    }
+  end
+
   require("formatter").setup({
     logging = true,
     log_level = vim.log.levels.ERROR,
@@ -79,6 +86,7 @@ local function config()
       vue = { prettier },
       yaml = { prettier },
       rust = { rustfmt },
+      nix = { nixfmt },
       ["*"] = {
         require("formatter.filetypes.any").remove_trailing_whitespace,
       },

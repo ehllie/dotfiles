@@ -64,9 +64,7 @@
         DOCKER_CONFIG = "${config.xdg.configHome}/docker";
       };
       shellAliases = {
-        config = "git --git-dir=${config.xdg.configHome}/dotfile-gitdir --work-tree=$HOME";
-        lgconf = "lazygit --git-dir=${config.xdg.configHome}/dotfile-gitdir --work-tree=$HOME";
-        nix-pull-rb = "sudo git -C /etc/nixos pull && sudo nixos-rebuild switch --flake /etc/nixos#$HOST";
+        update-nixos = "sudo nixos-rebuild switch --flake /etc/nixos#";
         vim = "nvim";
         # $HOME/.yarnrc
         yarn = "yarn --use-yarnrc ${config.xdg.configHome}/yarn/config";

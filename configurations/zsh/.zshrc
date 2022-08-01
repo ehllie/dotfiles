@@ -80,9 +80,6 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 
-# Export ranger variables
-export VISUAL=nvim
-
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
