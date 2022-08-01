@@ -39,8 +39,11 @@
     };
   };
 
-  xdg.configFile = {
-    "mypy/config".source = ./mypy/config;
-    "python/config".source = ./python/pythonrc.py;
+  xdg = {
+    enable = true;
+    configFile = {
+      "mypy/config".source = ./mypy/config;
+      "python/config".source = ./python/pythonrc.py;
+    };
   };
 }
