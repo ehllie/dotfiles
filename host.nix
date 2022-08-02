@@ -33,11 +33,16 @@
     timeout = 0;
   };
 
-  fonts.fonts = with pkgs; [
-    # Nerd Fonts
-    cascadia-code
-    nerdfonts
-  ];
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
+  fonts.fonts = with pkgs;
+    [
+      # Nerd Fonts
+      cascadia-code
+      nerdfonts
+    ];
   # Hardware
   # hardware = {
   #   cpu.intel.updateMicrocode = true;

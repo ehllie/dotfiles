@@ -64,7 +64,9 @@
         DOCKER_CONFIG = "${config.xdg.configHome}/docker";
       };
       shellAliases = {
-        update-nixos = "sudo nixos-rebuild switch --flake /etc/nixos#";
+        osflake-update = "sudo nix flake update";
+        osflake-dry = "sudo nixos-rebuild dry-activate --flake /etc/nixos#$HOST";
+        osflake-rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#$HOST";
         vim = "nvim";
         # $HOME/.yarnrc
         yarn = "yarn --use-yarnrc ${config.xdg.configHome}/yarn/config";
@@ -77,9 +79,8 @@
       dotDir = ".config/zsh";
 
       initExtra = builtins.concatStringsSep "\n" [
-        (builtins.readFile ./.zshrc)
+        (builtins.readFile ./zshrc)
         (builtins.readFile ./pathrc)
-        (builtins.readFile ./aliasrc)
       ];
     };
   };
