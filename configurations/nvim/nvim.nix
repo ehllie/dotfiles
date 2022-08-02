@@ -1,4 +1,4 @@
-{ pkgs, home-manager, ... }:
+{ pkgs ? import <nixpkgs>, ... }:
 {
   xdg.configFile = {
     "nvim/init.lua".source = ./init.lua;
@@ -9,31 +9,73 @@
     };
   };
   home = {
-    packages = with pkgs; [
-      #Graphical env
-      neovide
 
-      #Python and JS integration
-      python310Packages.pynvim
-      nodePackages.neovim
+    (pkgs.buildFHSUserEnv {
+    name = "nvim-env";
+    targetPkgs = pkgs: (with pkgs;
+      [
+        neovim
+        neovide
 
-      #LuaJIT and luarocks
-      luajit
-      luajitPackages.luarocks
+        nodejs
+        python310
+        cargo
+        ripgrep
 
-      #Linters
-      mypy
-      python310Packages.flake8
+        #Python and JS integration
+        python310Packages.pynvim
+        nodePackages.neovim
 
-      #Formatters
-      stylua
-      nixpkgs-fmt
-      black
-      python310Packages.isort
-      nodePackages.prettier
-    ];
-    sessionVariables = {
-      NEOVIDE_MULTIGRID = true;
-    };
+        #LuaJIT and luarocks
+        luajit
+        luajitPackages.luarocks
+
+        #Linters
+        mypy
+        python310Packages.flake8
+
+        #Formatters
+        stylua
+        nixpkgs-fmt
+        black
+        python310Packages.isort
+        nodePackages.prettier
+      ];)
+    runScript = "nvim";
+  }).env;
+
+  # packages = with pkgs;
+  #   [
+  #     #Graphical env
+  #     neovide
+  #
+  #     #Python and JS integration
+  #     python310Packages.pynvim
+  #     nodePackages.neovim
+  #
+  #     #LuaJIT and luarocks
+  #     luajit
+  #     luajitPackages.luarocks
+  #
+  #     #LSPs
+  #     nodePackages.bash-language-server
+  #     nodePackages.vscode-langservers-extracted
+  #     haskell-language-server
+  #     sumneko-lua-language-server
+  #
+  #     #Linters
+  #     mypy
+  #     python310Packages.flake8
+  #
+  #     #Formatters
+  #     stylua
+  #     nixpkgs-fmt
+  #     black
+  #     python310Packages.isort
+  #     nodePackages.prettier
+  #   ];
+  sessionVariables = {
+    NEOVIDE_MULTIGRID = true;
   };
+};
 }
