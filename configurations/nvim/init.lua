@@ -1,7 +1,6 @@
 require("impatient")
 
 _G.do_auto_format = true
-
 _G.symbols = {
   -- File = "",
   -- Module = "",
@@ -62,3 +61,7 @@ require("options")
 require("plug-conf")
 require("autocommands")
 require("keymaps")
+
+if vim.g.neovide then
+  require("neovide")
+end
