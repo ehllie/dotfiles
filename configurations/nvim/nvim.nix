@@ -32,5 +32,8 @@
       python310Packages.isort
       nodePackages.prettier
     ];
+    sessionVariables = {
+      NEOVIDE_MULTIGRID = true;
+    };
   };
 }
