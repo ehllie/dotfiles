@@ -7,6 +7,7 @@
       recursive = true;
       source = ./lua;
     };
+    "nvim/shell.nix".source = ./shell.nix;
   };
   home = {
     packages = with pkgs; [
@@ -22,12 +23,12 @@
       luajitPackages.luarocks
 
       #LSPs
-      nodePackages.bash-language-server
-      nodePackages.yaml-language-server
-      nodePackages.vscode-langservers-extracted
-      haskell-language-server
-      sumneko-lua-language-server
-      rnix-lsp
+      # nodePackages.bash-language-server
+      # nodePackages.yaml-language-server
+      # nodePackages.vscode-langservers-extracted
+      # haskell-language-server
+      # sumneko-lua-language-server
+      # rnix-lsp
 
       #Linters
       mypy
