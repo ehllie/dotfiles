@@ -64,7 +64,7 @@
         DOCKER_CONFIG = "${config.xdg.configHome}/docker";
       };
       shellAliases = {
-        osflake-update = "sudo nix flake update";
+        osflake-update = "sudo nix flake update /etc/nixos";
         osflake-dry = "sudo nixos-rebuild dry-activate --flake /etc/nixos#$HOST";
         osflake-rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#$HOST";
         vim = "nvim";
