@@ -10,6 +10,7 @@ local servers = {
   "tailwindcss",
   "volar",
   "yamlls",
+  "rnix",
 }
 
 ---@type table<table>
@@ -27,9 +28,9 @@ for _, server in ipairs(servers) do
 end
 
 local function config_lspistall()
-  require("nvim-lsp-installer").setup({
-    automatic_installation = true,
-  })
+  -- require("nvim-lsp-installer").setup({
+  --   automatic_installation = true,
+  -- })
 
   local lspconfig = require("lspconfig")
 

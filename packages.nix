@@ -17,11 +17,11 @@
     ripgrep-all
 
     # Haskell stuff
-    ghc
-    stack
-    cabal-install
-    hlint
-    haskell-language-server
+    # ghc
+    # stack
+    # cabal-install
+    # hlint
+    # haskell-language-server
 
     # Text stuff
     neovim
