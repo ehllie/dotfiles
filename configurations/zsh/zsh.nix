@@ -3,85 +3,81 @@
 
   config = {
     home = {
+      packages = [ pkgs.ranger ];
       sessionPath = [ ];
-      sessionVariables = {
-
-        XAUTHORITY = "${config.xdg.dataHome}/sddm/Xauthority";
-
-        # $HOME/.ghcup
-        GHCUP_USE_XDG_DIRS = true;
-
-        # $HOME/.stack
-        STACK_ROOT = "${config.xdg.dataHome}/stack";
-
-        # $HOME/.cabal
-        CABAL_CONFIG = "${config.xdg.dataHome}/cabal/config";
-        CABAL_DIR = "${config.xdg.dataHome}/cabal";
-
-        # $HOME/.rustup
-        RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
-
-        # $HOME/.cargo
-        CARGO_HOME = "${config.xdg.dataHome}/cargo";
-
-        # $HOME/.python_history
-        PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc.py";
-
-        # $HOME/.npmrc
-        NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
-
-        # $HOME/.pnpmrc
-        PNPM_HOME = "${config.xdg.dataHome}/pnpm";
-
-
-        # $HOME/.lesshst
-        LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
-
-        # $HOME/.kde4
-        KDEHOME = "${config.xdg.configHome}/kde";
-
-        # $HOME/.gtkrc-2.0
-        GTK2_RC_FILES = "${config.xdg.configHome}/gtk-2.0/gtkrc";
-
-        # $HOME/.gnupg
-        GNUPGHOME = "${config.xdg.dataHome}/gnupg";
-
-        # $HOME/.nv
-        CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
-
-
-        # $HOME/.inputrc
-        INPUTRC = "${config.xdg.configHome}/readline/inputrc";
-
-        # $HOME/.azure
-        AZURE_CONFIG_DIR = "${config.xdg.dataHome}/azure";
-
-        # $HOME/.aws
-        AWS_SHARED_CREDENTIALS_FILE = "${config.xdg.configHome}/aws/credentials";
-        AWS_CONFIG_FILE = "${config.xdg.configHome}/aws/config";
-
-        # $HOME/.docker
-        DOCKER_CONFIG = "${config.xdg.configHome}/docker";
-      };
+      sessionVariables = { };
       shellAliases = {
         osflake-update = "sudo nix flake update /etc/nixos";
         osflake-dry = "sudo nixos-rebuild dry-activate --flake /etc/nixos#$HOST";
-        osflake-rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#$HOST";
+        osflake-switch = "sudo nixos-rebuild switch --flake /etc/nixos#$HOST";
+        osflake-iter = "sudo nix flake update /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#$HOST";
         vim = "nvim";
-        # $HOME/.yarnrc
-        yarn = "yarn --use-yarnrc ${config.xdg.configHome}/yarn/config";
-        # $HOME/wget-hsts
-        wget = "wget - -hsts-file=${config.xdg.dataHome}/wget-hsts";
       };
     };
+
     programs.zsh = {
       enable = true;
+      history = {
+        path = "$XDG_CACHE_HOME/zsh/history";
+      };
       dotDir = ".config/zsh";
 
-      initExtra = builtins.concatStringsSep "\n" [
-        (builtins.readFile ./zshrc)
-        (builtins.readFile ./pathrc)
-      ];
+      localVariables = {
+        VI_MODE_RESET_PROMPT_ON_MODE_CHANGE = true;
+        VI_MODE_SET_CURSOR = true;
+      };
+      enableCompletion = true;
+      completionInit = ''
+        autoload -U compinit && compinit
+        zstyle ':completion:*' menu select
+        zmodload zsh/complist
+        compinit
+        _comp_options+=(globdots)		# Include hidden files.
+        unsetopt completealiases		# Include aliases.
+      '';
+      defaultKeymap = "viins";
+      initExtra = ''
+        # Use ranger to switch directories and bind it to ctrl-o
+        rangercd () {
+            tmp="$(mktemp)"
+            ranger --choosedir="$tmp" "$@"
+            if [ -f "$tmp" ]; then
+                dir="$(cat "$tmp")"
+                rm -f "$tmp"
+                [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+            fi
+        }
+        bindkey -s '^o' 'rangercd\n'
+      '';
+
+
+      plugins =
+        [
+          {
+            name = "zsh-nix-shell";
+            file = "nix-shell.plugins.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "chisui";
+              repo = "zsh-nix-shell";
+              rev = "v0.5.0";
+              sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
+            };
+          }
+          {
+            name = "spaceship-zsh-theme";
+            file = "spaceship.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "pascaldevink";
+              repo = "spaceship-zsh-theme";
+              rev = "master";
+              sha256 = "Mj5we+tOPgQ/JLBgplDG3qln1RMsm3Ir0c9URcP3AQY=";
+            };
+          }
+        ];
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "poetry" "vi-mode" ];
+      };
     };
   };
 }

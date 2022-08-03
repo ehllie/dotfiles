@@ -33,6 +33,8 @@
     timeout = 0;
   };
 
+  environment.pathsToLink = [ "/share/zsh" ];
+
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
