@@ -111,6 +111,10 @@ end
 
 return {
   {
+    "github/copilot.vim",
+    opt = true,
+  },
+  {
     "zbirenbaum/copilot.lua",
     event = { "VimEnter" },
     config = config_copilot,
