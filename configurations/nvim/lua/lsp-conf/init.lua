@@ -27,11 +27,7 @@ for _, server in ipairs(servers) do
   end
 end
 
-local function config_lspistall()
-  require("nvim-lsp-installer").setup({
-    automatic_installation = true,
-  })
-
+local function config_lsp()
   local lspconfig = require("lspconfig")
 
   local handlers = require("lsp-conf.handlers")
@@ -65,9 +61,9 @@ end
 
 return {
   {
-    "williamboman/nvim-lsp-installer",
-    config = config_lspistall,
-    requires = { "neovim/nvim-lspconfig", "folke/which-key.nvim" },
+    "neovim/nvim-lspconfig",
+    config = config_lsp,
+    requires = "folke/which-key.nvim",
   },
   {
     "jose-elias-alvarez/null-ls.nvim",

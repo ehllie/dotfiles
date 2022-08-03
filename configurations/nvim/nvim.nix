@@ -12,15 +12,16 @@ in
       recursive = true;
       source = ./lua;
     };
-    "nvim/shell.nix".source = ./shell.nix;
   };
   home = {
 
 
     packages = with pkgs; [
+      neovim
+
       #Graphical env
       neovide
-      nvim-shell
+      # nvim-shell
 
       #Python and JS integration
       python310Packages.pynvim
@@ -31,12 +32,12 @@ in
       luajitPackages.luarocks
 
       #LSPs
-      # nodePackages.bash-language-server
-      # nodePackages.yaml-language-server
-      # nodePackages.vscode-langservers-extracted
-      # haskell-language-server
-      # sumneko-lua-language-server
-      # rnix-lsp
+      nodePackages.bash-language-server
+      nodePackages.yaml-language-server
+      nodePackages.vscode-langservers-extracted
+      haskell-language-server
+      sumneko-lua-language-server
+      rnix-lsp
 
       #Linters
       mypy
