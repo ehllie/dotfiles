@@ -48,19 +48,31 @@
             fi
         }
         bindkey -s '^o' 'rangercd\n'
+
+        prompt_nix_shell_setup
       '';
 
 
       plugins =
         [
           {
+            name = "nix-zsh-completions";
+            file = "nix-zsh-completions.plugin.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "spwhitt";
+              repo = "nix-zsh-completions";
+              rev = "0.4.4";
+              sha256 = "Djs1oOnzeVAUMrZObNLZ8/5zD7DjW3YK42SWpD2FPNk=";
+            };
+          }
+          {
             name = "zsh-nix-shell";
-            file = "nix-shell.plugins.zsh";
+            file = "nix-shell.plugin.zsh";
             src = pkgs.fetchFromGitHub {
               owner = "chisui";
               repo = "zsh-nix-shell";
               rev = "v0.5.0";
-              sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
+              sha256 = "IT3wpfw8zhiNQsrw59lbSWYh0NQ1CUdUtFzRzHlURH0=";
             };
           }
           {
