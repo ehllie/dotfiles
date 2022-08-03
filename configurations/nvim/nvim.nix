@@ -1,4 +1,9 @@
 { pkgs, ... }:
+let
+  nvim-shell = pkgs.writeShellScriptBin "nvim" ''
+    nix-shell $XDG_CONFIG_HOME/nvim/shell.nix
+  '';
+in
 {
   xdg.configFile = {
     "nvim/init.lua".source = ./init.lua;
@@ -10,9 +15,12 @@
     "nvim/shell.nix".source = ./shell.nix;
   };
   home = {
+
+
     packages = with pkgs; [
       #Graphical env
       neovide
+      nvim-shell
 
       #Python and JS integration
       python310Packages.pynvim
