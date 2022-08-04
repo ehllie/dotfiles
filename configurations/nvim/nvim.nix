@@ -21,7 +21,6 @@ in
 
       #Graphical env
       neovide
-      # nvim-shell
 
       #Python and JS integration
       python310Packages.pynvim

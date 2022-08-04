@@ -39,7 +39,7 @@ local function config()
   }
 
   local function footer()
-    local width = 54
+    local width = 64
     local plugin_count = 0
     for _, _ in pairs(packer_plugins) do
       plugin_count = plugin_count + 1
