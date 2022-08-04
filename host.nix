@@ -24,6 +24,9 @@
     timeout = 0;
   };
 
+  # Silence bios buzzer
+  boot.blacklistedKernelModules = [ "pcspkr" ];
+
   environment.pathsToLink = [ "/share/zsh" ];
 
   nix.extraOptions = ''
