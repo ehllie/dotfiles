@@ -11,15 +11,6 @@
       ./packages.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  # boot = {
-  #   # Use the systemd-boot EFI boot loader
-  #   loader.systemd-boot.enable = true;
-  #   loader.efi.canTouchEfiVariables = true;
-  #   # Kernel packages
-  #   kernelPackages = pkgs.linuxPackages_zen;
-  # };
-
   # Bootloader.
   boot.loader = {
     systemd-boot = {
@@ -45,43 +36,17 @@
       cascadia-code
       nerdfonts
     ];
-  # Hardware
-  # hardware = {
-  #   cpu.intel.updateMicrocode = true;
-  #   enableRedistributableFirmware = true;
-  #   pulseaudio.enable = true;
-  #   pulseaudio.package = pkgs.pulseaudioFull;
-  #   bluetooth.enable = true;
-  #   opengl.enable = true;
-  #   opengl.driSupport = true;
-  # };
 
   # Networking
   networking = {
     hostName = "nixos-gram";
-    # wireless.iwd.enable = true;
     networkmanager = {
       enable = true;
-      # wifi.backend = "iwd";
     };
-    # firewall.enable = true;
-    # firewall.allowPing = true;
-    # firewall.allowedUDPPorts = [];
-    # firewall.allowedTCPPorts = [];
-
-    # hosts file
-    # extraHosts = pkgs.stdenv.lib.readFile ( pkgs.fetchurl {
-    #   url = "https://raw.githubusercontent.com/StevenBlack/hosts/5a5016ab5bf0166e004147cb49ccd0114ed29b72/alternates/fakenews-gambling-porn/hosts";
-    #   sha256 = "1c60fyzxz89bic6ymcvb8fcanyxpzr8v2z5vixxr79d8mj0vjswm";
-    # } );
   };
 
   # Timezone
   time.timeZone = "Europe/Warsaw";
-
-  # Network Proxy
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Locales
   i18n.defaultLocale = "en_IE.utf8";
@@ -127,20 +92,14 @@
         };
       };
       videoDrivers = [ "modesetting" ];
+
       displayManager.gdm.enable = true;
-      # displayManager.defaultSession = "none+xmonad";
       desktopManager = {
         gnome.enable = true;
-        xterm.enable = false;
-        # xmonad.enable = true;
-        # xmonad.enableContribAndExtras = true;
-        # xmonad.extraPackages = hpkgs: [
-        #   hpkgs.xmonad
-        #   hpkgs.xmonad-contrib
-        #   hpkgs.xmonad-extras
-        #   hpkgs.xmobar
-        # ];
       };
+      # Begone xterm
+      desktopManager.xterm.enable = false;
+      excludePackages = [ pkgs.xterm ];
     };
   };
 
@@ -167,8 +126,6 @@
       enable = true;
       wheelNeedsPassword = true;
     };
-
-    # pam.services.lightdm.enableGnomeKeyring = true;
 
   };
 
