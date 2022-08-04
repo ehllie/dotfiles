@@ -85,6 +85,26 @@
               sha256 = "Mj5we+tOPgQ/JLBgplDG3qln1RMsm3Ir0c9URcP3AQY=";
             };
           }
+          {
+            name = "catppuccin-syntax-highlighting";
+            file = "catppuccin-zsh-syntax-highlighting.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "catppuccin";
+              repo = "zsh-syntax-highlighting";
+              rev = "main";
+              sha256 = "YV9lpJ0X2vN9uIdroDWEize+cp9HoKegS3sZiSpNk50=";
+            };
+          }
+          {
+            name = "zsh-syntax-highlighting";
+            file = "zsh-syntax-highlighting.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "zsh-users";
+              repo = "zsh-syntax-highlighting";
+              rev = "master";
+              sha256 = "YV9lpJ0X2vN9uIdroDWEize+cp9HoKegS3sZiSpNk50=";
+            };
+          }
         ];
       oh-my-zsh = {
         enable = true;
