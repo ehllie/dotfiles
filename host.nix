@@ -131,6 +131,7 @@
       # displayManager.defaultSession = "none+xmonad";
       desktopManager = {
         gnome.enable = true;
+        xterm.enable = false;
         # xmonad.enable = true;
         # xmonad.enableContribAndExtras = true;
         # xmonad.extraPackages = hpkgs: [
