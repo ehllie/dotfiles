@@ -1,11 +1,10 @@
 { config, pkgs, lib, inputs, ... }:
 {
 
+  imports = [ ./xdg_env.nix ];
   config = {
     home = {
       packages = with pkgs; [ ranger ];
-      sessionPath = [ ];
-      sessionVariables = { };
       shellAliases = {
         osflake-update = "sudo nix flake update /etc/nixos";
         osflake-dry = "sudo nixos-rebuild dry-activate --flake /etc/nixos#$HOST";
