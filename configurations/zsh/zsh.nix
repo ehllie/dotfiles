@@ -3,7 +3,7 @@
 
   config = {
     home = {
-      packages = [ pkgs.ranger ];
+      packages = with pkgs; [ ranger ];
       sessionPath = [ ];
       sessionVariables = { };
       shellAliases = {

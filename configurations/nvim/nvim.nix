@@ -22,6 +22,10 @@ in
       #Graphical env
       neovide
 
+      #Clipboard integration
+      xclip
+      wl-clipboard
+
       #Python and JS integration
       python310Packages.pynvim
       nodePackages.neovim
