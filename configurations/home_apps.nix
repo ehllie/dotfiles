@@ -18,7 +18,7 @@ let
     gcc
     cargo
     nodePackages.pnpm
-    python310
+    python3
     pkgconfig
     nodejs
     go
@@ -28,8 +28,8 @@ let
     dmenu
   ];
   mediaPack = with pkgs; [
-    firefox
-    thunderbird
+    firefox-wayland
+    thunderbird-wayland
     vlc
   ];
   cliPack = with pkgs; [

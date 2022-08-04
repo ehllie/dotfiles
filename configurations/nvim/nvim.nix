@@ -27,7 +27,7 @@ in
       wl-clipboard
 
       #Python and JS integration
-      python310Packages.pynvim
+      python3Packages.pynvim
       nodePackages.neovim
 
       #LuaJIT and luarocks
@@ -44,13 +44,13 @@ in
 
       #Linters
       mypy
-      python310Packages.flake8
+      python3Packages.flake8
 
       #Formatters
       stylua
       nixpkgs-fmt
       black
-      python310Packages.isort
+      python3Packages.isort
       nodePackages.prettier
     ];
     sessionVariables = {

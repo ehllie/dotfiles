@@ -30,10 +30,7 @@
     ranger
     pcmanfm
 
-    # Browsers
-    firefox
-
-    python310
+    python3
 
   ];
 }
