@@ -25,6 +25,7 @@
     ./zsh/zsh.nix
     ./home_apps.nix
     ./nvim/nvim.nix
+    ./gtk.nix
   ];
 
   programs = {
