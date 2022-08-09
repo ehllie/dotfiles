@@ -82,7 +82,9 @@
     thermald.enable = true;
 
     # OpenSSH daemon
-    # services.openssh.enable = true;
+    openssh.enable = true;
+
+    iperf3.enable = true;
 
     # X config
     xserver = {
