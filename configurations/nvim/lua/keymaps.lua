@@ -30,6 +30,12 @@ local function toggle_format()
   end
 end
 
+vim.api.nvim_create_user_command("MultiMacro", function(arg_tab)
+  local reg_name = vim.fn.getcharstr()
+  vim.cmd(arg_tab.line1 .. "," .. arg_tab.line2 .. "g/^/norm @" .. reg_name)
+  vim.cmd("nohlsearch")
+end, { nargs = 0, range = true })
+
 -- Normal --
 register({
   ["<C-h>"] = { "<C-w>h", "Move to left window" },
@@ -63,6 +69,7 @@ register({
   p = { [["_dP]], "Paste" }, -- Doesn't overwrite the clipboard with the replaced text
   ["<"] = { "<gv", "Reduce indent" },
   [">"] = { ">gv", "Increase indent" },
+  ["@"] = { ":MultiMacro<CR>", "Run macro on selected lines" },
 }, { mode = "v" })
 
 -- Command --
