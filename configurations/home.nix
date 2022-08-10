@@ -17,7 +17,6 @@
       VISUAL = "nvim";
     };
 
-
     stateVersion = "22.05";
   };
 
@@ -47,4 +46,5 @@
       "python/config".source = ./python/pythonrc.py;
     };
   };
+
 }

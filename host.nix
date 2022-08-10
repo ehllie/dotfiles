@@ -46,6 +46,16 @@
     networkmanager = {
       enable = true;
     };
+    firewall = {
+      allowPing = true;
+      enable = true;
+      allowedTCPPorts = [
+        5357 # wsdd
+      ];
+      allowedUDPPorts = [
+        3702 # wsdd
+      ];
+    };
   };
 
   # Timezone
@@ -84,7 +94,43 @@
     # OpenSSH daemon
     openssh.enable = true;
 
-    iperf3.enable = true;
+    # Samba
+    samba-wsdd.enable = true; # make shares visible for windows 10 clients
+    samba = {
+      enable = true;
+      securityType = "user";
+      openFirewall = true;
+      extraConfig = ''
+        workgroup = WORKGROUP
+        server string = smbnix
+        netbios name = smbnix
+        security = user
+        #use sendfile = yes
+        #max protocol = smb2
+        # note: localhost is the ipv6 localhost ::1
+        hosts allow = 192.168.0.0/16 127.0.0.1 localhost
+        hosts deny = 0.0.0.0/0
+        guest account = nobody
+        map to guest = bad user
+      '';
+      shares = {
+        public = {
+          comment = "Public nixos share";
+          path = "/home/ellie/Shares/Public";
+          browseable = "yes";
+          "valid users" = "NOTUSED";
+          public = "yes";
+          writable = "yes";
+          printable = "no";
+          "read only" = "no";
+          "guest ok" = "yes";
+          "create mask" = "0644";
+          "directory mask" = "0755";
+          "force user" = "ALLOWEDUSER";
+          "force group" = "ALLOWEDGROUP";
+        };
+      };
+    };
 
     # X config
     xserver = {
