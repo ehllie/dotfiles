@@ -12,7 +12,7 @@
       description = "The user to use for the system";
 
     };
-    hostname = mkOption {
+    host = mkOption {
       type = types.str;
       description = "The hostname to use for the system";
 
