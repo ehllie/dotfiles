@@ -26,6 +26,8 @@ let
   appPack = with pkgs; [
     libreoffice
     dmenu
+    _1password
+    _1password-gui
   ];
   mediaPack = with pkgs; [
     firefox-wayland
