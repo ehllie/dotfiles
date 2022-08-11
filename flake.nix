@@ -7,7 +7,7 @@
     home-manager = { url = github:nix-community/home-manager; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = inputs@{ self, nur, home-manager, nixpkgs, ... }:
+  outputs = inputs@{ nur, home-manager, ... }:
     {
 
       modules = opts: [

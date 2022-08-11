@@ -134,7 +134,7 @@
         shares = {
           public = {
             comment = "Public nixos share";
-            path = "/home/ellie/Shares/Public";
+            path = "/home/${cfg.user}/Shares/Public";
             browseable = "yes";
             "valid users" = "NOTUSED";
             public = "yes";
@@ -178,15 +178,13 @@
     sound.enable = true;
 
     # User accounts
-    users.users = {
-      ellie = {
-        isNormalUser = true;
-        home = "/home/${cfg.user}";
-        shell = pkgs.zsh;
-        description = "Elizabeth";
-        extraGroups =
-          [ "wheel" "networkmanager" "docker" ];
-      };
+    users.users.${cfg.user} = {
+      isNormalUser = true;
+      home = "/home/${cfg.user}";
+      shell = pkgs.zsh;
+      description = "Elizabeth";
+      extraGroups =
+        [ "wheel" "networkmanager" "docker" ];
     };
 
 
