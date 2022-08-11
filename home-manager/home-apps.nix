@@ -32,6 +32,8 @@ let
   mediaPack = with pkgs; [
     firefox-wayland
     thunderbird-wayland
+    protonmail-bridge
+    protonvpn-gui
     vlc
   ];
   cliPack = with pkgs; [
