@@ -10,24 +10,27 @@
   outputs = inputs@{ self, nur, home-manager, nixpkgs, ... }:
     {
 
-      mkConfig = { hwConfig }: {
-        nixos-gram = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./host.nix
-            # Include the results of the hardware scan.
-            nur.nixosModules.nur
-            hwConfig
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              nixpkgs.config.allowUnfree = true;
-              home-manager.users.ellie = { imports = [ ./configurations/home.nix ]; };
-            }
-          ];
-        };
-      };
+      modules = opts: [
+        nur.nixosModules.nur
+        home-manager.nixosModules.home-manager
+        {
+          imports = [ ./host.nix ./packages.nix ];
+          dotfile-presets = opts;
+
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.${opts.user} = {
+              imports = [ ./home-manager/home.nix ];
+              home = {
+
+                username = opts.user;
+                homeDirectory = "/home/${opts.user}";
+              };
+            };
+          };
+        }
+      ];
 
     };
 }

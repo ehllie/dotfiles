@@ -3,13 +3,8 @@
 {
 
   home = {
-    username = "ellie";
-    homeDirectory = "/home/ellie";
-
     # Add locations to PATH
     sessionPath = [ "~/.local/bin" ];
-
-    # xdg.enable = true;
 
     # Add environment variables
     sessionVariables = {
@@ -22,10 +17,10 @@
 
   imports = [
     ./zsh/zsh.nix
-    ./home_apps.nix
+    ./home-apps.nix
     ./nvim/nvim.nix
     ./gtk.nix
-    ./test_module.nix
+    ./test-module.nix
   ];
 
   test-module.enabled = true;
