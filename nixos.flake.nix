@@ -19,7 +19,7 @@
         modules = [
           # Include the results of the hardware scan.
           ./hardware.nix
-        ] ++ dotfile-config.modules opts;
+        ] ++ dotfile-config.allModules opts;
       };
     };
 

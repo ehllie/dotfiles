@@ -8,22 +8,20 @@
   };
 
   outputs = inputs@{ nur, home-manager, ... }:
-    {
-
-      modules = opts: [
+    let
+      modules = { host-modules ? [ ], user-modules ? [ ], opts }: [
         nur.nixosModules.nur
         home-manager.nixosModules.home-manager
         {
-          imports = [ ./host.nix ./packages.nix ];
-          dotfile-presets = opts;
+          imports = [ ./host/common.nix ] ++ host-modules;
+          dot-opts = opts;
 
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
             users.${opts.user} = {
-              imports = [ ./home-manager/home.nix ];
+              imports = [ ./user/common.nix ] ++ user-modules;
               home = {
-
                 username = opts.user;
                 homeDirectory = "/home/${opts.user}";
               };
@@ -31,6 +29,14 @@
           };
         }
       ];
+    in
+    {
+      allModules = opts: modules {
+        host-modules = [ ./host/bare-metal.nix ];
+        user-modules = [ ./user/graphical.nix ];
+        opts = opts;
+      };
 
+      wslModules = opts: modules { opts = opts; };
     };
 }
