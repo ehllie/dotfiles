@@ -20,10 +20,7 @@
     ./home-apps.nix
     ./nvim/nvim.nix
     ./gtk.nix
-    ./test-module.nix
   ];
-
-  test-module.enabled = true;
 
   programs = {
     home-manager.enable = true;
