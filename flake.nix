@@ -16,6 +16,7 @@
           modules = [
             ./host.nix
             # Include the results of the hardware scan.
+            nur.nixosModules.nur
             hwConfig
             home-manager.nixosModules.home-manager
             {
