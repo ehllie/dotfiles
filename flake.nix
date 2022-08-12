@@ -2,12 +2,13 @@
   description = "An alright configuration";
 
   inputs = {
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nur.url = github:nix-community/NUR;
     home-manager = { url = github:nix-community/home-manager; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = inputs@{ nur, home-manager, ... }:
+  outputs = inputs@{ nur, home-manager, nixos-wsl, ... }:
     let
       modules = { host-modules ? [ ], user-modules ? [ ], opts }: [
         nur.nixosModules.nur
@@ -34,6 +35,19 @@
         opts = opts;
       };
 
-      wslModules = opts: modules { opts = opts; };
+      wslModules = opts: modules {
+        host-modules = [
+          nixos-wsl.nixosModules.wsl
+          {
+            wsl = {
+              enable = true;
+              automountPath = "/mnt";
+              defaultUser = "${opts.user}";
+              startMenuLaunchers = true;
+            };
+          }
+        ];
+        opts = opts;
+      };
     };
 }
