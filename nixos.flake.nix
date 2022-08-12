@@ -2,15 +2,14 @@
   description = "Depends on the dotfile flake as an input";
 
   inputs = {
-    dotfile-config.url = "github:ehllie/my-dotfiles/nix";
+    dotfiles.url = "github:ehllie/dotfiles/nix";
   };
 
-  outputs = { dotfile-config, nixpkgs, ... }:
+  outputs = { dotfiles, nixpkgs, ... }:
     let
       opts = {
-        user = "ellie";
-        host = "nixos-gram";
-        boot-loader = "systemd-boot";
+        user = "{{user}}";
+        host = "{{host}}";
       };
     in
     {
@@ -19,7 +18,7 @@
         modules = [
           # Include the results of the hardware scan.
           ./hardware.nix
-        ] ++ dotfile-config.allModules opts;
+        ] ++ dotfiles."{{preset}}" opts;
       };
     };
 
