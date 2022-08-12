@@ -103,10 +103,6 @@
 
     };
 
-    # Virtualization/other OS's support
-    virtualisation.docker = {
-      enable = true;
-    };
 
     # Other
     programs = {
