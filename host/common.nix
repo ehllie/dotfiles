@@ -55,9 +55,6 @@
     # Networking
     networking = {
       hostName = cfg.host;
-      networkmanager = {
-        enable = true;
-      };
       firewall = {
         allowPing = true;
         enable = true;
@@ -94,6 +91,7 @@
       description = "Elizabeth";
       extraGroups =
         [ "wheel" "networkmanager" "docker" ];
+      initialPassword = "password"; # Change this asap obv
     };
 
     # Sudo

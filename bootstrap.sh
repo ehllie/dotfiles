@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $EUID -ne 0 ]]; then
-  echo "Superuser permissions needed to edit the /etc/nixos file"
+  echo "This script will run as superuser"
   sudo -E $0 $@
   exit 0
 fi
