@@ -29,8 +29,23 @@ in
     ./nvim/nvim.nix
   ];
 
-  config = {
+  options.dot-opts = with lib; {
+    user = mkOption {
+      type = types.str;
+      description = "The user to use for the system";
+
+    };
+    host = mkOption {
+      type = types.str;
+      description = "The hostname to use for the system";
+
+    };
+  };
+
+  config = let cfg = config.dot-opts; in {
     home = {
+      username = cfg.user;
+      homeDirectory = "/home/${cfg.user}";
       packages = builtins.concatLists [ devPack cliPack ];
       # Add locations to PATH
       sessionPath = [ "~/.local/bin" ];

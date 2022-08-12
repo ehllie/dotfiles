@@ -2,14 +2,14 @@
 {
 
   imports = [ ./xdg_env.nix ];
-  config = {
+  config = let cfg = config.dot-opts; in {
     home = {
       packages = with pkgs; [ ranger ];
       shellAliases = {
         osflake-update = "sudo nix flake update /etc/nixos";
-        osflake-dry = "sudo nixos-rebuild dry-activate --flake /etc/nixos#$HOST";
-        osflake-switch = "sudo nixos-rebuild switch --flake /etc/nixos#$HOST";
-        osflake-iter = "sudo nix flake update /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#$HOST";
+        osflake-dry = "sudo nixos-rebuild dry-activate --flake /etc/nixos#${cfg.host}";
+        osflake-switch = "sudo nixos-rebuild switch --flake /etc/nixos#${cfg.host}";
+        osflake-iter = "sudo nix flake update /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#${cfg.host}";
         vim = "nvim";
       };
     };

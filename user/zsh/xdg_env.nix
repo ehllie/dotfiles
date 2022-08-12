@@ -1,70 +1,70 @@
 { config, ... }:
 {
-  config.home = {
+  config.home = with config.xdg; {
     sessionVariables = {
 
-      XAUTHORITY = "${config.xdg.dataHome}/sddm/Xauthority";
+      XAUTHORITY = "${dataHome}/sddm/Xauthority";
 
       # $HOME/.ghcup
       GHCUP_USE_XDG_DIRS = true;
 
       # $HOME/.stack
-      STACK_ROOT = "${config.xdg.dataHome}/stack";
+      STACK_ROOT = "${dataHome}/stack";
 
       # $HOME/.cabal
-      CABAL_CONFIG = "${config.xdg.dataHome}/cabal/config";
-      CABAL_DIR = "${config.xdg.dataHome}/cabal";
+      CABAL_CONFIG = "${dataHome}/cabal/config";
+      CABAL_DIR = "${dataHome}/cabal";
 
       # $HOME/.rustup
-      RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+      RUSTUP_HOME = "${dataHome}/rustup";
 
       # $HOME/.cargo
-      CARGO_HOME = "${config.xdg.dataHome}/cargo";
+      CARGO_HOME = "${dataHome}/cargo";
 
       # $HOME/.python_history
-      PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc.py";
+      PYTHONSTARTUP = "${configHome}/python/pythonrc.py";
 
       # $HOME/.npmrc
-      NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
+      NPM_CONFIG_USERCONFIG = "${configHome}/npm/npmrc";
 
       # $HOME/.pnpmrc
-      PNPM_HOME = "${config.xdg.dataHome}/pnpm";
+      PNPM_HOME = "${dataHome}/pnpm";
 
 
       # $HOME/.lesshst
-      LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
+      LESSHISTFILE = "${cacheHome}/less/history";
 
       # $HOME/.kde4
-      KDEHOME = "${config.xdg.configHome}/kde";
+      KDEHOME = "${configHome}/kde";
 
       # $HOME/.gtkrc-2.0
-      GTK2_RC_FILES = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+      GTK2_RC_FILES = "${configHome}/gtk-2.0/gtkrc";
 
       # $HOME/.gnupg
-      GNUPGHOME = "${config.xdg.dataHome}/gnupg";
+      GNUPGHOME = "${dataHome}/gnupg";
 
       # $HOME/.nv
-      CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
+      CUDA_CACHE_PATH = "${cacheHome}/nv";
 
 
       # $HOME/.inputrc
-      INPUTRC = "${config.xdg.configHome}/readline/inputrc";
+      INPUTRC = "${configHome}/readline/inputrc";
 
       # $HOME/.azure
-      AZURE_CONFIG_DIR = "${config.xdg.dataHome}/azure";
+      AZURE_CONFIG_DIR = "${dataHome}/azure";
 
       # $HOME/.aws
-      AWS_SHARED_CREDENTIALS_FILE = "${config.xdg.configHome}/aws/credentials";
-      AWS_CONFIG_FILE = "${config.xdg.configHome}/aws/config";
+      AWS_SHARED_CREDENTIALS_FILE = "${configHome}/aws/credentials";
+      AWS_CONFIG_FILE = "${configHome}/aws/config";
 
       # $HOME/.docker
-      DOCKER_CONFIG = "${config.xdg.configHome}/docker";
+      DOCKER_CONFIG = "${configHome}/docker";
     };
     shellAliases = {
       # $HOME/.yarnrc
-      yarn = "yarn --use-yarnrc ${config.xdg.configHome}/yarn/config";
+      yarn = "yarn --use-yarnrc ${configHome}/yarn/config";
       # $HOME/wget-hsts
-      wget = "wget - -hsts-file=${config.xdg.dataHome}/wget-hsts";
+      wget = "wget - -hsts-file=${dataHome}/wget-hsts";
     };
   };
 }

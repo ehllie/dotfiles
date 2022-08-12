@@ -21,10 +21,7 @@
             useUserPackages = true;
             users.${opts.user} = {
               imports = [ ./user/common.nix ] ++ user-modules;
-              home = {
-                username = opts.user;
-                homeDirectory = "/home/${opts.user}";
-              };
+              dot-opts = { inherit (opts) user host; };
             };
           };
         }
