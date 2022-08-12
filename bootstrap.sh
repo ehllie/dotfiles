@@ -46,13 +46,10 @@ if echo ${valid_presets[@]} | grep -w $preset > /dev/null; then
 
   if [[ ! -f "/etc/nixos/hardware.nix" ]]; then
     echo "No existing hardware configuration found"
-    print_usage
-  else
     sed -e "s/{{host}}/${host}/g" \
     -e "s/{{user}}/${user}/g" \
     -e "s/{{preset}}/${preset}Modules/g" \
-    ./nixos.flake.nix \
-    > /etc/nixos/flake.nix
+    ./nixos.flake.nix
 
     if [[ -f "/etc/nixos/configuration.nix" ]]; then # Backup old configuration.nix
       mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.bak

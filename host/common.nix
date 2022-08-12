@@ -36,7 +36,7 @@
           neovim
           ranger
           python3
-
+          fido2luks
         ];
       };
 
@@ -102,7 +102,6 @@
       };
 
     };
-
 
     # Other
     programs = {

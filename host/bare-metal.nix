@@ -18,7 +18,6 @@
       };
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
       };
       timeout = 0;
     };
@@ -123,7 +122,5 @@
     # Sound
     sound.enable = true;
 
-    # Swap
-    swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
   };
 }
