@@ -25,13 +25,18 @@
     # Silence bios buzzer
     boot.blacklistedKernelModules = [ "pcspkr" ];
 
-    networking.firewall = {
-      allowedTCPPorts = [
-        5357 # wsdd
-      ];
-      allowedUDPPorts = [
-        3702 # wsdd
-      ];
+    networking = {
+      networkmanager = {
+        enable = true;
+      };
+      firewall = {
+        allowedTCPPorts = [
+          5357 # wsdd
+        ];
+        allowedUDPPorts = [
+          3702 # wsdd
+        ];
+      };
     };
     services = {
       upower.enable = true;
