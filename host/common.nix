@@ -36,6 +36,9 @@
           neovim
           ranger
           python3
+          #Security
+
+          pam_u2f
           fido2luks
         ];
       };
