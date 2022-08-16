@@ -38,6 +38,7 @@ in
       nodePackages.bash-language-server
       nodePackages.yaml-language-server
       nodePackages.vscode-langservers-extracted
+      nodePackages.pyright
       haskell-language-server
       sumneko-lua-language-server
       rnix-lsp

@@ -9,6 +9,7 @@ let
     pkgconfig
     nodejs
     go
+    poetry
   ];
   cliPack = with pkgs; [
     zsh
