@@ -3,8 +3,6 @@ return {
     python = {
       analysis = {
         typeCheckingMode = "off",
-        venvPath = "./",
-        venv = ".venv",
       },
     },
   },

@@ -91,4 +91,42 @@ M.right_ui.temp_open = function(invoked_from)
   end
 end
 
+local editor_cmd = "neovide ."
+
+---@alias ShellTypes "NoShell" | "Poetry"
+
+---@return ShellTypes
+local function find_shell()
+  local poetry = io.popen("poetry check", "r")
+  if poetry then
+    for line in poetry:lines() do
+      if line == "All set!" then
+        return "Poetry"
+      end
+    end
+  end
+
+  return "NoShell"
+end
+
+---@param shell ShellTypes
+local function run_shell(shell)
+  local cmd = ""
+  if shell == "Poetry" then
+    cmd = "poetry run " .. editor_cmd
+  elseif shell == "NoShell" then
+    print("No shell found")
+    return
+  end
+  local proc = io.popen(cmd)
+  if proc then
+    proc:close()
+    vim.cmd("confirm qa")
+  end
+end
+
+M.to_shell = function()
+  run_shell(find_shell())
+end
+
 return M
