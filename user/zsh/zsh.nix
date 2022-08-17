@@ -10,6 +10,7 @@
         osflake-dry = "sudo nixos-rebuild dry-activate --flake /etc/nixos#${cfg.host}";
         osflake-switch = "sudo nixos-rebuild switch --flake /etc/nixos#${cfg.host}";
         osflake-iter = "sudo nix flake lock --update-input dotfiles /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#${cfg.host}";
+        osflake-local = "sudo nixos-rebuild switch --impure --flake .#${cfg.host}";
         vim = "nvim";
       };
     };
