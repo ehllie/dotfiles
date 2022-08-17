@@ -58,4 +58,6 @@ register({
     end,
     "Decrease gui font size",
   },
+
+  ["<leader>nf"] = { "<cmd>let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", "Toggle fulscreen mode" },
 }, { mode = "n" })
