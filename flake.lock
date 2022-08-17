@@ -52,18 +52,6 @@
         "type": "github"
       }
     },
-    "local-config": {
-      "locked": {
-        "lastModified": 1660755258,
-        "narHash": "sha256-m3KEeBEcQtaB9aT83y2w3e+Tl54h9bCg5YR0stKsPi8=",
-        "path": "/etc/nixos",
-        "type": "path"
-      },
-      "original": {
-        "path": "/etc/nixos",
-        "type": "path"
-      }
-    },
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -132,7 +120,6 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "local-config": "local-config",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
         "nur": "nur"

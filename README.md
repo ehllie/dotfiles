@@ -5,6 +5,6 @@ Really new to nix, don't copy this if you don't absolutely have to.
 
 
 ### To sync with the repository:
-Ensure you have git installed.
-Generate hardware configuration in `/etc/nixos` called `hardware.nix`.
-Run the bootstrap script.
+* Clone the repository
+* Create a flake.nix file in `/etc/nixos` based on `nixos.flake.nix`
+* Run `nixos-rebuild switch --flake github:ehllie/dotfiles#$HOSTNAME`
