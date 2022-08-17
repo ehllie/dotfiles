@@ -44,6 +44,8 @@
               automountPath = "/mnt";
               defaultUser = "${opts.user}";
               startMenuLaunchers = true;
+              docker-desktop.enable = true;
+              docker-native.enable = true;
             };
           }
         ];
