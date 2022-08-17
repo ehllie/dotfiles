@@ -2,13 +2,14 @@
   description = "An alright configuration";
 
   inputs = {
+    local-config.url = "/etc/nixos";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nur.url = github:nix-community/NUR;
-    home-manager = { url = github:nix-community/home-manager; inputs.nixpkgs.follows = "nixpkgs"; };
+    nur.url = "github:nix-community/NUR";
+    home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = inputs@{ nur, home-manager, nixos-wsl, ... }:
+  outputs = inputs@{ self, nixpkgs, nur, home-manager, nixos-wsl, local-config, ... }:
     let
       modules = { host-modules ? [ ], user-modules ? [ ], opts }: [
         nur.nixosModules.nur
@@ -51,5 +52,14 @@
         ];
         opts = opts;
       };
+
+      nixosConfigurations =
+        with local-config.config;
+        {
+          ${opts.host} = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = localModules ++ self.${preset} opts;
+          };
+        };
     };
 }
