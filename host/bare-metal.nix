@@ -37,6 +37,14 @@
         ];
       };
     };
+
+    programs = {
+      _1password-gui = {
+        enable = true;
+        polkitPolicyOwners = [ cfg.user ];
+      };
+
+    };
     services = {
       upower.enable = true;
 
