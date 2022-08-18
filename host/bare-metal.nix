@@ -5,6 +5,7 @@
       default = "systemd-boot";
       description = "The boot loader to use.";
     };
+    samba = mkEnableOption "samba";
   };
   config = let cfg = config.dot-opts; in {
     # Bootloader.
@@ -29,12 +30,14 @@
         enable = true;
       };
       firewall = {
-        allowedTCPPorts = [
-          5357 # wsdd
-        ];
-        allowedUDPPorts = [
-          3702 # wsdd
-        ];
+        allowedTCPPorts =
+          if cfg.samba then [
+            5357 # wsdd
+          ] else [ ];
+        allowedUDPPorts =
+          if cfg.samba then [
+            3702 # wsdd
+          ] else [ ];
       };
     };
 
@@ -60,8 +63,8 @@
       thermald.enable = true;
 
       # Samba
-      samba-wsdd.enable = true; # make shares visible for windows 10 clients
-      samba = {
+      samba-wsdd.enable = cfg.samba; # make shares visible for windows 10 clients
+      samba = lib.mkIf cfg.samba {
         enable = true;
         openFirewall = true;
         extraConfig = ''
