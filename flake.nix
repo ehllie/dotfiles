@@ -54,7 +54,7 @@
 
       nixosConfigurations =
         let
-          local-config = import /etc/nixos/local.nix;
+          local-config = import ./local.nix;
         in
         with local-config;
         {
