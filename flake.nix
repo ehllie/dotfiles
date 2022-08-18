@@ -52,16 +52,13 @@
         opts = opts;
       };
 
-      nixosConfigurations =
-        let
-          local-config = import ./local.nix;
-        in
-        with local-config;
-        {
-          ${opts.host} = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = localModules ++ self.${preset} opts;
-          };
+      mkConfiguration = local-config: with local-config;{
+        ${opts.host} = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = localModules ++ self.${preset} opts;
         };
+      };
+
+      nixosConfigurations = self.mkConfiguration (import /etc/nixos/local.nix);
     };
 }

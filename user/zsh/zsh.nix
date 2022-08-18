@@ -5,13 +5,18 @@
   config = let cfg = config.dot-opts; in {
     home = {
       packages = with pkgs; [ ranger ];
-      shellAliases = let repo = "github:/ehllie/dotfiles"; in {
-        osflake-dry = "sudo nixos-rebuild dry-activate --impure --flake ${repo}#${cfg.host}";
-        osflake-switch = "sudo nixos-rebuild switch --impure --flake ${repo}#${cfg.host}";
-        locflake-dry = "sudo nixos-rebuild dry-activate --impure --flake .#${cfg.host}";
-        locflake-switch = "sudo nixos-rebuild switch --impure --flake .#${cfg.host}";
-        vim = "nvim";
-      };
+      shellAliases =
+        let
+          flakeRebuild = cmd: loc: "sudo nixos-rebuild ${cmd} --flake ${loc}#${cfg.host}";
+          updateDotfiles = "sudo nix flake lock --update-input dotfiles /etc/nixos";
+        in
+        {
+          osflake-dry = "${updateDotfiles} && ${flakeRebuild "dry-activate" "/etc/nixos"}";
+          osflake-switch = "${updateDotfiles} && ${flakeRebuild "switch" "/etc/nixos"}";
+          locflake-dry = "${flakeRebuild "switch" "."} --impure";
+          locflake-switch = "${flakeRebuild "switch" "."} --impure";
+          vim = "nvim";
+        };
     };
 
     programs.zsh = {
