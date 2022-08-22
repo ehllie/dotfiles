@@ -1,7 +1,7 @@
 local function config()
   local handlers = require("lsp-conf.handlers")
   local opts = {
-    on_attach = handlers.on_attach,
+    on_attach = handlers.make_on_attach(),
     capabilities = handlers.capabilities,
   }
   require("lspconfig").sumneko_lua.setup(require("lua-dev").setup({

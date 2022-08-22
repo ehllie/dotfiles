@@ -35,7 +35,7 @@ local function config_lsp()
 
   for server, server_opts in pairs(Basic) do
     opts = {
-      on_attach = handlers.on_attach,
+      on_attach = handlers.make_on_attach(),
       capabilities = handlers.capabilities,
     }
 

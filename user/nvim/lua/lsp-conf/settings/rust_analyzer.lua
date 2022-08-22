@@ -1,15 +1,15 @@
 local function config()
   local handlers = require("lsp-conf.handlers")
+
   local opts = {
-    on_attach = handlers.on_attach,
+    on_attach = handlers.make_on_attach({
+      ["<leader>r"] = {
+        h = { "<cmd>RustToggleInlayHints<Cr>", "Toggle inlay hints" },
+        r = { "<cmd>RustRunnables<Cr>", "Rust runnables" },
+      },
+    }),
     capabilities = handlers.capabilities,
   }
-  local register = require("which-key").register
-
-  register({
-    h = { "<cmd>RustToggleInlayHints<Cr>", "Toggle inlay hints" },
-    r = { "<cmd>RustRunnables<Cr>", "Rust runnables" },
-  }, { prefix = "<leader>r" })
 
   -- keymap("n", "<leader>rh", "<cmd>RustSetInlayHints<Cr>")
   -- keymap("n", "<leader>rhd", "<cmd>RustDisableInlayHints<Cr>")
