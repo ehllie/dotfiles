@@ -84,22 +84,13 @@ return {
     "RRethy/vim-illuminate",
     config = function()
       local illuminate = require("illuminate")
-      vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
-      vim.g.Illuminate_highlightUnderCursor = 0
-      local register = require("which-key").register
-      register({
-        ["<a-n>"] = {
-          function()
-            illuminate.next_reference({ wrap = true })
-          end,
-          "Next reference",
-        },
-        ["<a-p>"] = {
-          function()
-            illuminate.next_reference({ reverse = true, wrap = true })
-          end,
-          "Previous reference",
-        },
+      illuminate.configure({
+        filetypes_denylist = { "alpha", "NvimTree" },
+        under_cursor = false,
+      })
+      require("which-key").register({
+        ["<a-n>"] = { illuminate.goto_next_reference, "Next reference" },
+        ["<a-p>"] = { illuminate.goto_prev_reference, "Previous reference" },
       })
     end,
     requires = "folke/which-key.nvim",
