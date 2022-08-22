@@ -39,6 +39,7 @@ local function config()
   local function footer()
     local width = 64
     local plugin_count = 0
+    ---@diagnostic disable-next-line
     for _, _ in pairs(packer_plugins) do
       plugin_count = plugin_count + 1
     end
@@ -54,8 +55,8 @@ local function config()
     }))
   end
 
+  ---@diagnostic disable-next-line
   dashboard.section.footer.val = footer()
-
   dashboard.section.footer.opts.hl = "Identifier"
   dashboard.section.header.opts.hl = "Type"
   dashboard.section.buttons.opts.hl = "Keyword"
@@ -65,5 +66,3 @@ local function config()
 end
 -- "goolord/alpha-nvim"
 return { "goolord/alpha-nvim", config = config }
-
--- Lua Diagnostics.: This function requires 4 argument(s) but instead it is receiving 3.

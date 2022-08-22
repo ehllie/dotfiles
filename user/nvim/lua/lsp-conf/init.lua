@@ -39,6 +39,7 @@ local function config_lsp()
       capabilities = handlers.capabilities,
     }
 
+    ---@diagnostic disable-next-line
     opts = vim.tbl_deep_extend("force", opts, server_opts)
     lspconfig[server].setup(opts)
   end
