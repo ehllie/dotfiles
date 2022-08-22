@@ -4,6 +4,7 @@ let
   devPack = with pkgs; [
     gcc
     cargo
+    rustc
     nodePackages.pnpm
     python3
     pkgconfig

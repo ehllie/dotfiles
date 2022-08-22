@@ -42,10 +42,12 @@ in
       haskell-language-server
       sumneko-lua-language-server
       rnix-lsp
+      rust-analyzer
 
       #Linters
       mypy
       python3Packages.flake8
+      clippy
 
       #Formatters
       stylua
@@ -53,6 +55,7 @@ in
       black
       python3Packages.isort
       nodePackages.prettier
+      rustfmt
     ];
     sessionVariables = {
       NEOVIDE_MULTIGRID = true;

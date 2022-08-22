@@ -17,6 +17,7 @@
           locflake-switch = "${flakeRebuild "switch" "."} --impure";
           vim = "nvim";
         };
+      sessionPath = [ "${config.xdg.dataHome}/cargo" ];
     };
 
     programs.zsh = {
