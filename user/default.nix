@@ -1,6 +1,6 @@
 { config, pkgs, lib, inputs, ... }:
-
 let
+  cfg = config.dot-opts;
   devPack = with pkgs; [
     gcc
     cargo
@@ -27,37 +27,32 @@ let
 in
 {
   imports = [
-    ./zsh/zsh.nix
-    ./nvim/nvim.nix
+    ./zsh
+    ./nvim
+    ./graphical.nix
   ];
 
   options.dot-opts = with lib; {
-    user = mkOption {
+    userName = mkOption {
       type = types.str;
       description = "The user to use for the system";
-
     };
-    host = mkOption {
+    hostName = mkOption {
       type = types.str;
       description = "The hostname to use for the system";
-
     };
   };
 
-  config = let cfg = config.dot-opts; in {
+  config = {
     home = {
-      username = cfg.user;
-      homeDirectory = "/home/${cfg.user}";
+      username = cfg.userName;
+      homeDirectory = "/home/${cfg.userName}";
       packages = builtins.concatLists [ devPack cliPack ];
-      # Add locations to PATH
       sessionPath = [ "~/.local/bin" ];
-
-      # Add environment variables
       sessionVariables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
       };
-
       stateVersion = "22.05";
     };
     programs = {
@@ -75,7 +70,6 @@ in
         extraConfig = "IdentityAgent ~/.1password/agent.sock";
       };
     };
-
     xdg = {
       enable = true;
       configFile = {

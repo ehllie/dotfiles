@@ -6,59 +6,82 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/NUR";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
+    private.url = "/etc/nixos";
   };
 
-  outputs = inputs@{ self, nixpkgs, nur, home-manager, nixos-wsl, ... }:
+  outputs = { nixpkgs, nur, home-manager, nixos-wsl, private, ... }:
     let
-      modules = { host-modules ? [ ], user-modules ? [ ], opts }: [
-        nur.nixosModules.nur
-        home-manager.nixosModules.home-manager
-        {
-          imports = [ ./host/common.nix ] ++ host-modules;
-          dot-opts = opts;
-
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${opts.user} = {
-              imports = [ ./user/common.nix ] ++ user-modules;
-              dot-opts = { inherit (opts) user host; };
-            };
-          };
-        }
-      ];
+      dotfileRepo = "github:ehllie/dotfiles";
+      user = "ellie";
+      flakeSystem = { userName, hostName, machine, extraModules ? [ ] }:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            nur.nixosModules.nur
+            home-manager.nixosModules.home-manager
+            ./hardware
+            ./host
+            {
+              dot-opts = {
+                hardware = { inherit machine; };
+                host = { inherit userName hostName; };
+              };
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.${userName} = {
+                  dot-opts = { inherit userName hostName dotfileRepo; };
+                  imports = [ ./user ];
+                };
+              };
+            }
+          ] ++ extraModules;
+        };
     in
     {
-      allModules = opts: modules {
-        host-modules = [ ./host/bare-metal.nix ];
-        user-modules = [ ./user/graphical.nix ];
-        opts = opts;
-      };
-
-      wslModules = opts: modules {
-        host-modules = [
-          nixos-wsl.nixosModules.wsl
-          {
-            wsl = {
-              enable = true;
-              automountPath = "/mnt";
-              defaultUser = "${opts.user}";
-              startMenuLaunchers = true;
-              docker-desktop.enable = true;
-              docker-native.enable = true;
-            };
-          }
-        ];
-        opts = opts;
-      };
-
-      mkConfiguration = local-config: with local-config;{
-        ${opts.host} = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = localModules ++ self.${preset} opts;
+      nixosConfigurations = {
+        nixgram = flakeSystem {
+          userName = user;
+          hostName = "nixgram";
+          machine = "dell-gram";
+          extraModules = [
+            private.nixosModules.private
+            {
+              dot-opts.host = { samba = true; bareMetal = true; };
+              home-manager.users.${user}.dot-opts.graphical = true;
+            }
+          ];
+        };
+        nixdesk = flakeSystem {
+          userName = user;
+          hostName = "nixdesk";
+          machine = "desktop";
+          extraModules = [
+            private.nixosModules.private
+            {
+              dot-opts.host.bareMetal = true;
+              home-manager.users.${user}.dot-opts.graphical = true;
+            }
+          ];
+        };
+        nixwsl = flakeSystem {
+          userName = user;
+          hostName = "nixwsl";
+          machine = "none";
+          extraModules = [
+            nixos-wsl.nixosModules.wsl
+            {
+              wsl = {
+                enable = true;
+                automountPath = "/mnt";
+                defaultUser = user;
+                startMenuLaunchers = true;
+                docker-desktop.enable = true;
+                docker-native.enable = true;
+              };
+            }
+          ];
         };
       };
-
-      nixosConfigurations = self.mkConfiguration (import /etc/nixos/local.nix);
     };
 }

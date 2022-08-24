@@ -1,20 +1,24 @@
-{ config, lib, pkgs, ... }: {
-  options.dot-opts = with lib; {
-    boot-loader = mkOption {
+{ config, lib, pkgs, ... }:
+let cfg = config.dot-opts.host; in {
+
+  options.dot-opts.host = with lib; {
+    bareMetal = mkEnableOption "bare metal configuration";
+    bootLoader = mkOption {
       type = types.enum [ "grub" "systemd-boot" ];
       default = "systemd-boot";
       description = "The boot loader to use.";
     };
     samba = mkEnableOption "samba";
   };
-  config = let cfg = config.dot-opts; in {
+
+  config = lib.mkIf cfg.bareMetal {
     # Bootloader.
     boot.loader = {
-      systemd-boot = lib.mkIf (cfg.boot-loader == "systemd-boot") {
+      systemd-boot = lib.mkIf (cfg.bootLoader == "systemd-boot") {
         enable = true;
         configurationLimit = 3;
       };
-      grub = lib.mkIf (cfg.boot-loader == "grub") {
+      grub = lib.mkIf (cfg.bootLoader == "grub") {
         enable = true;
       };
       efi = {
@@ -26,9 +30,7 @@
     boot.blacklistedKernelModules = [ "pcspkr" ];
 
     networking = {
-      networkmanager = {
-        enable = true;
-      };
+      networkmanager.enable = true;
       firewall = {
         allowedTCPPorts =
           if cfg.samba then [
@@ -44,7 +46,7 @@
     programs = {
       _1password-gui = {
         enable = true;
-        polkitPolicyOwners = [ cfg.user ];
+        polkitPolicyOwners = [ cfg.userName ];
       };
 
     };
@@ -68,7 +70,7 @@
         enable = true;
         openFirewall = true;
         extraConfig = ''
-          guest account = ${cfg.user}
+          guest account = ${cfg.userName}
           map to guest = Bad User
 
           follow symlinks = yes
@@ -84,7 +86,7 @@
 
         shares = {
           Code = {
-            "path" = "/home/${cfg.user}/Code/samba";
+            "path" = "/home/${cfg.userName}/Code/samba";
             "guest ok" = "no";
             "read only" = "no";
           };

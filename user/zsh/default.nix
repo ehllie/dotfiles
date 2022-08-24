@@ -1,20 +1,26 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
+let cfg = config.dot-opts; in
 {
-
   imports = [ ./xdg_env.nix ];
-  config = let cfg = config.dot-opts; in {
+
+  options.dot-opts.dotfileRepo = with lib; mkOption {
+    type = types.str;
+    description = "Url of the dotfile repo";
+  };
+
+  config = {
     home = {
       packages = with pkgs; [ ranger ];
       shellAliases =
         let
-          flakeRebuild = cmd: loc: "sudo nixos-rebuild ${cmd} --flake ${loc}#${cfg.host}";
+          flakeRebuild = cmd: loc: "sudo nixos-rebuild ${cmd} --flake ${loc}#${cfg.hostName}";
           updateDotfiles = "sudo nix flake lock --update-input dotfiles /etc/nixos";
         in
         {
-          osflake-dry = "${updateDotfiles} && ${flakeRebuild "dry-activate" "/etc/nixos"}";
-          osflake-switch = "${updateDotfiles} && ${flakeRebuild "switch" "/etc/nixos"}";
-          locflake-dry = "${flakeRebuild "switch" "."} --impure";
-          locflake-switch = "${flakeRebuild "switch" "."} --impure";
+          osflake-dry = "${updateDotfiles} && ${flakeRebuild "dry-activate" cfg.dotfileRepo}";
+          osflake-switch = "${updateDotfiles} && ${flakeRebuild "switch" cfg.dotfileRepo}";
+          locflake-dry = "${flakeRebuild "switch" "."}";
+          locflake-switch = "${flakeRebuild "switch" "."}";
           vim = "nvim";
         };
       sessionPath = [ "${config.xdg.dataHome}/cargo" ];

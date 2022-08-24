@@ -117,12 +117,25 @@
         "type": "github"
       }
     },
+    "private": {
+      "locked": {
+        "lastModified": 1661593753,
+        "narHash": "sha256-vhdeojPXip0UVx5PRf+8NxyyVVeE3nUv9Ku5oWDNn7Q=",
+        "path": "/etc/nixos",
+        "type": "path"
+      },
+      "original": {
+        "path": "/etc/nixos",
+        "type": "path"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
-        "nur": "nur"
+        "nur": "nur",
+        "private": "private"
       }
     },
     "utils": {

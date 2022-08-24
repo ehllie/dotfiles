@@ -1,6 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
-
+  cfg = config.dot-opts;
   appPack = with pkgs; [
     libreoffice
     dmenu
@@ -24,7 +24,8 @@ let
   ];
 in
 {
-  config = {
+  options.dot-opts.graphical = lib.mkEnableOption "graphical";
+  config = lib.mkIf cfg.graphical {
     home.packages = builtins.concatLists [ appPack mediaPack gtkPack ];
     gtk = {
       enable = true;

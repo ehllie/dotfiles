@@ -2,62 +2,63 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }: {
-  options.dot-opts = with lib; {
-    user = mkOption {
+{ config, lib, pkgs, ... }:
+let cfg = config.dot-opts.host; in {
+
+  imports = [ ./bare-metal.nix ];
+
+  options.dot-opts.host = with lib; {
+    userName = mkOption {
       type = types.str;
       description = "The user to use for the system";
 
     };
-    host = mkOption {
+    hostName = mkOption {
       type = types.str;
       description = "The hostname to use for the system";
 
     };
   };
 
-  config = let cfg = config.dot-opts; in {
+  config = {
+    environment = {
+      pathsToLink = [ "/share/zsh" ];
+      systemPackages = with pkgs; [
+        bash
+        zsh
+        git
+        wget
+        zip
+        unzip
+        coreutils
+        killall
+        usbutils
+        ripgrep
+        ripgrep-all
+        neovim
+        ranger
+        python3
+        #Security
 
-    environment =
-      {
-        pathsToLink = [ "/share/zsh" ];
-        systemPackages = with pkgs; [
-          bash
-          zsh
-          git
-          wget
-          zip
-          unzip
-          coreutils
-          killall
-          usbutils
-          ripgrep
-          ripgrep-all
-          neovim
-          ranger
-          python3
-          #Security
-
-          pam_u2f
-          fido2luks
-        ];
-      };
+        pam_u2f
+        fido2luks
+      ];
+    };
 
     nix.extraOptions = ''
       experimental-features = nix-command flakes
     '';
     nixpkgs.config.allowUnfree = true;
 
-    fonts.fonts = with pkgs;
-      [
-        # Nerd Fonts
-        cascadia-code
-        nerdfonts
-      ];
+    fonts.fonts = with pkgs; [
+      # Nerd Fonts
+      cascadia-code
+      nerdfonts
+    ];
 
     # Networking
     networking = {
-      hostName = cfg.host;
+      hostName = cfg.hostName;
       firewall = {
         allowPing = true;
         enable = true;
@@ -69,10 +70,7 @@
 
     # Locales
     i18n.defaultLocale = "en_IE.utf8";
-    console = {
-      # font = "Lat2-Terminus16";
-      keyMap = "pl";
-    };
+    console.keyMap = "pl";
 
     # Services
     services = {
@@ -87,9 +85,9 @@
     };
 
     # User accounts
-    users.users.${cfg.user} = {
+    users.users.${cfg.userName} = {
       isNormalUser = true;
-      home = "/home/${cfg.user}";
+      home = "/home/${cfg.userName}";
       shell = pkgs.zsh;
       description = "Elizabeth";
       extraGroups =
