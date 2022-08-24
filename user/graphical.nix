@@ -13,7 +13,7 @@ let
     protonmail-bridge
     protonvpn-gui
     vlc
-    discord
+    (discord.override { nss = nss_latest; })
   ];
   gtkPack = with pkgs; [
     gtk-engine-murrine
@@ -33,12 +33,5 @@ in
         name = "Catppuccin";
       };
     };
-    nixpkgs.overlays =
-      let
-        discordOverlay = self: super: {
-          discord = super.discord.override { withOpenASAR = true; };
-        };
-      in
-      [ discordOverlay ];
   };
 }
