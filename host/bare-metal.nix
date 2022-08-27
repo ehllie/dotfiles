@@ -51,20 +51,18 @@ let cfg = config.dot-opts.host; in {
 
     };
     services = {
-      upower.enable = true;
-
+      blueman.enable = true;
       dbus = {
         enable = true;
-        packages = [ pkgs.dconf ];
+        packages = with pkgs;[ dconf ];
       };
-      # CUPS
-      printing.enable = true;
-
-      blueman.enable = true;
-
+      printing = {
+        enable = true;
+        drivers = with pkgs;[ brlaser ];
+      };
       thermald.enable = true;
+      upower.enable = true;
 
-      # Samba
       samba-wsdd.enable = cfg.samba; # make shares visible for windows 10 clients
       samba = lib.mkIf cfg.samba {
         enable = true;
