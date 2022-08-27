@@ -14,12 +14,11 @@ let cfg = config.dot-opts; in
       shellAliases =
         let
           flakeRebuild = cmd: loc: "sudo nixos-rebuild ${cmd} --flake ${loc}#${cfg.hostName}";
-          updateDotfiles = "sudo nix flake lock --update-input dotfiles /etc/nixos";
         in
         {
-          osflake-dry = "${updateDotfiles} && ${flakeRebuild "dry-activate" cfg.dotfileRepo}";
-          osflake-switch = "${updateDotfiles} && ${flakeRebuild "switch" cfg.dotfileRepo}";
-          locflake-dry = "${flakeRebuild "switch" "."}";
+          osflake-dry = "${flakeRebuild "dry-activate" cfg.dotfileRepo} --option tarball-ttl 0";
+          osflake-switch = "${flakeRebuild "switch" cfg.dotfileRepo} --option tarball-ttl 0";
+          locflake-dry = "${flakeRebuild "dry-activate" "."}";
           locflake-switch = "${flakeRebuild "switch" "."}";
           vim = "nvim";
         };
