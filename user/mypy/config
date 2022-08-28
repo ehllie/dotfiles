@@ -1,5 +1,0 @@
-[mypy]
-python_version = 3.10
-strict = True
-no_implicit_optional = False
-plugins = returns.contrib.mypy.returns_plugin, pydantic.mypy

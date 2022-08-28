@@ -1,14 +1,8 @@
-{ config, lib, pkgs, modulesPath, ... }:
-let cfg = config.dot-opts.hardware; in {
+{ config, lib, myLib, ... }:
+let cfg = config.dotfiles; in {
+  options.dotfiles.hardware = myLib.mkEnumOption "desktop";
 
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
-  options.dot-opts.hardware.machine = with lib; mkOption {
-    type = with types; nullOr (enum [ "desktop" ]);
-  };
-
-  config = lib.mkIf (cfg.machine == "desktop") {
-
+  config = lib.mkIf (cfg.hardware == "desktop") {
     boot = {
       kernelModules = [ "kvm-amd" ];
       extraModulePackages = [ ];
@@ -29,13 +23,7 @@ let cfg = config.dot-opts.hardware; in {
       };
     };
 
-    fileSystems = {
-      "/" = { device = "/dev/vg1/root"; fsType = "ext4"; };
-      "/boot" = { device = "/dev/disk/by-uuid/8CA4-CBD3"; fsType = "vfat"; };
-      "/home" = { device = "/dev/vg1/home"; fsType = "ext4"; };
-    };
-
-    swapDevices = [{ device = "/dev/vg1/swap"; }];
+    fileSystems."/boot" = { device = "/dev/disk/by-uuid/8CA4-CBD3"; fsType = "vfat"; };
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
     # (the default) this is the recommended approach. When using systemd-networkd it's

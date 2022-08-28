@@ -1,6 +1,30 @@
-{ config, ... }:
-{
-  config.home = with config.xdg; {
+{ myLib, ... }:
+myLib.userDefinitions ({ config, ... }: with config.xdg; {
+  xdg = {
+    enable = true;
+    configFile."python/pythonrc.py".text = ''
+      import atexit
+      import os
+      import readline
+
+      history = os.path.join(os.environ["XDG_CACHE_HOME"], "python_history")
+      try:
+          readline.read_history_file(history)
+      except OSError:
+          pass
+
+
+      def write_history():
+          try:
+              readline.write_history_file(history)
+          except OSError:
+              pass
+
+
+      atexit.register(write_history)
+    '';
+  };
+  home = {
     sessionVariables = {
 
       XAUTHORITY = "${dataHome}/sddm/Xauthority";
@@ -30,7 +54,6 @@
       # $HOME/.pnpmrc
       PNPM_HOME = "${dataHome}/pnpm";
 
-
       # $HOME/.lesshst
       LESSHISTFILE = "${cacheHome}/less/history";
 
@@ -45,7 +68,6 @@
 
       # $HOME/.nv
       CUDA_CACHE_PATH = "${cacheHome}/nv";
-
 
       # $HOME/.inputrc
       INPUTRC = "${configHome}/readline/inputrc";
@@ -67,4 +89,4 @@
       wget = "wget - -hsts-file=${dataHome}/wget-hsts";
     };
   };
-}
+})

@@ -3,7 +3,7 @@
   inputs = { };
   outputs = { ... }: {
     nixosModules.private = { ... }: {
-      dot-opts.hardware.fido = {
+      dotfiles.fido = {
         enable = true;
         credential = "FIDO2 credential";
       };

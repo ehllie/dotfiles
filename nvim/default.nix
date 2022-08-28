@@ -1,10 +1,5 @@
-{ pkgs, ... }:
-let
-  nvim-shell = pkgs.writeShellScriptBin "nvim" ''
-    nix-shell $XDG_CONFIG_HOME/nvim/shell.nix
-  '';
-in
-{
+{ pkgs, lib, myLib, ... }:
+myLib.userDefinitions {
   xdg.configFile = {
     "nvim/init.lua".source = ./init.lua;
     "nvim/.luarc.json".source = ./.luarc.json;
@@ -14,10 +9,12 @@ in
     };
   };
   home = {
-
-
     packages = with pkgs; [
       neovim
+
+      #Telescope
+      ripgrep
+      ripgrep-all
 
       #Graphical env
       neovide

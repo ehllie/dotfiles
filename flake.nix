@@ -11,70 +11,65 @@
 
   outputs = { nixpkgs, nur, home-manager, nixos-wsl, private, ... }:
     let
-      dotfileRepo = "github:ehllie/dotfiles";
-      user = "ellie";
-      flakeSystem = { userName, hostName, machine, extraModules ? [ ] }:
-        nixpkgs.lib.nixosSystem {
+      defaultConfig = {
+        userName = "ellie";
+        userDesc = "Elizabeth";
+        dotfileRepo = "github:ehllie/dotfiles";
+        shell = "zsh";
+      };
+
+      inherit (nixpkgs) lib;
+
+      flakeSystem = { dotfileConfig ? { }, extraModules ? [ ] }:
+        let
+          dotfiles = defaultConfig // dotfileConfig;
+          globalConfigModule = {
+            inherit dotfiles;
+            home-manager = { useGlobalPkgs = true; useUserPackages = true; };
+          };
+        in
+        lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs.myLib = ((import ./lib) { inherit nixpkgs; }).setDefaults dotfiles;
           modules = [
+            ./.
             nur.nixosModules.nur
             home-manager.nixosModules.home-manager
-            ./hardware
-            ./host
-            {
-              dot-opts = {
-                hardware = { inherit machine; };
-                host = { inherit userName hostName; };
-              };
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${userName} = {
-                  dot-opts = { inherit userName hostName dotfileRepo; };
-                  imports = [ ./user ];
-                };
-              };
-            }
+            globalConfigModule
           ] ++ extraModules;
         };
     in
     {
       nixosConfigurations = {
         nixgram = flakeSystem {
-          userName = user;
-          hostName = "nixgram";
-          machine = "dell-gram";
-          extraModules = [
-            private.nixosModules.private
-            {
-              dot-opts.host = { samba = true; bareMetal = true; };
-              home-manager.users.${user}.dot-opts.graphical = true;
-            }
-          ];
+          dotfileConfig = {
+            hostName = "nixgram";
+            hardware = "dell-gram";
+            samba = true;
+            graphical = true;
+          };
+          extraModules = [ private.nixosModules.private ];
         };
         nixdesk = flakeSystem {
-          userName = user;
-          hostName = "nixdesk";
-          machine = "desktop";
-          extraModules = [
-            private.nixosModules.private
-            {
-              dot-opts.host.bareMetal = true;
-              home-manager.users.${user}.dot-opts.graphical = true;
-            }
-          ];
+          dotfileConfig = {
+            hostName = "nixdesk";
+            hardware = "desktop";
+            graphical = true;
+          };
+          extraModules = [ private.nixosModules.private ];
         };
         nixwsl = flakeSystem {
-          userName = user;
-          hostName = "nixwsl";
-          machine = "none";
+          dotfileConfig = {
+            hostName = "nixwsl";
+            hardware = "none";
+          };
           extraModules = [
             nixos-wsl.nixosModules.wsl
             {
               wsl = {
                 enable = true;
                 automountPath = "/mnt";
-                defaultUser = user;
+                defaultUser = defaultConfig.userName;
                 startMenuLaunchers = true;
                 docker-desktop.enable = true;
                 docker-native.enable = true;
