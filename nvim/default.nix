@@ -36,7 +36,7 @@ myLib.userDefinitions {
       nodePackages.yaml-language-server
       nodePackages.vscode-langservers-extracted
       nodePackages.pyright
-      haskell-language-server
+      # haskell-language-server Moved to default
       sumneko-lua-language-server
       rnix-lsp
       rust-analyzer

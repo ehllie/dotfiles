@@ -18,13 +18,31 @@ let
   ];
 in
 {
-  imports = [ ./gnome.nix ];
+  imports = [ ./gnome.nix ./xmonad ];
 
-  options.dotfiles.graphical = lib.mkEnableOption "graphical";
-
+  options.dotfiles = with lib; {
+    graphical = mkEnableOption "graphical";
+    windowManager = mkOption {
+      type = with types; nullOr (enum [ "none" ]);
+      default = "none";
+    };
+  };
 
   config = lib.mkIf cfg.graphical (myLib.dualDefinitions {
     hostDefinitions = {
+      services.xserver = {
+        layout = "pl";
+        videoDrivers = [ "modesetting" ];
+        libinput = {
+          enable = true;
+          touchpad = {
+            naturalScrolling = true;
+          };
+        };
+        desktopManager.xterm.enable = false;
+        excludePackages = [ pkgs.xterm ];
+      };
+      # Begone xterm
       programs._1password-gui = { enable = true; polkitPolicyOwners = [ cfg.userName ]; };
     };
     userDefinitions = {

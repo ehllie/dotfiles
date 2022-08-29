@@ -45,6 +45,7 @@
           dotfileConfig = {
             hostName = "nixgram";
             hardware = "dell-gram";
+            windowManager = "gnome";
             samba = true;
             graphical = true;
           };
@@ -54,6 +55,7 @@
           dotfileConfig = {
             hostName = "nixdesk";
             hardware = "desktop";
+            windowManager = "gnome";
             graphical = true;
           };
           extraModules = [ private.nixosModules.private ];
@@ -61,7 +63,6 @@
         nixwsl = flakeSystem {
           dotfileConfig = {
             hostName = "nixwsl";
-            hardware = "none";
           };
           extraModules = [
             nixos-wsl.nixosModules.wsl

@@ -5,22 +5,8 @@ let
   hostDefinitions = {
     services.xserver = {
       enable = true;
-      layout = "pl";
-      libinput = {
-        enable = true;
-        touchpad = {
-          naturalScrolling = true;
-        };
-      };
-      videoDrivers = [ "modesetting" ];
-
       displayManager.gdm.enable = true;
-      desktopManager = {
-        gnome.enable = true;
-      };
-      # Begone xterm
-      desktopManager.xterm.enable = false;
-      excludePackages = [ pkgs.xterm ];
+      desktopManager.gnome.enable = true;
     };
   };
   userDefinitions = {
@@ -40,5 +26,9 @@ let
     };
   };
 in
-lib.mkIf cfg.graphical
-  (myLib.dualDefinitions { inherit userDefinitions hostDefinitions; })
+{
+  options.dotfiles.windowManager = myLib.mkEnumOption "gnome";
+
+  config = lib.mkIf (cfg.windowManager == "gnome")
+    (myLib.dualDefinitions { inherit userDefinitions hostDefinitions; });
+}

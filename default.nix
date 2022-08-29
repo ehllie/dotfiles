@@ -81,7 +81,14 @@ let
     };
   };
 
+  haskellPkgs = ps: with ps; [
+    xmonad
+    xmonad-contrib
+    xmonad-extras
+    haskell-language-server
+  ];
   devPack = with pkgs; [
+    (ghc.withPackages haskellPkgs)
     gcc
     cargo
     rustc

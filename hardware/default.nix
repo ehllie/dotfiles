@@ -10,6 +10,7 @@ let cfg = config.dotfiles; in {
     hardware = mkOption {
       description = "The machine for which to setup hardware configuration for.";
       type = with types; nullOr (enum [ "none" ]);
+      default = "none";
     };
     fido = {
       enable = mkEnableOption "fido";
@@ -23,13 +24,16 @@ let cfg = config.dotfiles; in {
   };
 
   config = lib.mkIf (cfg.hardware != "none") {
-    boot.loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 3;
+    boot = {
+      plymouth.enable = true;
+      loader = {
+        systemd-boot = {
+          enable = true;
+          configurationLimit = 3;
+        };
+        efi.canTouchEfiVariables = true;
+        timeout = 0;
       };
-      efi.canTouchEfiVariables = true;
-      timeout = 0;
     };
     boot.blacklistedKernelModules = [ "pcspkr" ];
 

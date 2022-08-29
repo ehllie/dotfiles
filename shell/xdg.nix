@@ -27,8 +27,6 @@ myLib.userDefinitions ({ config, ... }: with config.xdg; {
   home = {
     sessionVariables = {
 
-      XAUTHORITY = "${dataHome}/sddm/Xauthority";
-
       # $HOME/.ghcup
       GHCUP_USE_XDG_DIRS = true;
 
