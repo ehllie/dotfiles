@@ -133,6 +133,10 @@ let
         strict = True
         no_implicit_optional = False
       '';
+      "lazygit/config.yml".text = ''
+        git:
+          autoFetch: false
+      '';
     };
   };
 in
