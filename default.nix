@@ -22,9 +22,16 @@ let
       ];
     };
 
-    nix.extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    nix = {
+      gc = {
+        automatic = true;
+        dates = "daily";
+        options = "--delete-older-than 7d";
+      };
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+    };
     nixpkgs.config.allowUnfree = true;
 
     fonts.fonts = with pkgs; [
