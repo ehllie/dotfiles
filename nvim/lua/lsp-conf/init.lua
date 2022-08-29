@@ -27,7 +27,7 @@ for _, server in ipairs(servers) do
   end
 end
 
-local function config_lsp()
+local function config()
   local lspconfig = require("lspconfig")
 
   local handlers = require("lsp-conf.handlers")
@@ -47,28 +47,12 @@ local function config_lsp()
   handlers.setup()
 end
 
-local function config_nls()
-  local null_ls = require("null-ls")
-
-  local diagnostics = null_ls.builtins.diagnostics
-  null_ls.setup({
-    debug = false,
-    sources = {
-      diagnostics.flake8.with({ extra_args = { "--max-line-length", "--extend-ignore", "E203" } }),
-      diagnostics.mypy,
-    },
-  })
-end
-
 return {
   {
     "neovim/nvim-lspconfig",
-    config = config_lsp,
+    config = config,
     requires = "folke/which-key.nvim",
   },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = config_nls,
-  },
+  require("lsp-conf.null-ls"),
   unpack(extended),
 }

@@ -56,7 +56,6 @@ return packer.startup({
     use(require("plug-conf.cmp"))
     use(require("plug-conf.comment"))
     use(require("plug-conf.dap"))
-    use(require("plug-conf.formatter"))
     use(require("plug-conf.hop"))
     use(require("plug-conf.lualine"))
     use(require("plug-conf.misc"))

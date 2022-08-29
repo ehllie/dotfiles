@@ -88,11 +88,24 @@ local function lsp_keymaps(bufnr, extra)
   register(vim.tbl_deep_extend("force", base, extra or {}), { buffer = bufnr })
 end
 
+local can_format = { "hls", "rust_analyzer" }
+
+local function in_table(elem, table)
+  for _, value in ipairs(table) do
+    if value == elem then
+      return true
+    end
+  end
+  return false
+end
+
 ---@param extra table?
 ---@return fun(client: table, bufnr: number): nil
 M.make_on_attach = function(extra)
   return function(client, bufnr)
-    client.resolved_capabilities.document_formatting = false
+    if not in_table(client.name, can_format) then
+      client.resolved_capabilities.document_formatting = false
+    end
     lsp_keymaps(bufnr, extra)
     local status_ok, illuminate = pcall(require, "illuminate")
     if not status_ok then

@@ -47,11 +47,11 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   end,
 })
 
--- Format after write
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+-- Format before write
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   callback = function()
     if do_auto_format then
-      vim.cmd("FormatWrite")
+      vim.lsp.buf.formatting() ---@diagnostic disable-line
     end
   end,
 })
