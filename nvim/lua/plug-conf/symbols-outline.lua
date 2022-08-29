@@ -1,7 +1,7 @@
 local function config()
   local ui_funcs = require("local-lib").right_ui
 
-  vim.g.symbols_outline = {
+  require("symbols-outline").setup({
     highlight_hovered_item = true,
     show_guides = true,
     auto_preview = false,
@@ -14,13 +14,17 @@ local function config()
     -- show_symbol_details = true,
     preview_bg_highlight = "Pmenu",
     keymaps = { -- These keymaps can be a string or a table for multiple keys
-      close = { "<Esc>", "q" },
+      close = {},
       goto_location = "<Cr>",
       focus_location = "o",
       hover_symbol = "K",
       toggle_preview = "PP",
       rename_symbol = "r",
       code_actions = "a",
+      fold = "h",
+      unfold = "l",
+      fold_all = "H",
+      unfold_all = "L",
     },
     lsp_blacklist = {},
     symbol_blacklist = {},
@@ -52,7 +56,7 @@ local function config()
       Operator = { icon = symbols.Operator, hl = "TSOperator" },
       TypeParameter = { icon = symbols.TypeParameter, hl = "TSParameter" },
     },
-  }
+  })
 
   ui_funcs.register("symbols", function()
     vim.cmd("SymbolsOutlineOpen")

@@ -45,10 +45,8 @@ return packer.startup({
         end,
         requires = "folke/which-key.nvim",
       },
-      "michaeljsmith/vim-indent-object",
       "moll/vim-bbye",
       "nvim-lua/plenary.nvim", -- Useful lua functions used by lots of plugins
-      "tpope/vim-surround",
     })
 
     -- Depencancy and config setup for plugins in separate files

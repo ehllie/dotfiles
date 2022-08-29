@@ -69,12 +69,12 @@ end
 ---@param invoked_from string
 ---@return nil
 M.right_ui.toggle = function(invoked_from)
-  M.right_ui.functions[M.right_ui.status].close()
+  pcall(M.right_ui.functions[M.right_ui.status].close)
   M.right_ui.restore = nop
   if invoked_from == M.right_ui.status then
     M.right_ui.status = "closed"
   else
-    M.right_ui.functions[invoked_from].open()
+    pcall(M.right_ui.functions[invoked_from].open)
     M.right_ui.status = invoked_from
   end
 end

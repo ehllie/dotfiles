@@ -2,6 +2,7 @@ local function config()
   local util = require("Comment.utils")
   --[[ local api = require("Comment.api") ]]
   require("Comment").setup({
+    ignore = "^$",
     toggler = {
       line = "<leader>cc",
       block = "<leader>bb",
@@ -31,18 +32,6 @@ local function config()
       end
     end,
   })
-
-  --[[ local register = require("which-key").register ]]
-  --[[ register({ ["<leader>/"] = { api.toggle_current_linewise, "Comment out" } }) ]]
-  --[[ register({ ]]
-  --[[   ["<leader>/"] = { ]]
-  --[[     function() ]]
-  --[[       api.toggle_linewise_op(vim.fn.visualmode()) ]]
-  --[[     end, ]]
-  --[[     "Comment out", ]]
-  --[[     mode = "x", ]]
-  --[[   }, ]]
-  --[[ }) ]]
 end
 
 return {
