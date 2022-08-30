@@ -8,6 +8,7 @@ let
       xserver = {
         enable = true;
         displayManager = {
+          defaultSession = "none+xmonad";
           lightdm = {
             enable = true;
             greeters = {
@@ -15,31 +16,32 @@ let
               enso.enable = true;
             };
           };
+          # startx.enable = true;
         };
       };
-      greetd = with pkgs;{
-        enable = true;
-        settings = {
-          default_session = {
-            command = "${greetd.tuigreet}/bin/tuigreet --time -r --cmd startx";
-            user = "greeter";
-          };
-        };
-      };
+      # greetd = with pkgs;{
+      #   enable = true;
+      #   settings = {
+      #     default_session = {
+      #       command = "${greetd.tuigreet}/bin/tuigreet --time -r --cmd startx";
+      #       user = "greeter";
+      #     };
+      #   };
+      # };
     };
   };
   userDefinitions = {
     programs.alacritty.enable = true;
-    home.file.".xinitrc".text = ''
-      if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-      	eval $(dbus-launch --exit-with-session --sh-syntax)
-      fi
-      systemctl --user import-environment DISPLAY XAUTHORITY
+    # home.file.".xinitrc".text = ''
+    #   if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+    #   	eval $(dbus-launch --exit-with-session --sh-syntax)
+    #   fi
+    #   systemctl --user import-environment DISPLAY XAUTHORITY
 
-      if command -v dbus-update-activation-environment >/dev/null 2>&1; then
-              dbus-update-activation-environment DISPLAY XAUTHORITY
-      fi
-    '';
+    #   if command -v dbus-update-activation-environment >/dev/null 2>&1; then
+    #           dbus-update-activation-environment DISPLAY XAUTHORITY
+    #   fi
+    # '';
     xsession = {
       enable = true;
       windowManager.xmonad = {
