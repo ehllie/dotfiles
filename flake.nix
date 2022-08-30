@@ -2,14 +2,15 @@
   description = "An alright configuration";
 
   inputs = {
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nur.url = "github:nix-community/NUR";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
+    vscode-server = { url = "github:ehllie/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nur.url = "github:nix-community/NUR";
     private.url = "/etc/nixos";
   };
 
-  outputs = { nixpkgs, nur, home-manager, nixos-wsl, private, ... }:
+  outputs = { nixpkgs , home-manager , nixos-wsl , vscode-server , nur , private , ... }:
     let
       defaultConfig = {
         userName = "ellie";
@@ -66,16 +67,29 @@
           };
           extraModules = [
             nixos-wsl.nixosModules.wsl
-            {
-              wsl = {
-                enable = true;
-                automountPath = "/mnt";
-                defaultUser = defaultConfig.userName;
-                startMenuLaunchers = true;
-                docker-desktop.enable = true;
-                docker-native.enable = true;
+            ({ myLib, lib, config, ... }: myLib.dualDefinitions {
+              hostDefinitions = {
+                systemd.services.fix-docker-desktop-distro = {
+                  description = "Fixes permissions of docker-desktop-user-distro";
+                  script = ''
+                    chmod a+rx ${config.wsl.automountPath}/wsl/docker-desktop/docker-desktop-user-distro
+                  '';
+                  wantedBy = [ "docker-desktop-proxy.service" ];
+                };
+                wsl = {
+                  enable = true;
+                  automountPath = "/mnt";
+                  defaultUser = defaultConfig.userName;
+                  startMenuLaunchers = true;
+                  docker-desktop.enable = true;
+                  docker-native.enable = true;
+                };
               };
-            }
+              userDefinitions = {
+                imports = [ vscode-server.nixosModules.home ];
+                services.vscode-server.enable = true;
+              };
+            })
           ];
         };
       };
