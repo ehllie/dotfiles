@@ -11,7 +11,6 @@ let
   mediaPack = with pkgs; [
     firefox-wayland
     thunderbird-wayland
-    protonmail-bridge
     protonvpn-gui
     vlc
     (discord.override { nss = nss_latest; })
@@ -45,8 +44,31 @@ in
       # Begone xterm
       programs._1password-gui = { enable = true; polkitPolicyOwners = [ cfg.userName ]; };
     };
-    userDefinitions = {
-      home.packages = builtins.concatLists [ appPack mediaPack ];
-    };
+    userDefinitions =
+      let
+        protonmail-cli = pkgs.writeShellScriptBin "protonmail-cli" ''
+          systemctl --user stop protonmail-bridge.service
+          ${pkgs.protonmail-bridge}/bin/protonmail-bridge --cli
+          systemctl --user start protonmail-bridge.service
+        '';
+      in
+      {
+        systemd.user.services.protonmail-bridge = {
+          Unit = {
+            Description = "Protonmail Bridge";
+            After = [ "network.target" ];
+          };
+          Service = {
+            Type = "simple";
+            ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge -l info --noninteractive";
+            Restart = "on-failure";
+            RestartSec = 3;
+          };
+          Install = {
+            WantedBy = [ "default.target" ];
+          };
+        };
+        home.packages = builtins.concatLists [ appPack mediaPack [ protonmail-cli ] ];
+      };
   });
 }
