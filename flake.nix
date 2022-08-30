@@ -10,7 +10,7 @@
     private.url = "/etc/nixos";
   };
 
-  outputs = { nixpkgs , home-manager , nixos-wsl , vscode-server , nur , private , ... }:
+  outputs = { nixpkgs, home-manager, nixos-wsl, vscode-server, nur, private, ... }:
     let
       defaultConfig = {
         userName = "ellie";

@@ -1,4 +1,4 @@
-{ config, lib, myLib, ... }:
+{ config, lib, myLib, pkgs, ... }:
 let cfg = config.dotfiles; in
 {
   imports = [ ./xdg.nix ./zsh.nix ];
@@ -16,6 +16,7 @@ let cfg = config.dotfiles; in
 
   config = myLib.userDefinitions ({ config, ... }: {
     home = {
+      packages = [ (pkgs.writeScriptBin "fixdate" (builtins.readFile ../fixdate.sh)) ];
       shellAliases =
         let
           flakeRebuild = cmd: loc: "sudo nixos-rebuild ${cmd} --flake ${loc}#${cfg.hostName}";
