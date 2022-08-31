@@ -150,10 +150,12 @@ let
 in
 {
   imports = [
+    ./colourscheme
+    ./desktop
     ./hardware
-    ./shell
     ./nvim
-    ./graphical
+    ./shell
+    ./terminal
   ];
 
   options.dotfiles = with lib; {

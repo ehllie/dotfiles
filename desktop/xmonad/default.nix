@@ -18,6 +18,7 @@ let
           };
           # startx.enable = true;
         };
+        windowManager.xmonad.enable = true;
       };
       # greetd = with pkgs;{
       #   enable = true;
