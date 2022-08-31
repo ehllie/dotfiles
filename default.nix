@@ -85,6 +85,7 @@ let
     xmonad
     xmonad-contrib
     xmonad-extras
+    taffybar
     haskell-language-server
   ];
   devPack = with pkgs; [
