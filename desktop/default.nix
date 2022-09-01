@@ -17,7 +17,7 @@ let
   ];
 in
 {
-  imports = [ ./gnome.nix ./xmonad ];
+  imports = [ ./gnome.nix ./xmonad ./taffybar ];
 
   options.dotfiles = with lib; {
     graphical = mkEnableOption "graphical";

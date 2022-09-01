@@ -3,7 +3,8 @@ let
   cfg = config.dotfiles;
 
   hostDefinitions = {
-    environment.systemPackages = [ pkgs.greetd.tuigreet ];
+    gtk.iconCache.enable = true;
+    environment.systemPackages = [ pkgs.xcompmgr ];
     services = {
       xserver = {
         enable = true;
@@ -19,19 +20,21 @@ let
         };
         windowManager.xmonad.enable = true;
       };
-      gnome.at-spi2-core.enable = true;
     };
     security.polkit.enable = true;
+
 
   };
   userDefinitions = {
     programs.alacritty.enable = true;
+    services.taffybar.enable = true;
     xsession = {
       enable = true;
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
         config = pkgs.writeText "xmonad.hs" (builtins.readFile ./xmonad.hs);
+        extraPackages = ps: with ps; [ taffybar ];
       };
     };
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
