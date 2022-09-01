@@ -9,8 +9,8 @@ let
     _1password-gui
   ];
   mediaPack = with pkgs; [
-    firefox-wayland
-    thunderbird-wayland
+    firefox
+    thunderbird
     protonvpn-gui
     vlc
     (discord.override { nss = nss_latest; })

@@ -16,33 +16,16 @@ let
               enso.enable = true;
             };
           };
-          # startx.enable = true;
         };
         windowManager.xmonad.enable = true;
       };
-      # greetd = with pkgs;{
-      #   enable = true;
-      #   settings = {
-      #     default_session = {
-      #       command = "${greetd.tuigreet}/bin/tuigreet --time -r --cmd startx";
-      #       user = "greeter";
-      #     };
-      #   };
-      # };
+      gnome.at-spi2-core.enable = true;
     };
+    security.polkit.enable = true;
+
   };
   userDefinitions = {
     programs.alacritty.enable = true;
-    # home.file.".xinitrc".text = ''
-    #   if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-    #   	eval $(dbus-launch --exit-with-session --sh-syntax)
-    #   fi
-    #   systemctl --user import-environment DISPLAY XAUTHORITY
-
-    #   if command -v dbus-update-activation-environment >/dev/null 2>&1; then
-    #           dbus-update-activation-environment DISPLAY XAUTHORITY
-    #   fi
-    # '';
     xsession = {
       enable = true;
       windowManager.xmonad = {
@@ -50,6 +33,21 @@ let
         enableContribAndExtras = true;
         config = pkgs.writeText "xmonad.hs" (builtins.readFile ./xmonad.hs);
       };
+    };
+    systemd.user.services.polkit-gnome-authentication-agent-1 = {
+      Unit = {
+        Description = "Gnome polkit authentication agent";
+        After = [ "graphical-session.target" ];
+
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 in
