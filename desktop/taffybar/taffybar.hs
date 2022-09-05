@@ -1,39 +1,43 @@
-import Data.Default (def)
-import System.Taffybar (dyreTaffybar)
+import System.Taffybar (startTaffybar)
 import System.Taffybar.Hooks
 import System.Taffybar.SimpleConfig
 import System.Taffybar.Widget
 
 main =
-  let myWorkspacesConfig =
-        def
-          { minIcons = 1,
-            widgetGap = 1,
-            showWorkspaceFn = hideEmpty
-          }
-      workspaces = workspacesNew myWorkspacesConfig
-      clockFormat = "%a %x %k:%M"
-      clock = textClockNewWith $ ClockConfig Nothing Nothing clockFormat $ ConstantInterval 10
-      layout = layoutNew def
-      windowsW = windowsNew def
+  let workspaces =
+        workspacesNew
+          defaultWorkspacesConfig
+            { widgetGap = 1,
+              showWorkspaceFn = hideEmpty
+            }
+      clock =
+        textClockNewWith $
+          ClockConfig
+            { clockTimeZone = Nothing,
+              clockTimeLocale = Nothing,
+              clockFormatString = "%a %e %b %Y %k:%M",
+              clockUpdateStrategy = ConstantInterval 10
+            }
+      window = windowsNew defaultWindowsConfig
       tray = sniTrayNew
+      batteryText = textBatteryNew "$percentage$%"
       myConfig =
-        def
+        defaultSimpleTaffyConfig
           { startWidgets =
-              workspaces : map (>>= buildContentsBox) [layout, windowsW],
+              [workspaces],
+            centerWidgets =
+              [window],
             endWidgets =
-              map
-                (>>= buildContentsBox)
-                [ batteryIconNew,
-                  clock,
-                  tray,
-                  mpris2New
-                ],
-            barPosition = Top,
-            barPadding = 10,
+              [ batteryIconNew,
+                batteryText,
+                clock,
+                tray,
+                mpris2New
+              ],
             barHeight = ExactSize 50,
-            widgetSpacing = 0
+            barPadding = 2,
+            widgetSpacing = 5
           }
-   in dyreTaffybar $
+   in startTaffybar $
         withBatteryRefresh . withLogServer . withToggleServer $
           toTaffyConfig myConfig

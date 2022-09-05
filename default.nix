@@ -48,7 +48,7 @@ let
     };
 
     time.timeZone = "Europe/Warsaw";
-    i18n.defaultLocale = "en_IE.utf8";
+    i18n.defaultLocale = "en_IE.UTF-8";
     console.keyMap = "pl";
 
     services = {
