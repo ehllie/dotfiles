@@ -88,13 +88,23 @@ let
     taffybar
     haskell-language-server
   ];
+
+  pythonPkgs = ps: with ps; [
+    black
+    flake8
+    isort
+    mypy
+    pynvim
+    debugpy
+  ];
+
   devPack = with pkgs; [
     (ghc.withPackages haskellPkgs)
+    (python3.withPackages pythonPkgs)
     gcc
     cargo
     rustc
     nodePackages.pnpm
-    python3
     pkgconfig
     nodejs
     go

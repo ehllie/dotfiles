@@ -36,21 +36,16 @@ myLib.userDefinitions {
       nodePackages.yaml-language-server
       nodePackages.vscode-langservers-extracted
       nodePackages.pyright
-      # haskell-language-server Moved to default
       sumneko-lua-language-server
       rnix-lsp
       rust-analyzer
 
       #Linters
-      mypy
-      python3Packages.flake8
       clippy
 
       #Formatters
       stylua
       nixpkgs-fmt
-      black
-      python3Packages.isort
       nodePackages.prettier
       rustfmt
     ];
