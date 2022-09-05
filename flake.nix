@@ -18,6 +18,7 @@
         userDesc = "Elizabeth";
         dotfileRepo = "github:ehllie/dotfiles";
         shell = "zsh";
+        colourscheme.catppuccin.enable = true;
       };
 
       inherit (nixpkgs) lib;
@@ -48,7 +49,7 @@
           dotfileConfig = {
             hostName = "nixgram";
             hardware = "dell-gram";
-            windowManager = "gnome";
+            windowManager = "xmonad";
             samba = true;
             graphical = true;
           };
