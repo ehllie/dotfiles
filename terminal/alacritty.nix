@@ -11,7 +11,7 @@ myLib.userDefinitions {
         italic.style = "Italic";
         bold.style = "Bold";
         bold_italic.style = "Bold Italic";
-        size = 12;
+        size = 10;
       };
 
     };

@@ -2,7 +2,7 @@
 
 -- Resize font in gui --
 
-vim.g.gui_font_default_size = 13
+vim.g.gui_font_default_size = 8
 vim.g.gui_font_size = vim.g.gui_font_default_size
 vim.g.gui_font_face = "Cascadia Code"
 
@@ -24,7 +24,7 @@ reset_gui_font()
 
 -- Config --
 vim.g.neovide_scroll_animation_length = 0.3
-vim.g.neovide_fullscreen = true
+-- vim.g.neovide_fullscreen = true
 
 -- Keymaps --
 
@@ -59,5 +59,5 @@ register({
     "Decrease gui font size",
   },
 
-  ["<leader>nf"] = { "<cmd>let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", "Toggle fulscreen mode" },
+  -- ["<leader>nf"] = { "<cmd>let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", "Toggle fulscreen mode" },
 }, { mode = "n" })
