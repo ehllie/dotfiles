@@ -5,7 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
-    vscode-server = { url = "github:ehllie/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
+    vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
     taffybar.url = "github:taffybar/taffybar";
     nur.url = "github:nix-community/NUR";
     private.url = "/etc/nixos";
