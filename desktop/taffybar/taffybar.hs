@@ -15,12 +15,14 @@ main =
           ClockConfig
             { clockTimeZone = Nothing
             , clockTimeLocale = Nothing
-            , clockFormatString = "%a %e %b %Y %k:%M"
+            , clockFormatString = "%k:%M | %a %e %b"
             , clockUpdateStrategy = ConstantInterval 10
             }
       window = windowsNew defaultWindowsConfig
       tray = sniTrayNew
-      batteryText = textBatteryNew "$percentage$%"
+      battery = map (>>= buildContentsBox) [batteryIconNew, batteryText]
+       where
+        batteryText = textBatteryNew "$percentage$%"
    in startTaffybar
         . withBatteryRefresh
         . withLogServer
@@ -29,7 +31,7 @@ main =
         $ defaultSimpleTaffyConfig
           { startWidgets = [workspaces]
           , centerWidgets = [window]
-          , endWidgets = [batteryIconNew, batteryText, clock, tray, mpris2New]
+          , endWidgets = battery ++ map (>>= buildContentsBox) [clock, tray, mpris2New]
           , barHeight = ExactSize 50
           , barPadding = 2
           , widgetSpacing = 5
