@@ -1,4 +1,4 @@
-{ lib, myLib, config, ... }:
+{ lib, myLib, config, pkgs, ... }:
 with lib;
 let cfg = config.dotfiles.colourscheme.catppuccin; in {
   options.dotfiles.colourscheme.catppuccin = {
@@ -110,5 +110,13 @@ let cfg = config.dotfiles.colourscheme.catppuccin; in {
           { index = 17; color = palette.rosewater; }
         ];
       };
+      gtk = {
+        enable = true;
+        theme = {
+          package = pkgs.catppuccin-gtk;
+          name = "Catppuccin";
+        };
+      };
+
     });
 }

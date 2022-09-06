@@ -42,7 +42,10 @@ in
         excludePackages = [ pkgs.xterm ];
       };
       # Begone xterm
-      programs._1password-gui = { enable = true; polkitPolicyOwners = [ cfg.userName ]; };
+      programs = {
+        _1password-gui = { enable = true; polkitPolicyOwners = [ cfg.userName ]; };
+        dconf.enable = true;
+      };
     };
     userDefinitions =
       let

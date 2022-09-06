@@ -17,13 +17,6 @@ let
       gnome.gnome-tweaks
       gnome.gnome-themes-extra
     ];
-    gtk = {
-      enable = true;
-      theme = {
-        package = pkgs.catppuccin-gtk;
-        name = "Catppuccin";
-      };
-    };
   };
 in
 {
