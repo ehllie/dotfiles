@@ -21,8 +21,12 @@ main =
       window = windowsNew defaultWindowsConfig
       tray = sniTrayNew
       batteryText = textBatteryNew "$percentage$%"
-      myConfig =
-        defaultSimpleTaffyConfig
+   in startTaffybar
+        . withBatteryRefresh
+        . withLogServer
+        . withToggleServer
+        . toTaffyConfig
+        $ defaultSimpleTaffyConfig
           { startWidgets =
               [workspaces],
             centerWidgets =
@@ -38,6 +42,3 @@ main =
             barPadding = 2,
             widgetSpacing = 5
           }
-   in startTaffybar $
-        withBatteryRefresh . withLogServer . withToggleServer $
-          toTaffyConfig myConfig
