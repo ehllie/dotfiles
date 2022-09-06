@@ -86,6 +86,8 @@ let
     xmonad-contrib
     xmonad-extras
     taffybar
+    cabal-fmt
+    fourmolu
     haskell-language-server
   ];
 

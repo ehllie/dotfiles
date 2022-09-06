@@ -88,7 +88,7 @@ local function lsp_keymaps(bufnr, extra)
   register(vim.tbl_deep_extend("force", base, extra or {}), { buffer = bufnr })
 end
 
-local can_format = { "hls", "rust_analyzer" }
+local can_format = { "rust_analyzer" }
 
 local function in_table(elem, table)
   for _, value in ipairs(table) do

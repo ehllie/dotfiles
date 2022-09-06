@@ -7,16 +7,16 @@ main =
   let workspaces =
         workspacesNew
           defaultWorkspacesConfig
-            { widgetGap = 1,
-              showWorkspaceFn = hideEmpty
+            { widgetGap = 1
+            , showWorkspaceFn = hideEmpty
             }
       clock =
         textClockNewWith $
           ClockConfig
-            { clockTimeZone = Nothing,
-              clockTimeLocale = Nothing,
-              clockFormatString = "%a %e %b %Y %k:%M",
-              clockUpdateStrategy = ConstantInterval 10
+            { clockTimeZone = Nothing
+            , clockTimeLocale = Nothing
+            , clockFormatString = "%a %e %b %Y %k:%M"
+            , clockUpdateStrategy = ConstantInterval 10
             }
       window = windowsNew defaultWindowsConfig
       tray = sniTrayNew
@@ -27,18 +27,10 @@ main =
         . withToggleServer
         . toTaffyConfig
         $ defaultSimpleTaffyConfig
-          { startWidgets =
-              [workspaces],
-            centerWidgets =
-              [window],
-            endWidgets =
-              [ batteryIconNew,
-                batteryText,
-                clock,
-                tray,
-                mpris2New
-              ],
-            barHeight = ExactSize 50,
-            barPadding = 2,
-            widgetSpacing = 5
+          { startWidgets = [workspaces]
+          , centerWidgets = [window]
+          , endWidgets = [batteryIconNew, batteryText, clock, tray, mpris2New]
+          , barHeight = ExactSize 50
+          , barPadding = 2
+          , widgetSpacing = 5
           }

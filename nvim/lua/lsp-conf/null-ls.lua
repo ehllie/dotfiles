@@ -12,14 +12,14 @@ local function config()
       formatting.black.with({ extra_args = { "--fast" } }),
       formatting.isort.with({ extra_args = { "--profile", "black" } }),
 
-      formatting.stylua.with({
-        extra_args = { "--indent-type", "spaces", "--indent-width", "2" },
-      }),
+      formatting.stylua.with({ extra_args = { "--indent-type", "spaces", "--indent-width", "2" } }),
 
-      formatting.prettier.with({
-        extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" },
-      }),
+      formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
+
       formatting.nixpkgs_fmt,
+
+      formatting.fourmolu.with({ extra_args = { "--indentation", "2" } }),
+      formatting.cabal_fmt,
     },
   })
 end
