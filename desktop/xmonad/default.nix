@@ -26,7 +26,10 @@ let
 
   };
   userDefinitions = {
-    programs.alacritty.enable = true;
+    programs = {
+      alacritty.enable = true;
+      rofi.enable = true;
+    };
     services.taffybar.enable = true;
     xsession = {
       enable = true;

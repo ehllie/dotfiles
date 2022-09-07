@@ -13,14 +13,13 @@ main =
         additionalKeys
           conf
           [ ((modm .|. shiftMask, xK_t), spawn term)
-          , ((modm .|. shiftMask, xK_n), spawn "neovide")
           , -- Workspace navigation
             ((modm .|. controlMask, xK_Left), prevWS)
           , ((modm .|. controlMask, xK_Right), nextWS)
           , ((modm .|. controlMask, xK_Down), moveTo Next emptyWS)
           , ((modm .|. controlMask .|. shiftMask, xK_Left), shiftToPrev >> prevWS)
           , ((modm .|. controlMask .|. shiftMask, xK_Right), shiftToNext >> nextWS)
-          , ((modm, xK_space), spawn "dmenu_run")
+          , ((modm, xK_space), spawn "rofi -show drun")
           ]
       toRemove conf@XConfig{modMask = modm} =
         removeKeys
