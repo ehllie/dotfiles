@@ -34,5 +34,7 @@ let cfg = config.dotfiles; in {
     # networking.interfaces.wlp36s0.useDHCP = lib.mkDefault true;
 
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+    services.xserver.videoDrivers = [ "nvidia" ];
   };
 }

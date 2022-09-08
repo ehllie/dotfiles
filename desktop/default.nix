@@ -29,19 +29,20 @@ in
 
   config = lib.mkIf cfg.graphical (myLib.dualDefinitions {
     hostDefinitions = {
-      services.xserver = {
-        layout = "pl";
-        videoDrivers = [ "modesetting" ];
-        libinput = {
-          enable = true;
-          touchpad = {
-            naturalScrolling = true;
+      services = {
+        xserver = {
+          layout = "pl";
+          libinput = {
+            enable = true;
+            touchpad = {
+              naturalScrolling = true;
+            };
           };
+          desktopManager.xterm.enable = false;
+          excludePackages = [ pkgs.xterm ];
         };
-        desktopManager.xterm.enable = false;
-        excludePackages = [ pkgs.xterm ];
+        gnome.gnome-keyring.enable = true;
       };
-      # Begone xterm
       programs = {
         _1password-gui = { enable = true; polkitPolicyOwners = [ cfg.userName ]; };
         dconf.enable = true;

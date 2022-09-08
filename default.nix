@@ -52,7 +52,6 @@ let
     console.keyMap = "pl";
 
     services = {
-      gnome.gnome-keyring.enable = true;
       timesyncd = {
         enable = true;
         servers = [ "pl.pool.ntp.org" ];
