@@ -1,11 +1,12 @@
 { nixpkgs }:
 let
   inherit (nixpkgs) lib;
-  takeDefaults = [ [ "dualDefinitions" ] [ "userDefinitions" ] ];
+  takeDefaults = [ [ "dualDefinitions" ] [ "userDefinitions" ] [ "homePath" ] ];
   self = with lib; {
     dualDefinitions = { userName, ... }: { hostDefinitions, userDefinitions }:
       hostDefinitions // { home-manager.users.${userName}.imports = [ userDefinitions ]; };
     userDefinitions = { userName, ... }: definitions: { home-manager.users.${userName}.imports = [ definitions ]; };
+    homePath = { userName, ... }: path: [ "home-manager" "users" "${userName}" ] ++ path;
     /* boolModule = { path, definitions, imports ? [ ], extraDeclarations ? { } }:
       { config, ... }:
       let

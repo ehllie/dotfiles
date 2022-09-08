@@ -1,4 +1,4 @@
-{ myLib, pkgs, ... }:
+{ lib, myLib, pkgs, config, ... }:
 let
   userDefinitions = with pkgs; {
     services.taffybar.package = haskellPackages.callCabal2nix "my-taffybar" ./. { };
@@ -15,7 +15,6 @@ let
       };
       Install.WantedBy = [ "taffybar.service" ];
     };
-    # xdg.configFile."taffybar/taffybar.hs".source = ./taffybar.hs;
   };
   hostDefinitions = {
     services = {
@@ -23,5 +22,8 @@ let
       gnome.at-spi2-core.enable = true;
     };
   };
+  enable = config.dotfiles.windowManager == "xmonad";
 in
-myLib.dualDefinitions { inherit hostDefinitions userDefinitions; }
+lib.mkIf enable (myLib.dualDefinitions {
+  inherit hostDefinitions userDefinitions;
+})

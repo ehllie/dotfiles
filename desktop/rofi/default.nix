@@ -12,7 +12,8 @@ let
       };
     };
   };
+  enable = config.dotfiles.windowManager == "xmonad";
 in
-myLib.dualDefinitions {
+lib.mkIf enable (myLib.dualDefinitions {
   inherit userDefinitions hostDefinitions;
-}
+})
