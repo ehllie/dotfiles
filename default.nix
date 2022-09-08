@@ -36,7 +36,7 @@ let
 
     fonts.fonts = with pkgs; [
       cascadia-code
-      nerdfonts
+      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     ];
 
     networking = {

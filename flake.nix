@@ -39,7 +39,7 @@
             nur.nixosModules.nur
             home-manager.nixosModules.home-manager
             globalConfigModule
-            { nixpkgs.overlays = taffybar.overlays; }
+            { nixpkgs.overlays = (import ./overlays) ++ taffybar.overlays; }
           ] ++ extraModules;
         };
     in
