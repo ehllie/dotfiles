@@ -13,7 +13,7 @@ let
     thunderbird
     protonvpn-gui
     vlc
-    (discord.override { nss = nss_latest; })
+    discord
   ];
 in
 {

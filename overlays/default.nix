@@ -1,1 +1,1 @@
-[ (import ./fido2luks) ]
+[ (import ./fido2luks.nix) (import ./discord.nix) ]
