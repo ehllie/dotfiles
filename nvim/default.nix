@@ -1,12 +1,16 @@
 { pkgs, lib, myLib, ... }:
 myLib.userDefinitions {
   xdg.configFile = {
-    "nvim/init.lua".source = ./init.lua;
+    "nvim/init.lua".text = ''
+      require("nix-patches")
+    '' + (builtins.readFile ./init.lua);
     "nvim/.luarc.json".source = ./.luarc.json;
     "nvim/lua" = {
       recursive = true;
       source = ./lua;
     };
+    "nvim/lua/nix-patches.lua".source =
+      with pkgs; substituteAll { src = ./nix-patches.lua; inherit gcc; };
   };
   home = {
     packages = with pkgs; [
