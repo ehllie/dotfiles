@@ -114,9 +114,8 @@ let cfg = config.dotfiles.colourscheme.catppuccin; in {
         enable = true;
         theme = {
           package = pkgs.catppuccin-gtk;
-          name = "Catppuccin";
+          name = "Catppuccin-Dark";
         };
       };
-
     });
 }
