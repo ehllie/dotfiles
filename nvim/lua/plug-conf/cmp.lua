@@ -1,4 +1,4 @@
-local function config_cmp()
+local function config()
   local cmp = require("cmp")
   require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -95,20 +95,6 @@ local function config_cmp()
   })
 end
 
-local function config_copilot()
-  vim.defer_fn(function()
-    require("copilot").setup({
-      cmp = {
-        enabled = true,
-        method = "getCompletionsCycling",
-      },
-      panel = {
-        enabled = true,
-      },
-    })
-  end, 100)
-end
-
 return {
   {
     "github/copilot.vim",
@@ -117,17 +103,25 @@ return {
   {
     "zbirenbaum/copilot.lua",
     event = { "VimEnter" },
-    config = config_copilot,
+    requires = { "zbirenbaum/copilot-cmp" },
+    config = function()
+      vim.defer_fn(function()
+        require("copilot").setup()
+      end, 100)
+    end,
   },
   {
     "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua", "nvim-cmp" },
     module = "copilot_cmp",
-    requires = "zbirenbaum/copilot.lua",
+    config = function()
+      require("copilot_cmp").setup()
+    end,
   },
   {
     "hrsh7th/nvim-cmp",
     deps = { "cmp", "luasnip" },
-    config = config_cmp,
+    config = config,
     requires = {
       "L3MON4D3/LuaSnip",
       "hrsh7th/cmp-buffer",
