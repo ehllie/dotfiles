@@ -6,12 +6,13 @@
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
+    beautysh = { url = "github:lovesegfault/beautysh"; inputs.nixpkgs.follows = "nixpkgs"; };
+    volar.url = "github:ehllie/nixpkgs/volar";
     taffybar.url = "github:taffybar/taffybar";
-    nur.url = "github:nix-community/NUR";
     private.url = "/etc/nixos";
   };
 
-  outputs = { nixpkgs, home-manager, nixos-wsl, vscode-server, taffybar, nur, private, ... }:
+  outputs = { nixpkgs, home-manager, nixos-wsl, vscode-server, taffybar, private, volar, beautysh, ... }:
     let
       defaultConfig = {
         userName = "ellie";
@@ -20,6 +21,15 @@
         shell = "zsh";
         colourscheme.catppuccin.enable = true;
       };
+
+      system = "x86_64-linux";
+
+      volarPkgs = volar.legacyPackages.${system};
+      volarOverlay = self: super: {
+        nodePackages = super.nodePackages // { inherit (volarPkgs.nodePackages) volar; };
+      };
+
+      beautyshOverlay = beautysh.overlay;
 
       inherit (nixpkgs) lib;
 
@@ -36,10 +46,9 @@
           specialArgs.myLib = ((import ./lib) { inherit nixpkgs; }).setDefaults dotfiles;
           modules = [
             ./.
-            nur.nixosModules.nur
             home-manager.nixosModules.home-manager
             globalConfigModule
-            { nixpkgs.overlays = (import ./overlays) ++ taffybar.overlays; }
+            { nixpkgs.overlays = (import ./overlays) ++ taffybar.overlays ++ [ volarOverlay beautyshOverlay ]; }
           ] ++ extraModules;
         };
     in

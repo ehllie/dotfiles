@@ -1,5 +1,27 @@
 {
   "nodes": {
+    "beautysh": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "poetry2nix": "poetry2nix",
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1659313893,
+        "narHash": "sha256-9foISiQfbEoMSYjvTDPCY2qSlZY4icUTyohDWVw2+xM=",
+        "owner": "lovesegfault",
+        "repo": "beautysh",
+        "rev": "776863dc573a37518fbca2d61878bfbd787245ab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lovesegfault",
+        "repo": "beautysh",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -215,7 +237,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "utils": "utils"
+        "utils": "utils_2"
       },
       "locked": {
         "lastModified": 1662759269,
@@ -380,18 +402,28 @@
         "type": "indirect"
       }
     },
-    "nur": {
+    "poetry2nix": {
+      "inputs": {
+        "flake-utils": [
+          "beautysh",
+          "utils"
+        ],
+        "nixpkgs": [
+          "beautysh",
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1662895535,
-        "narHash": "sha256-x1Rstsq1WNoWbX7iyqLGBjy7lY0iXU4hvrNm3hZeHp0=",
+        "lastModified": 1658665240,
+        "narHash": "sha256-/wkx7D7enyBPRjIkK0w7QxLQhzEkb3UxNQnjyc3FTUI=",
         "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "d55d54586641dc127c7fcb0e6afc67153b87be72",
+        "repo": "poetry2nix",
+        "rev": "8b8edc85d24661d5a6d0d71d6a7011f3e699780f",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "repo": "NUR",
+        "repo": "poetry2nix",
         "type": "github"
       }
     },
@@ -409,10 +441,10 @@
     },
     "root": {
       "inputs": {
+        "beautysh": "beautysh",
         "home-manager": "home-manager",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "nur": "nur",
         "private": "private",
         "taffybar": "taffybar",
         "vscode-server": "vscode-server"
@@ -462,6 +494,21 @@
       }
     },
     "utils": {
+      "locked": {
+        "lastModified": 1656928814,
+        "narHash": "sha256-RIFfgBuKz6Hp89yRr7+NR5tzIAbn52h8vT6vXkYjZoM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "7e2a3b3dfd9af950a856d66b0a7d01e3c18aa249",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_2": {
       "locked": {
         "lastModified": 1653893745,
         "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",

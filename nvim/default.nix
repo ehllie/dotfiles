@@ -43,18 +43,22 @@ myLib.userDefinitions {
       nodePackages.yaml-language-server
       nodePackages.vscode-langservers-extracted
       nodePackages.pyright
+      nodePackages.tailwindcss-language-server
+      nodePackages.volar
       sumneko-lua-language-server
       rnix-lsp
       rust-analyzer
 
       #Linters
       clippy
+      shellcheck
 
       #Formatters
       stylua
       nixpkgs-fmt
       nodePackages.prettier
       rustfmt
+      python3Packages.beautysh
     ];
     sessionVariables = {
       NEOVIDE_MULTIGRID = true;

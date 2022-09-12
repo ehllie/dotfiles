@@ -18,6 +18,8 @@ local function config()
 
       formatting.nixpkgs_fmt,
 
+      formatting.beautysh.with({ extra_args = { "-i", "2", "-s", "fnonly" } }),
+
       formatting.fourmolu.with({ extra_args = { "--indentation", "2" } }),
       formatting.cabal_fmt,
     },
