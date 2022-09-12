@@ -51,12 +51,9 @@ let
     i18n.defaultLocale = "en_IE.UTF-8";
     console.keyMap = "pl";
 
-    services = {
-      timesyncd = {
-        enable = true;
-        servers = [ "pl.pool.ntp.org" ];
-      };
-      openssh.enable = true;
+    services.timesyncd = {
+      enable = true;
+      servers = [ "pl.pool.ntp.org" ];
     };
 
     users.users.${cfg.userName} = {

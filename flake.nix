@@ -86,7 +86,7 @@
                   defaultUser = defaultConfig.userName;
                   startMenuLaunchers = true;
                   docker-desktop.enable = true;
-                  docker-native.enable = true;
+                  docker-native.enable = false;
                 };
               };
               userDefinitions = {

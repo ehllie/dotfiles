@@ -67,6 +67,7 @@ let cfg = config.dotfiles; in {
       thermald.enable = true;
       upower.enable = true;
       udisks2.enable = true;
+      openssh.enable = true;
 
       samba-wsdd.enable = cfg.samba; # make shares visible for windows 10 clients
       samba = lib.mkIf cfg.samba {
