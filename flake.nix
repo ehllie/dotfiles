@@ -42,7 +42,7 @@
           };
         in
         lib.nixosSystem {
-          system = "x86_64-linux";
+          inherit system;
           specialArgs.myLib = ((import ./lib) { inherit nixpkgs; }).setDefaults dotfiles;
           modules = [
             ./.

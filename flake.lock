@@ -447,6 +447,7 @@
         "nixpkgs": "nixpkgs",
         "private": "private",
         "taffybar": "taffybar",
+        "volar": "volar",
         "vscode-server": "vscode-server"
       }
     },
@@ -520,6 +521,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "volar": {
+      "locked": {
+        "lastModified": 1662983815,
+        "narHash": "sha256-gSnwr6hUTcB9Kwo+BbVsjT6c0DOtijc2TiyjB6yxD48=",
+        "owner": "ehllie",
+        "repo": "nixpkgs",
+        "rev": "0aaaec7edb9f71c4dab18de7fe574e1c55905618",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ehllie",
+        "ref": "volar",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
