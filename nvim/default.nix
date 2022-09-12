@@ -1,8 +1,11 @@
 { pkgs, lib, myLib, ... }:
+let
+  parsers = with pkgs.tree-sitter; withPlugins (_: allGrammars);
+in
 myLib.userDefinitions {
   xdg.configFile = {
     "nvim/init.lua".text = ''
-      require("nix-patches")
+      require("nix-patches") 
     '' + (builtins.readFile ./init.lua);
     "nvim/.luarc.json".source = ./.luarc.json;
     "nvim/lua" = {
@@ -10,7 +13,7 @@ myLib.userDefinitions {
       source = ./lua;
     };
     "nvim/lua/nix-patches.lua".source =
-      with pkgs; substituteAll { src = ./nix-patches.lua; inherit gcc; };
+      with pkgs; substituteAll { src = ./nix-patches.lua; inherit gcc parsers; };
   };
   home = {
     packages = with pkgs; [
