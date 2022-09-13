@@ -99,6 +99,7 @@ let
   devPack = with pkgs; [
     (ghc.withPackages haskellPkgs)
     (python3.withPackages pythonPkgs)
+    lldb
     gcc
     cargo
     rustc
