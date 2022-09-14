@@ -21,5 +21,6 @@ myLib.userDefinitions {
       extraConfig = ''set-option -ga terminal-overrides ",xterm-256color:Tc"'';
     };
   };
+  home.shellAliases = { ssh = "TERM=xterm-256color; ssh"; };
 }
   
