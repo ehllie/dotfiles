@@ -54,16 +54,30 @@ let cfg = config.dotfiles; in {
       };
     };
 
+    environment.systemPackages = [ pkgs.pulseaudio ]; # Enables pactl
+
+    security.rtkit.enable = true;
+
     services = {
-      blueman.enable = true;
       dbus = {
         enable = true;
         packages = with pkgs;[ dconf ];
       };
+
+      pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+        wireplumber.enable = true;
+      };
+
       printing = {
         enable = true;
         drivers = with pkgs;[ brlaser ];
       };
+
+      blueman.enable = true;
       thermald.enable = true;
       upower.enable = true;
       udisks2.enable = true;
@@ -100,6 +114,5 @@ let cfg = config.dotfiles; in {
 
     virtualisation.docker.enable = true;
     systemd.services.upower.enable = true;
-    sound.enable = true;
   };
 }

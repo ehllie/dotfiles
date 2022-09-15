@@ -35,6 +35,14 @@ let cfg = config.dotfiles; in {
 
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver = {
+      videoDrivers = [ "nvidia" ];
+      displayManager.sessionCommands = ''
+        xrandr --output DP-4 --mode 2560x1440 --refresh 144
+        xrandr --output HDMI-0 --right-of DP-4 --rotate left
+      '';
+    };
+
+    programs.steam.enable = true;
   };
 }

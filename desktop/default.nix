@@ -5,13 +5,12 @@ let
   appPack = with pkgs; [
     libreoffice
     dmenu
-    _1password
-    _1password-gui
   ];
   mediaPack = with pkgs; [
     firefox
     thunderbird
     protonvpn-gui
+    pavucontrol
     vlc
     discord
   ];
@@ -72,7 +71,10 @@ in
             WantedBy = [ "default.target" ];
           };
         };
-        home.packages = builtins.concatLists [ appPack mediaPack [ protonmail-cli ] ];
+        home = {
+          packages = appPack ++ mediaPack ++ [ protonmail-cli ];
+          sessionVariables.OP_BIOMETRIC_UNLOCK_ENABLED = true;
+        };
       };
   });
 }

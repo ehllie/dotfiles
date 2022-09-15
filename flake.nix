@@ -67,7 +67,7 @@
           dotfileConfig = {
             hostName = "nixdesk";
             hardware = "desktop";
-            windowManager = "gnome";
+            windowManager = "xmonad";
             graphical = true;
           };
           extraModules = [ ./secrets ];

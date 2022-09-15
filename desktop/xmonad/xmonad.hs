@@ -1,3 +1,4 @@
+import Graphics.X11.ExtraTypes.XF86
 import System.Taffybar.Support.PagerHints (pagerHints)
 import XMonad
 import XMonad.Actions.CycleWS
@@ -20,6 +21,9 @@ main =
           , ((modm .|. controlMask .|. shiftMask, xK_Left), shiftToPrev >> prevWS)
           , ((modm .|. controlMask .|. shiftMask, xK_Right), shiftToNext >> nextWS)
           , ((modm, xK_space), spawn "rofi -show drun")
+          , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+          , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+          , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
           ]
       toRemove conf@XConfig{modMask = modm} =
         removeKeys
