@@ -427,25 +427,12 @@
         "type": "github"
       }
     },
-    "private": {
-      "locked": {
-        "lastModified": 1661857200,
-        "narHash": "sha256-Gzm1ac5M4vmFa1gTS77fz6eHtY7ZjvHQ0MmkGViuGmE=",
-        "path": "/etc/nixos",
-        "type": "path"
-      },
-      "original": {
-        "path": "/etc/nixos",
-        "type": "path"
-      }
-    },
     "root": {
       "inputs": {
         "beautysh": "beautysh",
         "home-manager": "home-manager",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "private": "private",
         "taffybar": "taffybar",
         "volar": "volar",
         "vscode-server": "vscode-server"

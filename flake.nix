@@ -9,10 +9,9 @@
     beautysh = { url = "github:lovesegfault/beautysh"; inputs.nixpkgs.follows = "nixpkgs"; };
     volar.url = "github:ehllie/nixpkgs/volar";
     taffybar.url = "github:taffybar/taffybar";
-    private.url = "/etc/nixos";
   };
 
-  outputs = { nixpkgs, home-manager, nixos-wsl, vscode-server, taffybar, private, volar, beautysh, ... }:
+  outputs = { nixpkgs, home-manager, nixos-wsl, vscode-server, taffybar, volar, beautysh, ... }:
     let
       defaultConfig = {
         userName = "ellie";
@@ -62,7 +61,7 @@
             samba = true;
             graphical = true;
           };
-          extraModules = [ private.nixosModules.private ];
+          extraModules = [ ./secrets ];
         };
         nixdesk = flakeSystem {
           dotfileConfig = {
@@ -71,7 +70,7 @@
             windowManager = "gnome";
             graphical = true;
           };
-          extraModules = [ private.nixosModules.private ];
+          extraModules = [ ./secrets ];
         };
         nixwsl = flakeSystem {
           dotfileConfig = {
