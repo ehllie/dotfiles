@@ -117,4 +117,14 @@ return {
       require("nvim-surround").setup()
     end,
   },
+  {
+    "ellisonleao/glow.nvim",
+    config = function()
+      require("glow").setup({ border = "rounded", width = 80 })
+      require("which-key").register({
+        ["<leader>m"] = { "<cmd>Glow<CR>", "Open preview in glow" },
+      })
+    end,
+    requires = "folke/which-key.nvim",
+  },
 }

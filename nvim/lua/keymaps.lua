@@ -2,7 +2,7 @@ local packer_ok, packer = pcall(require, "packer")
 local which_key_ok, wk = pcall(require, "which-key")
 
 --Remap space as leader key
-vim.keymap.set("", "<Space>", "<Nop>")
+vim.keymap.set("", "<Space>", "<Nop>", {})
 vim.g.mapleader = " "
 
 -- Modes
@@ -15,7 +15,7 @@ vim.g.mapleader = " "
 
 if not which_key_ok then
   if packer_ok then
-    vim.keymap.set("n", "<leader>p", packer.sync)
+    vim.keymap.set("n", "<leader>p", packer.sync, {})
   end
   return
 end

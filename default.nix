@@ -120,6 +120,7 @@ let
     coreutils
     killall
     _1password
+    glow
   ];
 
   userDefinitions = { config, ... }: {

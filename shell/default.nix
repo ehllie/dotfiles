@@ -16,7 +16,6 @@ let cfg = config.dotfiles; in
 
   config = myLib.userDefinitions ({ config, ... }: {
     home = {
-      packages = [ (pkgs.writeScriptBin "fixdate" (builtins.readFile ../fixdate.sh)) ];
       shellAliases =
         let
           flakeRebuild = cmd: loc: "sudo nixos-rebuild ${cmd} --flake ${loc}#${cfg.hostName}";
