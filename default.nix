@@ -111,6 +111,7 @@ let
   ];
   cliPack = with pkgs; [
     git
+    git-crypt
     wget
     zip
     lazygit
@@ -121,23 +122,31 @@ let
     _1password
   ];
 
-  userDefinitions = {
+  userDefinitions = { config, ... }: {
     home = {
       username = cfg.userName;
       homeDirectory = "/home/${cfg.userName}";
       packages = builtins.concatLists [ devPack cliPack ];
       stateVersion = "22.05";
     };
+
+    services.gpg-agent.enable = true;
+
     programs = {
       home-manager.enable = true;
+
       git = {
         enable = true;
         userName = "Elizabeth Paź";
         userEmail = "me@ehllie.xyz";
-        extraConfig.init = {
-          defaultBranch = "main";
-        };
+        extraConfig.init.defaultBranch = "main";
       };
+
+      gpg = {
+        enable = true;
+        homedir = "${config.xdg.dataHome}/gnupg";
+      };
+
       ssh = {
         enable = true;
         extraConfig = "IdentityAgent ~/.1password/agent.sock";

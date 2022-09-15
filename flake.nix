@@ -39,6 +39,7 @@
           globalConfigModule = {
             inherit dotfiles;
             home-manager = { useGlobalPkgs = true; useUserPackages = true; };
+            nixpkgs.overlays = (import ./overlays) ++ taffybar.overlays ++ [ volarOverlay beautyshOverlay ];
           };
         in
         lib.nixosSystem {
@@ -48,7 +49,6 @@
             ./.
             home-manager.nixosModules.home-manager
             globalConfigModule
-            { nixpkgs.overlays = (import ./overlays) ++ taffybar.overlays ++ [ volarOverlay beautyshOverlay ]; }
           ] ++ extraModules;
         };
     in
