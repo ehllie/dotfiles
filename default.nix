@@ -55,6 +55,7 @@ let
       enable = true;
       servers = [ "pl.pool.ntp.org" ];
     };
+    programs._1password.enable = true;
 
     users.users.${cfg.userName} = {
       isNormalUser = true;
@@ -119,7 +120,6 @@ let
     btop
     coreutils
     killall
-    _1password
     glow
   ];
 
