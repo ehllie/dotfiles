@@ -1,10 +1,10 @@
 local function config()
+  vim.opt.runtimepath:append("@parsers@")
   require("nvim-treesitter.configs").setup({
-    ensure_installed = "all", -- one of "all" or a list of languages
-    ignore_install = { "" }, -- List of parsers to ignore installing
+    ensure_installed = {}, -- Installing parsers with nix
+    parser_install_dir = "@parsers@",
     highlight = {
-      enable = true, -- false will disable the whole extension
-      disable = { "css", "markdown" }, -- list of language that will be disabled
+      enable = true,
     },
     autopairs = {
       enable = true,

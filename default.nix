@@ -172,7 +172,7 @@ in
     ./colourscheme
     ./desktop
     ./hardware
-    ./nvim
+    ./neovim
     ./shell
     ./terminal
   ];

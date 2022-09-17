@@ -2,7 +2,7 @@
 
 -- Resize font in gui --
 
-vim.g.gui_font_default_size = 8
+vim.g.gui_font_default_size = tonumber("@fontsize@")
 vim.g.gui_font_size = vim.g.gui_font_default_size
 vim.g.gui_font_face = "Cascadia Code"
 

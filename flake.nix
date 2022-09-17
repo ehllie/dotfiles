@@ -40,10 +40,12 @@
             home-manager = { useGlobalPkgs = true; useUserPackages = true; };
             nixpkgs.overlays = (import ./overlays) ++ taffybar.overlays ++ [ volarOverlay beautyshOverlay ];
           };
+          myLib = ((import ./lib) { inherit nixpkgs; }).setDefaults dotfiles;
+          dotConf = dotfiles // { fontsize = 11; };
         in
         lib.nixosSystem {
           inherit system;
-          specialArgs.myLib = ((import ./lib) { inherit nixpkgs; }).setDefaults dotfiles;
+          specialArgs = { inherit myLib dotConf; };
           modules = [
             ./.
             home-manager.nixosModules.home-manager

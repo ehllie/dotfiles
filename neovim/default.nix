@@ -1,20 +1,20 @@
-{ pkgs, lib, myLib, ... }:
+{ pkgs, lib, myLib, dotConf, ... }:
 let
-  parsers = with pkgs.tree-sitter; withPlugins (_: allGrammars);
+  parsers = pkgs.linkFarm "grammars-prefixed" [{
+    name = "parser";
+    path = with pkgs.tree-sitter; withPlugins (_: allGrammars);
+  }];
 in
 myLib.userDefinitions {
-  xdg.configFile = {
-    "nvim/init.lua".text = ''
-      require("nix-patches") 
-    '' + (builtins.readFile ./init.lua);
-    "nvim/.luarc.json".source = ./.luarc.json;
-    "nvim/lua" = {
-      recursive = true;
-      source = ./lua;
+  xdg.configFile.nvim = {
+    recursive = true;
+    source = with pkgs; substituteAllRec {
+      src = ./nvim;
+      inherit parsers;
+      inherit (dotConf) fontsize;
     };
-    "nvim/lua/nix-patches.lua".source =
-      with pkgs; substituteAll { src = ./nix-patches.lua; inherit gcc parsers; };
   };
+
   home = {
     packages = with pkgs; [
       neovim
@@ -60,6 +60,7 @@ myLib.userDefinitions {
       rustfmt
       python3Packages.beautysh
     ];
+
     sessionVariables = {
       NEOVIDE_MULTIGRID = true;
     };
