@@ -5,6 +5,7 @@ let
   appPack = with pkgs; [
     libreoffice
     dmenu
+    xdotool
   ];
   mediaPack = with pkgs; [
     firefox
