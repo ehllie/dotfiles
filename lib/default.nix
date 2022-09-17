@@ -1,41 +1,23 @@
-{ nixpkgs }:
+{ nixpkgs, dfconf }:
 let
   inherit (nixpkgs) lib;
-  takeDefaults = [ [ "dualDefinitions" ] [ "userDefinitions" ] [ "homePath" ] ];
+  inherit (dfconf) userName;
   self = with lib; {
-    dualDefinitions = { userName, ... }: { hostDefinitions, userDefinitions }:
+    dualDefinitions = { hostDefinitions, userDefinitions }:
       hostDefinitions // { home-manager.users.${userName}.imports = [ userDefinitions ]; };
-    userDefinitions = { userName, ... }: definitions: { home-manager.users.${userName}.imports = [ definitions ]; };
+    userDefinitions = definitions: { home-manager.users.${userName}.imports = [ definitions ]; };
     homePath = { userName, ... }: path: [ "home-manager" "users" "${userName}" ] ++ path;
-    /* boolModule = { path, definitions, imports ? [ ], extraDeclarations ? { } }:
-      { config, ... }:
+    condDefinitions = path: default: pred: definitions:
       let
-        enable = getAttrFromPath path config;
-        optDec = mkOption { type = types.bool; default = false; };
+        val = attrByPath path default dfconf;
+        enable = pred val;
       in
-      {
-        imports =
-          if enable then imports else [ ];
-        options = recursiveUpdate (setAttrByPath path optDec) extraDeclarations;
-        config = mkIf enable definitions;
-      };
-      enumModule = { path, enumVal, definitions, imports ? [ ], extraDeclarations ? { } }:
-      { config, ... }:
-      let
-        enable = (getAttrFromPath path config) == enumVal;
-        optDec = mkOption { type = with types; nullOr (enum [ enumVal ]); };
-      in
-      {
-        imports = if enable then imports else [ ];
-        options = recursiveUpdate (setAttrByPath path optDec) extraDeclarations;
-        config = mkIf enable definitions;
-      }; */
+      mkIf enable definitions;
+    boolDefinitions = path: self.condDefinitions path false (v: assert builtins.isBool v; v);
+    boolDefinitions' = path: self.condDefinitions path false (v: assert builtins.isBool v; !v);
+    enumDefinitions = path: val: self.condDefinitions path null (v: v == val);
+    enumDefinitions' = path: val: self.condDefinitions path null (v: v != val);
     mkEnumOption = enumVal: mkOption { type = with types; nullOr (enum [ enumVal ]); };
-    setDefaults = defaults:
-      let
-        updates = map (path: { inherit path; update = old: old defaults; }) takeDefaults;
-      in
-      updateManyAttrsByPath updates self;
   };
 in
 self

@@ -18,6 +18,8 @@
         userDesc = "Elizabeth";
         dotfileRepo = "github:ehllie/dotfiles";
         shell = "zsh";
+        samba = false;
+        fontsize = 8;
         colourscheme.catppuccin.enable = true;
       };
 
@@ -34,18 +36,16 @@
 
       flakeSystem = { dotfileConfig ? { }, extraModules ? [ ] }:
         let
-          dotfiles = defaultConfig // dotfileConfig;
+          dfconf = lib.recursiveUpdate defaultConfig dotfileConfig;
+          extra = (import ./lib) { inherit nixpkgs dfconf; };
           globalConfigModule = {
-            inherit dotfiles;
             home-manager = { useGlobalPkgs = true; useUserPackages = true; };
             nixpkgs.overlays = (import ./overlays) ++ taffybar.overlays ++ [ volarOverlay beautyshOverlay ];
           };
-          myLib = ((import ./lib) { inherit nixpkgs; }).setDefaults dotfiles;
-          dotConf = dotfiles // { fontsize = 11; };
         in
         lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit myLib dotConf; };
+          specialArgs = { inherit extra dfconf; };
           modules = [
             ./.
             home-manager.nixosModules.home-manager
@@ -56,32 +56,30 @@
     {
       nixosConfigurations = {
         nixgram = flakeSystem {
-          dotfileConfig = {
+          dotfileConfig = ({
             hostName = "nixgram";
             hardware = "dell-gram";
             windowManager = "xmonad";
             samba = true;
             graphical = true;
-          };
-          extraModules = [ ./secrets ];
+          } // (import ./secrets));
         };
         nixdesk = flakeSystem {
-          dotfileConfig = {
+          dotfileConfig = ({
             hostName = "nixdesk";
             hardware = "desktop";
             windowManager = "xmonad";
+            fontsize = 11;
             graphical = true;
-          };
-          extraModules = [ ./secrets ];
+          } // (import ./secrets));
         };
         nixwsl = flakeSystem {
           dotfileConfig = {
             hostName = "nixwsl";
-            colourscheme.catppuccin.enable = false;
           };
           extraModules = [
             nixos-wsl.nixosModules.wsl
-            ({ myLib, lib, config, ... }: myLib.dualDefinitions {
+            ({ extra, lib, config, ... }: extra.dualDefinitions {
               hostDefinitions = {
                 systemd.services.fix-docker-desktop-distro = {
                   description = "Fixes permissions of docker-desktop-user-distro";

@@ -1,7 +1,5 @@
-{ config, lib, myLib, pkgs, ... }:
+{ config, dfconf, extra, lib, pkgs, ... }:
 let
-  cfg = config.dotfiles;
-
   hostDefinitions = {
     services.xserver = {
       enable = true;
@@ -9,6 +7,7 @@ let
       desktopManager.gnome.enable = true;
     };
   };
+
   userDefinitions = {
     home.packages = with pkgs; [
       gtk-engine-murrine
@@ -19,9 +18,5 @@ let
     ];
   };
 in
-{
-  options.dotfiles.windowManager = myLib.mkEnumOption "gnome";
-
-  config = lib.mkIf (cfg.windowManager == "gnome")
-    (myLib.dualDefinitions { inherit userDefinitions hostDefinitions; });
-}
+extra.enumDefinitions [ "windowManager" ] "gnome"
+  (extra.dualDefinitions { inherit userDefinitions hostDefinitions; })

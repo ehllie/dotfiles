@@ -1,5 +1,5 @@
-{ myLib, ... }:
-myLib.userDefinitions ({ config, ... }: with config.xdg; {
+{ extra, ... }:
+extra.userDefinitions ({ config, ... }: with config.xdg; {
   xdg = {
     enable = true;
     configFile."python/pythonrc.py".text = ''

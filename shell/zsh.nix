@@ -1,28 +1,26 @@
-{ config, pkgs, lib, myLib, ... }:
+{ config, dfconf, extra, lib, pkgs, ... }:
 let
-  cfg = config.dotfiles;
-
-  path = [ "dotfiles" "shell" ];
-  enumVal = "zsh";
-
   hostDefinitions = {
     environment = { pathsToLink = [ "/share/zsh" ]; };
     programs.zsh.enable = true;
-    users.users.${cfg.userName}.shell = pkgs.zsh;
+    users.users.${dfconf.userName}.shell = pkgs.zsh;
   };
+
   userDefinitions = ({ config, ... }: {
     home.packages = [ pkgs.ranger ];
 
     programs.zsh = {
       enable = true;
-      history.path = "${config.xdg.cacheHome}/zsh/history";
+      defaultKeymap = "viins";
       dotDir = ".config/zsh";
+      enableCompletion = true;
+      history.path = "${config.xdg.cacheHome}/zsh/history";
 
       localVariables = {
         VI_MODE_RESET_PROMPT_ON_MODE_CHANGE = true;
         VI_MODE_SET_CURSOR = true;
       };
-      enableCompletion = true;
+
       completionInit = ''
         autoload -U compinit && compinit
         zstyle ':completion:*' menu select
@@ -31,7 +29,7 @@ let
         _comp_options+=(globdots)		# Include hidden files.
         unsetopt completealiases		# Include aliases.
       '';
-      defaultKeymap = "viins";
+
       initExtra = ''
         # Use ranger to switch directories and bind it to ctrl-o
         rangercd () {
@@ -100,6 +98,7 @@ let
           };
         }
       ];
+
       oh-my-zsh = {
         enable = true;
         plugins = [ "poetry" "vi-mode" ];
@@ -107,9 +106,5 @@ let
     };
   });
 in
-{
-  options.dotfiles.shell = myLib.mkEnumOption "zsh";
-
-  config = lib.mkIf (cfg.shell == "zsh")
-    (myLib.dualDefinitions { inherit userDefinitions hostDefinitions; });
-}
+extra.enumDefinitions [ "shell" ] "zsh"
+  (extra.dualDefinitions { inherit userDefinitions hostDefinitions; })

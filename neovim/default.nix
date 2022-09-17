@@ -1,17 +1,17 @@
-{ pkgs, lib, myLib, dotConf, ... }:
+{ dfconf, extra, lib, pkgs, ... }:
 let
   parsers = pkgs.linkFarm "grammars-prefixed" [{
     name = "parser";
     path = with pkgs.tree-sitter; withPlugins (_: allGrammars);
   }];
 in
-myLib.userDefinitions {
+extra.userDefinitions {
   xdg.configFile.nvim = {
     recursive = true;
     source = with pkgs; substituteAllRec {
       src = ./nvim;
       inherit parsers;
-      inherit (dotConf) fontsize;
+      inherit (dfconf) fontsize;
     };
   };
 

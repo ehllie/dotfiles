@@ -1,38 +1,33 @@
-{ myLib, config, pkgs, lib, ... }:
+{ config, dfconf, extra, lib, pkgs, ... }:
 let
-  cfg = config.dotfiles;
-
   hostDefinitions = {
-    gtk.iconCache.enable = true;
     environment.systemPackages = [ pkgs.xcompmgr ];
-    services = {
-      xserver = {
-        enable = true;
-        displayManager = {
-          defaultSession = "none+xmonad";
-          lightdm = {
-            enable = true;
-            greeters = {
-              gtk.enable = false;
-              enso.enable = true;
-            };
-          };
-        };
-        windowManager.xmonad.enable = true;
-      };
-    };
+    gtk.iconCache.enable = true;
     security.polkit.enable = true;
 
+    services.xserver = {
+      enable = true;
+      windowManager.xmonad.enable = true;
 
-  };
-  userDefinitions = {
-    programs = {
-      alacritty.enable = true;
-      rofi.enable = true;
+      displayManager = {
+        defaultSession = "none+xmonad";
+
+        lightdm = {
+          enable = true;
+
+          greeters = {
+            gtk.enable = false;
+            enso.enable = true;
+          };
+        };
+      };
     };
-    services.taffybar.enable = true;
+  };
+
+  userDefinitions = {
     xsession = {
       enable = true;
+
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
@@ -40,12 +35,15 @@ let
         extraPackages = ps: with ps; [ taffybar ];
       };
     };
+
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
+      Install.WantedBy = [ "graphical-session.target" ];
+
       Unit = {
         Description = "Gnome polkit authentication agent";
         After = [ "graphical-session.target" ];
-
       };
+
       Service = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -53,13 +51,8 @@ let
         RestartSec = 1;
         TimeoutStopSec = 10;
       };
-      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 in
-{
-  options.dotfiles.windowManager = myLib.mkEnumOption "xmonad";
-
-  config = lib.mkIf (cfg.windowManager == "xmonad")
-    (myLib.dualDefinitions { inherit userDefinitions hostDefinitions; });
-}
+extra.enumDefinitions [ "windowManager" ] "xmonad"
+  (extra.dualDefinitions { inherit userDefinitions hostDefinitions; })

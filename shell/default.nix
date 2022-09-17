@@ -1,28 +1,16 @@
-{ config, lib, myLib, pkgs, ... }:
-let cfg = config.dotfiles; in
+{ config, dfconf, extra, lib, pkgs, ... }:
 {
   imports = [ ./xdg.nix ./zsh.nix ];
 
-  options.dotfiles = with lib; {
-    shell = mkOption {
-      description = "Which shell to use";
-      type = with types; nullOr (enum [ ]);
-    };
-    dotfileRepo = mkOption {
-      type = types.str;
-      description = "Url of the dotfile repo";
-    };
-  };
-
-  config = myLib.userDefinitions ({ config, ... }: {
+  config = extra.userDefinitions ({ config, ... }: {
     home = {
       shellAliases =
         let
-          flakeRebuild = cmd: loc: "sudo nixos-rebuild ${cmd} --flake ${loc}#${cfg.hostName}";
+          flakeRebuild = cmd: loc: "sudo nixos-rebuild ${cmd} --flake ${loc}#${dfconf.hostName}";
         in
         {
-          osflake-dry = "${flakeRebuild "dry-activate" cfg.dotfileRepo} --option tarball-ttl 0";
-          osflake-switch = "${flakeRebuild "switch" cfg.dotfileRepo} --option tarball-ttl 0";
+          osflake-dry = "${flakeRebuild "dry-activate" dfconf.dotfileRepo} --option tarball-ttl 0";
+          osflake-switch = "${flakeRebuild "switch" dfconf.dotfileRepo} --option tarball-ttl 0";
           locflake-dry = "${flakeRebuild "dry-activate" "."}";
           locflake-switch = "${flakeRebuild "switch" "."}";
           vim = "nvim";

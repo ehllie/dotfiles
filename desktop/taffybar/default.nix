@@ -1,29 +1,34 @@
-{ lib, myLib, pkgs, config, ... }:
+{ config, dfconf, extra, lib, pkgs, ... }:
 let
   userDefinitions = with pkgs; {
-    services.taffybar.package = haskellPackages.callCabal2nix "my-taffybar" ./. { };
+    services.taffybar = {
+      enable = true;
+      package = haskellPackages.callCabal2nix "my-taffybar" ./. { };
+    };
+
     systemd.user.services.status-notifier-item = {
+      Install.WantedBy = [ "taffybar.service" ];
+
       Unit = {
         Description = "Status Notifier Item";
         PartOf = [ "tray.target" ];
       };
+
       Service = {
         Type = "dbus";
         BusName = "org.kde.StatusNotifierWatcher";
         ExecStart = "${haskellPackages.status-notifier-item}/bin/status-notifier-watcher";
         Restart = "on-failure";
       };
-      Install.WantedBy = [ "taffybar.service" ];
     };
   };
+
   hostDefinitions = {
     services = {
       xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
       gnome.at-spi2-core.enable = true;
     };
   };
-  enable = config.dotfiles.windowManager == "xmonad";
 in
-lib.mkIf enable (myLib.dualDefinitions {
-  inherit hostDefinitions userDefinitions;
-})
+extra.enumDefinitions [ "windowManager" ] "xmonad"
+  (extra.dualDefinitions { inherit hostDefinitions userDefinitions; })
