@@ -79,15 +79,15 @@
           };
           extraModules = [
             nixos-wsl.nixosModules.wsl
-            ({ extra, lib, config, ... }: extra.dualDefinitions {
+            ({ config,  extra, lib, ... }: extra.dualDefinitions {
               hostDefinitions = {
-                systemd.services.fix-docker-desktop-distro = {
-                  description = "Fixes permissions of docker-desktop-user-distro";
-                  script = ''
-                    chmod a+rx ${config.wsl.automountPath}/wsl/docker-desktop/docker-desktop-user-distro
-                  '';
-                  wantedBy = [ "docker-desktop-proxy.service" ];
-                };
+                # systemd.services.fix-docker-desktop-distro = {
+                #   description = "Fixes permissions of docker-desktop-user-distro";
+                #   script = ''
+                #     chmod a+rx ${config.wsl.automountPath}/wsl/docker-desktop/docker-desktop-user-distro
+                #   '';
+                #   wantedBy = [ "docker-desktop-proxy.service" ];
+                # };
                 wsl = {
                   enable = true;
                   automountPath = "/mnt";
@@ -100,6 +100,7 @@
               userDefinitions = {
                 imports = [ vscode-server.nixosModules.home ];
                 services.vscode-server.enable = true;
+                dconf.enable = false;
               };
             })
           ];
