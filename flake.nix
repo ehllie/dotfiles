@@ -38,19 +38,13 @@
         let
           dfconf = lib.recursiveUpdate defaultConfig dotfileConfig;
           extra = (import ./lib) { inherit nixpkgs dfconf; };
-          globalConfigModule = {
-            home-manager = { useGlobalPkgs = true; useUserPackages = true; };
-            nixpkgs.overlays = (import ./overlays) ++ taffybar.overlays ++ [ volarOverlay beautyshOverlay ];
-          };
+          hm = home-manager.nixosModules.home-manager;
+          overlays = import ./overlays [ taffybar.overlays volarOverlay beautyshOverlay ];
         in
         lib.nixosSystem {
           inherit system;
           specialArgs = { inherit extra dfconf; };
-          modules = [
-            ./.
-            home-manager.nixosModules.home-manager
-            globalConfigModule
-          ] ++ extraModules;
+          modules = [ ./. hm overlays ] ++ extraModules;
         };
     in
     {
@@ -79,15 +73,8 @@
           };
           extraModules = [
             nixos-wsl.nixosModules.wsl
-            ({ config,  extra, lib, ... }: extra.dualDefinitions {
+            ({ config, extra, lib, ... }: extra.dualDefinitions {
               hostDefinitions = {
-                # systemd.services.fix-docker-desktop-distro = {
-                #   description = "Fixes permissions of docker-desktop-user-distro";
-                #   script = ''
-                #     chmod a+rx ${config.wsl.automountPath}/wsl/docker-desktop/docker-desktop-user-distro
-                #   '';
-                #   wantedBy = [ "docker-desktop-proxy.service" ];
-                # };
                 wsl = {
                   enable = true;
                   automountPath = "/mnt";

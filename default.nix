@@ -95,6 +95,11 @@ let
       servers = [ "pl.pool.ntp.org" ];
     };
 
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+    };
+
     users.users.${dfconf.userName} = {
       isNormalUser = true;
       home = "/home/${dfconf.userName}";
@@ -115,7 +120,6 @@ let
       autoUpgrade.channel = https://nixos.org/channels/nixos-unstable;
     };
   };
-
 
   userDefinitions = { config, ... }: {
     services.gpg-agent.enable = true;
@@ -172,5 +176,5 @@ in
     ./terminal
   ];
 
-  config = extra.dualDefinitions { inherit hostDefinitions userDefinitions; };
+  config = lib.recursiveUpdate hostDefinitions (extra.userDefinitions userDefinitions);
 }
