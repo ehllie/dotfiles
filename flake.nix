@@ -73,14 +73,14 @@
           };
           extraModules = [
             nixos-wsl.nixosModules.wsl
-            ({ config, extra, lib, ... }: extra.dualDefinitions {
+            ({ extra, lib, config, ... }: extra.dualDefinitions {
               hostDefinitions = {
                 wsl = {
                   enable = true;
                   automountPath = "/mnt";
                   defaultUser = defaultConfig.userName;
                   startMenuLaunchers = true;
-                  docker-desktop.enable = true;
+                  docker-desktop.enable = false;
                   docker-native.enable = false;
                 };
               };
