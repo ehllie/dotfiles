@@ -106,7 +106,10 @@ return {
     requires = { "zbirenbaum/copilot-cmp" },
     config = function()
       vim.defer_fn(function()
-        require("copilot").setup()
+        require("copilot").setup({
+          ft_disable = { "help", "dashboard", "dap-repl" },
+          copilot_node_command = "@nodejs16@/bin/node",
+        })
       end, 100)
     end,
   },

@@ -5,13 +5,13 @@ local M = {}
 ---@generic T
 ---@param str `T`
 ---@return `T`
-M.id = function(str)
+function M.id(str)
   return str
 end
 
 ---@param vals table
 ---@return fun(str: string): string)
-M.format = function(vals)
+function M.format(vals)
   ---@param str string
   return function(str)
     return string.format(str, unpack(vals))
@@ -22,7 +22,7 @@ end
 ---@param funcs table<fun(arg: `T`): `R`>
 ---@param args table<`T`>
 ---@return table<`R`>
-M.zip_map = function(funcs, args)
+function M.zip_map(funcs, args)
   local results = {}
   for i, func in ipairs(funcs) do
     results[i] = func(args[i])
@@ -33,7 +33,7 @@ end
 ---@param lines table<string>
 ---@param min_width integer?
 ---@return table<string>
-M.center = function(lines, min_width)
+function M.center(lines, min_width)
   local align = plen_str.align_str
   local max_len = min_width or 0
   for _, line in ipairs(lines) do
@@ -62,13 +62,13 @@ M.right_ui.restore = nop
 ---@param name string
 ---@param open function
 ---@param close function
-M.right_ui.register = function(name, open, close)
+function M.right_ui.register(name, open, close)
   M.right_ui.functions[name] = { open = open, close = close }
 end
 
 ---@param invoked_from string
 ---@return nil
-M.right_ui.toggle = function(invoked_from)
+function M.right_ui.toggle(invoked_from)
   pcall(M.right_ui.functions[M.right_ui.status].close)
   M.right_ui.restore = nop
   if invoked_from == M.right_ui.status then
@@ -81,7 +81,7 @@ end
 
 ---@param invoked_from string
 ---@return nil
-M.right_ui.temp_open = function(invoked_from)
+function M.right_ui.temp_open(invoked_from)
   if invoked_from ~= M.right_ui.status then
     local old_status = M.right_ui.status
     M.right_ui.toggle(invoked_from)
@@ -125,7 +125,39 @@ local function run_shell(shell)
   end
 end
 
-M.to_shell = function()
+---@param scale integer
+---@return {width: integer, height: integer}
+function M.ui_dim_fraction(scale)
+  local ui = vim.api.nvim_list_uis()[1]
+  return {
+    width = math.floor(ui.width * scale),
+    height = math.floor(ui.height * scale),
+  }
+end
+
+---Creates a floating window with sane defaults
+---@param opts {ratio: float?, bufnr: integer?}
+---@return any
+function M.floating_win(opts)
+  local ui = vim.api.nvim_list_uis()[1]
+  local ratio = opts.ratio or 0.7
+  local bufnr = opts.bufnr or vim.api.nvim_create_buf(false, true)
+  local dims = M.ui_dim_fraction(ratio)
+  local row = (ui.height - dims.height) / 2
+  local col = (ui.width - dims.width) / 2
+
+  return vim.api.nvim_open_win(bufnr, true, {
+    relative = "editor",
+    width = dims.width,
+    height = dims.height,
+    row = row,
+    col = col,
+    style = "minimal",
+    border = "rounded",
+  })
+end
+
+function M.to_shell()
   run_shell(find_shell())
 end
 

@@ -22,6 +22,8 @@ local function config()
 
       formatting.fourmolu.with({ extra_args = { "--indentation", "2" } }),
       formatting.cabal_fmt,
+
+      formatting.trim_whitespace,
     },
   })
 end

@@ -10,6 +10,7 @@ extra.userDefinitions {
     recursive = true;
     source = with pkgs; substituteAllRec {
       src = ./nvim;
+      nodejs16 = pkgs.nodejs-16_x;
       inherit parsers;
       inherit (dfconf) fontsize;
     };

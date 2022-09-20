@@ -1,4 +1,5 @@
 local function config_dapui()
+  local lib = require("local-lib")
   local dap = require("dap")
   local dapui = require("dapui")
   local register = require("which-key").register
@@ -23,7 +24,7 @@ local function config_dapui()
             size = 0.4, -- Can be float or integer > 1
           },
           {
-            id = "watches",
+            id = "stacks",
             size = 0.3,
           },
           {
@@ -36,8 +37,14 @@ local function config_dapui()
       },
       {
         elements = {
-          "repl",
-          "console",
+          {
+            id = "watches",
+            size = 0.4,
+          },
+          {
+            id = "console",
+            size = 0.6,
+          },
         },
         size = 0.2,
         position = "bottom",
@@ -82,6 +89,12 @@ local function config_dapui()
     ui_funcs.restore()
   end
 
+  local winsize = 0.8
+
+  vim.api.nvim_create_user_command("FloatRepl", function()
+    lib.floating_win({ ratio = winsize })
+  end, {})
+
   register({
     d = {
       name = "Debug",
@@ -90,7 +103,13 @@ local function config_dapui()
       i = { dap.step_into, "Step into" },
       o = { dap.step_over, "Step over" },
       O = { dap.step_out, "Step out" },
-      r = { dap.repl.toggle, "Toggle repl" },
+      r = {
+        function()
+          dap.repl.toggle(lib.ui_dim_fraction(winsize), "FloatRepl")
+          vim.cmd("wincmd p")
+        end,
+        "Toggle repl",
+      },
       l = { dap.run_last, "Run last" },
       u = { toggle, "Toggle UI" },
       t = { dap.terminate, "Terminate" },
