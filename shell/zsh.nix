@@ -14,6 +14,7 @@ let
       defaultKeymap = "viins";
       dotDir = ".config/zsh";
       enableCompletion = true;
+      enableSyntaxHighlighting = true;
       history.path = "${config.xdg.cacheHome}/zsh/history";
 
       localVariables = {
@@ -30,7 +31,12 @@ let
         unsetopt completealiases		# Include aliases.
       '';
 
-      initExtra = ''
+      initExtra = with pkgs; ''
+        source ${spaceship-prompt}/lib/spaceship-prompt/spaceship.zsh
+        source ${nix-zsh-completions}/share/zsh/plugins/nix/nix-zsh-completions.plugin.zsh
+        source ${zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
+        source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
         # Use ranger to switch directories and bind it to ctrl-o
         rangercd () {
             tmp="$(mktemp)"
@@ -45,64 +51,6 @@ let
 
         prompt_nix_shell_setup
       '';
-
-      plugins = [
-        {
-          name = "nix-zsh-completions";
-          file = "nix-zsh-completions.plugin.zsh";
-          src = pkgs.fetchFromGitHub {
-            owner = "spwhitt";
-            repo = "nix-zsh-completions";
-            rev = "0.4.4";
-            sha256 = "Djs1oOnzeVAUMrZObNLZ8/5zD7DjW3YK42SWpD2FPNk=";
-          };
-        }
-        {
-          name = "zsh-nix-shell";
-          file = "nix-shell.plugin.zsh";
-          src = pkgs.fetchFromGitHub {
-            owner = "chisui";
-            repo = "zsh-nix-shell";
-            rev = "v0.5.0";
-            sha256 = "IT3wpfw8zhiNQsrw59lbSWYh0NQ1CUdUtFzRzHlURH0=";
-          };
-        }
-        {
-          name = "spaceship-zsh-theme";
-          file = "spaceship.zsh";
-          src = pkgs.fetchFromGitHub {
-            owner = "pascaldevink";
-            repo = "spaceship-zsh-theme";
-            rev = "master";
-            sha256 = "Mj5we+tOPgQ/JLBgplDG3qln1RMsm3Ir0c9URcP3AQY=";
-          };
-        }
-        {
-          name = "catppuccin-syntax-highlighting";
-          file = "catppuccin-zsh-syntax-highlighting.zsh";
-          src = pkgs.fetchFromGitHub {
-            owner = "catppuccin";
-            repo = "zsh-syntax-highlighting";
-            rev = "main";
-            sha256 = "YV9lpJ0X2vN9uIdroDWEize+cp9HoKegS3sZiSpNk50=";
-          };
-        }
-        {
-          name = "zsh-syntax-highlighting";
-          file = "zsh-syntax-highlighting.zsh";
-          src = pkgs.fetchFromGitHub {
-            owner = "zsh-users";
-            repo = "zsh-syntax-highlighting";
-            rev = "master";
-            sha256 = "YV9lpJ0X2vN9uIdroDWEize+cp9HoKegS3sZiSpNk50=";
-          };
-        }
-      ];
-
-      oh-my-zsh = {
-        enable = true;
-        plugins = [ "poetry" "vi-mode" ];
-      };
     };
   });
 in
