@@ -52,6 +52,7 @@ let
     btop
     killall
     glow
+    tree
   ];
 
   hostDefinitions = {

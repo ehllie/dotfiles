@@ -17,6 +17,8 @@
         userName = "ellie";
         userDesc = "Elizabeth";
         dotfileRepo = "github:ehllie/dotfiles";
+        repoUrl = "https://github.com/ehllie/dotfiles.git";
+        repoDir = "$HOME/Code/dotfiles";
         shell = "zsh";
         samba = false;
         fontsize = 8;
