@@ -9,13 +9,58 @@ function M.id(str)
   return str
 end
 
----@param vals table
----@return fun(str: string): string)
-function M.format(vals)
-  ---@param str string
-  return function(str)
-    return string.format(str, unpack(vals))
+---Returns a table of keys from a table
+---@param tab table
+---@return table
+function M.keys(tab)
+  local result = {}
+  for k, _ in pairs(tab) do
+    table.insert(result, k)
   end
+  return result
+end
+
+---Transforms tables' key: value pairs using the provided function
+---@generic T1
+---@generic T2
+---@generic T3
+---@generic T4
+---@param fun fun(k: T2, v: T2): (T3, T4)
+---@param tab { [T1]: T2 }
+---@return { [T3]: T4 }
+function M.transform_table(fun, tab)
+  local result = {}
+  for k, v in pairs(tab) do
+    local nk, nv = fun(k, v)
+    result[nk] = nv
+  end
+  return result
+end
+
+---Checks whether a table contains a value.
+---@param elem any
+---@param table table
+---@return boolean
+function M.is_in(elem, table)
+  for _, value in pairs(table) do
+    if value == elem then
+      return true
+    end
+  end
+  return false
+end
+
+---@generic T1
+---@generic T2
+---@param fun fun(acc: T1, elem: T2): T1
+---@param acc T1
+---@param tab { [integer]: T2 }}
+---@return T1
+function M.fold(fun, acc, tab)
+  for _, v in ipairs(tab) do
+    acc = fun(acc, v)
+  end
+  return acc
 end
 
 ---@generic R

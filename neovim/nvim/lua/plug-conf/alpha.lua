@@ -1,7 +1,7 @@
 local function config()
   local dashboard = require("alpha.themes.dashboard")
   local fortune = require("alpha.fortune")
-  local center = require("local-lib").center
+  local center = require("utils").center
   local header = {
     [[  ` : | | | |:  ||  :     `  :  |  |+|: | : : :|   .        `              .]],
     [[      ` : | :|  ||  |:  :    `  |  | :| : | : |:   |  .                    :]],
@@ -46,7 +46,7 @@ local function config()
     return center(vim.tbl_flatten({
       center({
         "",
-        string.format("%d plugins installed", plugin_count),
+        ("%d plugins installed"):format(plugin_count),
         "Neovim is pretty cool actually",
         "",
         "",

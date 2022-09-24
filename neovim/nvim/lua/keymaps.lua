@@ -55,7 +55,7 @@ register({
   ["<leader>h"] = { "<cmd>nohlsearch<CR>", "Clear search highlighting" },
   ["<leader><leader>"] = { "<cmd>:w<CR>", "Quick save" },
   ["<leader>s"] = { toggle_format, "Toggle auto formatting" },
-  ["<leader>v"] = { require("local-lib").to_shell, "Open current project in a virtual shell if one exists" },
+  ["<leader>v"] = { require("utils").to_shell, "Open current project in a virtual shell if one exists" },
   ["<leader>n"] = {
     function()
       vim.cmd([[!nix develop -c $SHELL -c "SHELL=$SHELL; neovide ."]])

@@ -1,5 +1,5 @@
 local function config()
-  local ui_funcs = require("local-lib").right_ui
+  local ui_funcs = require("utils").right_ui
 
   require("symbols-outline").setup({
     highlight_hovered_item = true,

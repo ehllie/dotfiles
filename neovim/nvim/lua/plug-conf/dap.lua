@@ -1,9 +1,9 @@
 local function config_dapui()
-  local lib = require("local-lib")
+  local utils = require("utils")
   local dap = require("dap")
   local dapui = require("dapui")
   local register = require("which-key").register
-  local ui_funcs = require("local-lib").right_ui
+  local ui_funcs = require("utils").right_ui
 
   dapui.setup({
     icons = { expanded = "▾", collapsed = "▸" },
@@ -92,7 +92,7 @@ local function config_dapui()
   local winsize = 0.8
 
   vim.api.nvim_create_user_command("FloatRepl", function()
-    lib.floating_win({ ratio = winsize })
+    utils.floating_win({ ratio = winsize })
   end, {})
 
   register({
@@ -105,7 +105,7 @@ local function config_dapui()
       O = { dap.step_out, "Step out" },
       r = {
         function()
-          dap.repl.toggle(lib.ui_dim_fraction(winsize), "FloatRepl")
+          dap.repl.toggle(utils.ui_dim_fraction(winsize), "FloatRepl")
           vim.cmd("wincmd p")
         end,
         "Toggle repl",
@@ -134,20 +134,6 @@ return {
       }, { prefix = "<leader>d" })
       dappy.setup("python")
       dappy.test_runner = "pytest"
-    end,
-    requires = "mfussenegger/nvim-dap",
-  },
-  {
-    "ravenxrz/DAPInstall.nvim",
-    config = function()
-      local dap_install = require("dap-install")
-      dap_install.setup({})
-
-      local custom_configs = {}
-
-      for debugger, config in pairs(custom_configs) do
-        dap_install.config(debugger, config)
-      end
     end,
     requires = "mfussenegger/nvim-dap",
   },
