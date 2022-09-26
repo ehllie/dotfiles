@@ -30,6 +30,15 @@ local function toggle_format()
   end
 end
 
+local function close_floating()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative ~= "" then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
+end
+
 vim.api.nvim_create_user_command("MultiMacro", function(arg_tab)
   local reg_name = vim.fn.getcharstr()
   pcall(vim.cmd, arg_tab.line1 .. "," .. arg_tab.line2 .. "g/^/norm @" .. reg_name)
@@ -63,6 +72,7 @@ register({
     end,
     "Nix develop",
   },
+  ["<C-w>f"] = { close_floating, "Closes all floating windows" },
   -- ["<leader>p"] = { packer.sync, "Reload packer" },
 })
 
