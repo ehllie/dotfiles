@@ -8,7 +8,6 @@ local function config()
         ["<leader>l"] = {
           a = { rt.code_action_group.code_action_group, "Rust code actions" },
           m = { rt.expand_macro.expand_macro, "Expand macro" },
-          r = { rt.runnables.runnables, "Runnables" },
         },
         ["K"] = { rt.hover_actions.hover_actions, "Rust hover actions" },
       }
