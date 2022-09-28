@@ -29,11 +29,13 @@ local function config()
       capabilities = opts.capabilities,
       settings = {
         ["rust-analyzer"] = {
-          lens = {
-            enable = true,
-          },
           checkOnSave = {
             command = "clippy",
+          },
+          cargo = {
+            extraEnv = {
+              CARGO_TARGET_DIR = "/tmp/rust-analyzer",
+            },
           },
         },
       },
