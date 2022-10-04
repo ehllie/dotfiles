@@ -35,7 +35,7 @@ let
 
     networking.firewall = {
       allowedTCPPorts = [ 5357 ]; # wsdd
-      allowedUDPPorts = [ 3702 ]; # wsdd 
+      allowedUDPPorts = [ 3702 ]; # wsdd
     };
   };
 in
@@ -77,6 +77,11 @@ in
       upower.enable = true;
       udisks2.enable = true;
       openssh.enable = true;
+
+      avahi = {
+        enable = true;
+        nssmdns = true;
+      };
 
       dbus = {
         enable = true;
