@@ -14,6 +14,7 @@ let
     thunderbird
     protonvpn-gui
     pavucontrol
+    networkmanagerapplet
     vlc
     discord
     protonmail-cli
@@ -49,30 +50,27 @@ in
       };
     };
 
-    userDefinitions =
-      let
-      in
-      {
-        systemd.user.services.protonmail-bridge = {
-          Install.WantedBy = [ "default.target" ];
+    userDefinitions = {
+      systemd.user.services.protonmail-bridge = {
+        Install.WantedBy = [ "default.target" ];
 
-          Unit = {
-            Description = "Protonmail Bridge";
-            After = [ "network.target" ];
-          };
-
-          Service = {
-            Type = "simple";
-            ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge -l info --noninteractive";
-            Restart = "on-failure";
-            RestartSec = 3;
-          };
+        Unit = {
+          Description = "Protonmail Bridge";
+          After = [ "network.target" ];
         };
 
-        home = {
-          packages = userPackages;
-          sessionVariables.OP_BIOMETRIC_UNLOCK_ENABLED = true;
+        Service = {
+          Type = "simple";
+          ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge -l info --noninteractive";
+          Restart = "on-failure";
+          RestartSec = 3;
         };
       };
+
+      home = {
+        packages = userPackages;
+        sessionVariables.OP_BIOMETRIC_UNLOCK_ENABLED = true;
+      };
+    };
   });
 }
