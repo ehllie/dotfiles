@@ -8,6 +8,7 @@
     vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
     beautysh = { url = "github:lovesegfault/beautysh"; inputs.nixpkgs.follows = "nixpkgs"; };
     nil = { url = "github:oxalica/nil"; inputs.nixpkgs.follows = "nixpkgs"; };
+    ante = { url = "github:jfecher/ante"; inputs.nixpkgs.follows = "nixpkgs"; };
     volar.url = "github:ehllie/nixpkgs/volar";
     taffybar.url = "github:taffybar/taffybar";
   };
@@ -21,6 +22,7 @@
     , volar
     , beautysh
     , nil
+    , ante
     , ...
     }:
     let
@@ -57,6 +59,7 @@
             volarOverlay
             beautyshOverlay
             nil.overlays.default
+            ante.overlays.default
           ];
         in
         lib.nixosSystem {

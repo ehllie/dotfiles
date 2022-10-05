@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "ante": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1664720788,
+        "narHash": "sha256-lHl0+N9jC7N+LlRY0EBAVloniL814+G3YJ1bt7X9YKg=",
+        "owner": "jfecher",
+        "repo": "ante",
+        "rev": "453402f8afe0f34582e5d71c20f0e8f077157065",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jfecher",
+        "repo": "ante",
+        "type": "github"
+      }
+    },
     "beautysh": {
       "inputs": {
         "nixpkgs": [
@@ -128,6 +149,21 @@
         "type": "github"
       }
     },
+    "flake-utils_7": {
+      "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "git-ignore-nix": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -206,7 +242,7 @@
     },
     "gtk-sni-tray": {
       "inputs": {
-        "flake-utils": "flake-utils_4",
+        "flake-utils": "flake-utils_5",
         "git-ignore-nix": "git-ignore-nix_2",
         "nixpkgs": "nixpkgs_4",
         "status-notifier-item": "status-notifier-item"
@@ -228,7 +264,7 @@
     },
     "gtk-strut": {
       "inputs": {
-        "flake-utils": "flake-utils_6",
+        "flake-utils": "flake-utils_7",
         "git-ignore-nix": "git-ignore-nix_4",
         "nixpkgs": "nixpkgs_8"
       },
@@ -270,7 +306,7 @@
     },
     "nil": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -293,7 +329,7 @@
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils_3",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -466,6 +502,7 @@
     },
     "root": {
       "inputs": {
+        "ante": "ante",
         "beautysh": "beautysh",
         "home-manager": "home-manager",
         "nil": "nil",
@@ -503,7 +540,7 @@
     },
     "status-notifier-item": {
       "inputs": {
-        "flake-utils": "flake-utils_5",
+        "flake-utils": "flake-utils_6",
         "git-ignore-nix": "git-ignore-nix_3",
         "nixpkgs": "nixpkgs_6"
       },
@@ -524,7 +561,7 @@
     },
     "taffybar": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_4",
         "git-ignore-nix": "git-ignore-nix",
         "gtk-sni-tray": "gtk-sni-tray",
         "gtk-strut": "gtk-strut",

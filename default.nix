@@ -33,6 +33,8 @@ let
     (python3.withPackages pythonPkgs)
     poetry
 
+    ante
+
     lldb
     cargo
     rustc
@@ -71,9 +73,9 @@ let
       extraOptions = "experimental-features = nix-command flakes";
 
       settings = {
-        trusted-substituters = [ https://nix-community.cachix.org ];
-        extra-substituters = [ https://nix-community.cachix.org ];
-        extra-trusted-public-keys = [ nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= ];
+        trusted-substituters = [ "https://nix-community.cachix.org" ];
+        extra-substituters = [ "https://nix-community.cachix.org" ];
+        extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
       };
 
       gc = {
@@ -124,7 +126,7 @@ let
       stateVersion = "22.05";
       autoUpgrade.enable = true;
       autoUpgrade.allowReboot = true;
-      autoUpgrade.channel = https://nixos.org/channels/nixos-unstable;
+      autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
     };
   };
 
