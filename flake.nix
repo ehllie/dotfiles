@@ -7,11 +7,22 @@
     nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
     beautysh = { url = "github:lovesegfault/beautysh"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nil = { url = "github:oxalica/nil"; inputs.nixpkgs.follows = "nixpkgs"; };
     volar.url = "github:ehllie/nixpkgs/volar";
     taffybar.url = "github:taffybar/taffybar";
   };
 
-  outputs = { nixpkgs, home-manager, nixos-wsl, vscode-server, taffybar, volar, beautysh, ... }:
+  outputs =
+    { nixpkgs
+    , home-manager
+    , nixos-wsl
+    , vscode-server
+    , taffybar
+    , volar
+    , beautysh
+    , nil
+    , ...
+    }:
     let
       defaultConfig = {
         userName = "ellie";
@@ -41,7 +52,12 @@
           dfconf = lib.recursiveUpdate defaultConfig dotfileConfig;
           extra = (import ./lib) { inherit nixpkgs dfconf; };
           hm = home-manager.nixosModules.home-manager;
-          overlays = import ./overlays [ taffybar.overlays volarOverlay beautyshOverlay ];
+          overlays = import ./overlays [
+            taffybar.overlays
+            volarOverlay
+            beautyshOverlay
+            nil.overlays.default
+          ];
         in
         lib.nixosSystem {
           inherit system;

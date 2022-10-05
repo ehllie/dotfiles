@@ -10,7 +10,7 @@ local servers = {
   "tailwindcss",
   "volar",
   "yamlls",
-  "rnix",
+  "nil_ls",
 }
 
 ---@type table<table>

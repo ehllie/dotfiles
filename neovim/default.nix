@@ -47,7 +47,7 @@ extra.userDefinitions {
       nodePackages.tailwindcss-language-server
       nodePackages.volar
       sumneko-lua-language-server
-      rnix-lsp
+      nil
       rust-analyzer
 
       #Linters
