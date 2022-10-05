@@ -513,11 +513,11 @@
     },
     "volar": {
       "locked": {
-        "lastModified": 1663054312,
-        "narHash": "sha256-gSnwr6hUTcB9Kwo+BbVsjT6c0DOtijc2TiyjB6yxD48=",
+        "lastModified": 1664984167,
+        "narHash": "sha256-Er6RLXrBnVpbM5ewmOdde8xlCXpmtgIPNNSO7dvg4HA=",
         "owner": "ehllie",
         "repo": "nixpkgs",
-        "rev": "82d40efc17aa54cbc20aa424aab2aed816751ea2",
+        "rev": "789bf9c62b20d587c26e8c5e5debd27266fcbd6b",
         "type": "github"
       },
       "original": {
