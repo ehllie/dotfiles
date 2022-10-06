@@ -105,6 +105,7 @@ return {
     event = { "VimEnter" },
     requires = { "zbirenbaum/copilot-cmp" },
     config = function()
+      vim.opt.runtimepath:append("@nodejs16@/bin")
       vim.defer_fn(function()
         require("copilot").setup({
           ft_disable = { "help", "dashboard", "dap-repl" },
