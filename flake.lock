@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1664720788,
-        "narHash": "sha256-lHl0+N9jC7N+LlRY0EBAVloniL814+G3YJ1bt7X9YKg=",
+        "lastModified": 1665084683,
+        "narHash": "sha256-plXwewVYF/E7SO1qHFA/MhvCP0iWB1V/i1RbmuzNFlk=",
         "owner": "jfecher",
         "repo": "ante",
-        "rev": "453402f8afe0f34582e5d71c20f0e8f077157065",
+        "rev": "867cfea7334a241908207dc665f6614e07b77b77",
         "type": "github"
       },
       "original": {
