@@ -1,5 +1,4 @@
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local is_in = require("utils").is_in
 
 local M = {}
 
@@ -95,9 +94,6 @@ M.can_format = { "rust_analyzer" }
 ---@return fun(client: table, bufnr: number): nil
 M.make_on_attach = function(extra)
   return function(client, bufnr)
-    if not is_in(client.name, M.can_format) then
-      client.resolved_capabilities.document_formatting = false
-    end
     lsp_keymaps(bufnr, extra)
     local status_ok, illuminate = pcall(require, "illuminate")
     if not status_ok then

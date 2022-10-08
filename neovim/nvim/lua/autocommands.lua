@@ -1,4 +1,6 @@
 -- Autocommands that rely on the vim.cmd API
+local lsp_formatters = require("lsp-conf.handlers").can_format
+local is_in = require("utils").is_in
 
 -- Use 'q' to quit from common plugins
 vim.api.nvim_create_autocmd({ "FileType" }, {
@@ -51,7 +53,12 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   callback = function()
     if do_auto_format then
-      vim.lsp.buf.formatting() ---@diagnostic disable-line
+      vim.lsp.buf.format({
+        async = true,
+        filter = function(client)
+          return is_in(client.name, lsp_formatters) or client.name == "null-ls"
+        end,
+      })
     end
   end,
 })
