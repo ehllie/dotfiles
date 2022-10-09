@@ -59,7 +59,7 @@ extra.userDefinitions {
       nixpkgs-fmt
       nodePackages.prettier
       rustfmt
-      # python3Packages.beautysh
+      beautysh
     ];
 
     sessionVariables = {

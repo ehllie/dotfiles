@@ -6,7 +6,6 @@
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
-    beautysh = { url = "github:lovesegfault/beautysh"; inputs.nixpkgs.follows = "nixpkgs"; };
     nil = { url = "github:oxalica/nil"; inputs.nixpkgs.follows = "nixpkgs"; };
     ante = { url = "github:jfecher/ante"; inputs.nixpkgs.follows = "nixpkgs"; };
     volar.url = "github:ehllie/nixpkgs/volar";
@@ -20,7 +19,6 @@
     , vscode-server
     , taffybar
     , volar
-    , beautysh
     , nil
     , ante
     , ...
@@ -45,8 +43,6 @@
         nodePackages = super.nodePackages // { inherit (volarPkgs.nodePackages) volar; };
       };
 
-      beautyshOverlay = beautysh.overlay;
-
       inherit (nixpkgs) lib;
 
       flakeSystem = { dotfileConfig ? { }, extraModules ? [ ] }:
@@ -57,7 +53,6 @@
           overlays = import ./overlays [
             taffybar.overlays
             volarOverlay
-            beautyshOverlay
             nil.overlays.default
             ante.overlays.default
           ];
