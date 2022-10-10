@@ -60,7 +60,9 @@ return packer.startup({
     use(require("plug-conf.lualine"))
     use(require("plug-conf.misc"))
     use(require("plug-conf.nvim-tree"))
-    use(require("plug-conf.presence"))
+    if "@graphical@" == "1" then
+      use(require("plug-conf.presence"))
+    end
     use(require("plug-conf.symbols-outline"))
     use(require("plug-conf.telescope"))
     use(require("plug-conf.theme"))

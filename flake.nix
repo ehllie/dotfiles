@@ -86,6 +86,7 @@
         nixwsl = flakeSystem {
           dotfileConfig = {
             hostName = "nixwsl";
+            graphical = false;
           };
           extraModules = [
             nixos-wsl.nixosModules.wsl
