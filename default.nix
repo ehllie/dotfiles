@@ -31,7 +31,7 @@ let
     (ghc.withPackages haskellPkgs)
 
     (python3.withPackages pythonPkgs)
-    # poetry
+    poetry
 
     ante
 
