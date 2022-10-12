@@ -29,6 +29,7 @@ let
 
   userPackages = with pkgs; [
     (ghc.withPackages haskellPkgs)
+    cabal-install
 
     (python3.withPackages pythonPkgs)
     poetry

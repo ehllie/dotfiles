@@ -18,6 +18,7 @@ let
     vlc
     discord
     protonmail-cli
+    spectacle
   ];
 in
 {
