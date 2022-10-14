@@ -9,14 +9,15 @@ let
   ];
 
   haskellPkgs = ps: with ps; [
+    cabal-fmt
+    fourmolu
+    haskell-language-server
+  ] ++ (if dfconf.graphical then [
     xmonad
     xmonad-contrib
     xmonad-extras
     taffybar
-    cabal-fmt
-    fourmolu
-    haskell-language-server
-  ];
+  ] else [ ]);
 
   pythonPkgs = ps: with ps; [
     black
