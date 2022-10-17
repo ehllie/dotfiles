@@ -31,8 +31,8 @@ in
         {
           osflake-dry = "${remote-op} ${flakeRebuild "dry-activate" "."} --option tarball-ttl 0";
           osflake-switch = "${remote-op} ${flakeRebuild "switch" "."} --option tarball-ttl 0";
-          locflake-dry = "${flakeRebuild "dry-activate" dfconf.repoDir}";
-          locflake-switch = "${flakeRebuild "switch" dfconf.repoDir}";
+          locflake-dry = "${flakeRebuild "dry-activate" dfconf.repoDir} --fast";
+          locflake-switch = "${flakeRebuild "switch" dfconf.repoDir} --fast";
           vim = "nvim";
         };
       packages = [ show-pkg ];
