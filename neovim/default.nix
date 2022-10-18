@@ -12,7 +12,7 @@ extra.userDefinitions {
       src = ./nvim;
       nodejs16 = pkgs.nodejs-16_x;
       inherit parsers;
-      inherit (dfconf) fontsize graphical;
+      inherit (dfconf) fontsize graphical repoDir;
     };
   };
 
