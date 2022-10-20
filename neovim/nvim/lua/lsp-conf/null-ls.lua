@@ -8,8 +8,8 @@ local function config()
   local diagnostics = null_ls.builtins.diagnostics
   local formatting = null_ls.builtins.formatting
   local sources = {
-    diagnostics.flake8.with({ extra_args = { "--max-line-length", "--extend-ignore", "E203" } }),
-    diagnostics.mypy,
+    diagnostics.flake8.with({ extra_args = { "--max-line-length", "88", "--extend-ignore", "E203" } }),
+    -- diagnostics.mypy,
 
     formatting.black.with({ extra_args = { "--fast" } }),
     formatting.isort.with({ extra_args = { "--profile", "black" } }),
