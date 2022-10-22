@@ -56,6 +56,7 @@ in
     virtualisation.docker.enable = true;
     systemd.services.upower.enable = true;
     networking.networkmanager.enable = true;
+    hardware.bluetooth.enable = true;
 
     boot = {
       plymouth.enable = true;
