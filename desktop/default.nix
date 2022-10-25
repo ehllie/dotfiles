@@ -19,6 +19,7 @@ let
     discord
     protonmail-cli
     spectacle
+    prismlauncher
   ];
 in
 {
