@@ -179,6 +179,17 @@ let
         git:
           autoFetch: false
       '';
+      "cabal/config".text = ''
+        repository hackage.haskell.org
+          url: http://hackage.haskell.org/
+
+        remote-repo-cache: ${config.xdg.cacheHome}/cabal/packages
+        extra-prog-path: ${config.xdg.dataHome}/cabal/bin
+        build-summary: ${config.xdg.dataHome}/cabal/logs/build.log
+        remote-build-reporting: none
+        jobs: $ncpus
+        installdir: ${config.xdg.dataHome}/cabal/bin
+      '';
     };
   };
 in

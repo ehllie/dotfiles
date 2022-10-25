@@ -34,7 +34,7 @@ extra.userDefinitions ({ config, ... }: with config.xdg; {
       STACK_ROOT = "${dataHome}/stack";
 
       # $HOME/.cabal
-      CABAL_CONFIG = "${dataHome}/cabal/config";
+      CABAL_CONFIG = "${configHome}/cabal/config";
       CABAL_DIR = "${dataHome}/cabal";
 
       # $HOME/.rustup
