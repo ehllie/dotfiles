@@ -151,6 +151,10 @@ let
         userName = "Elizabeth Paź";
         userEmail = "me@ehllie.xyz";
         extraConfig.init.defaultBranch = "main";
+        signing = {
+          key = null;
+          signByDefault = true;
+        };
       };
 
       gpg = {
