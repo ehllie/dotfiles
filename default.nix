@@ -57,6 +57,7 @@ let
     killall
     glow
     tree
+    pandoc
   ];
 
   hostDefinitions = {
