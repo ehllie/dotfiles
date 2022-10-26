@@ -19,9 +19,9 @@ let
 
   develop = pkgs.writeShellScriptBin "develop" ''
     if [ -z "$1" ]; then
-      nix develop -c $SHELL
+      nix develop -c "$SHELL"
     else
-      nix develop -c $SHELL -c SHELL=$SHELL; "$@"
+      nix develop -c "$SHELL" -c "SHELL=$SHELL; $*"
     fi
   '';
 
