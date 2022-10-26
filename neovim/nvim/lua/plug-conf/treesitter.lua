@@ -1,8 +1,7 @@
 local function config()
-  vim.opt.runtimepath:append("@parsers@")
+  vim.opt.runtimepath:append("@gcc@")
   require("nvim-treesitter.configs").setup({
-    ensure_installed = {}, -- Installing parsers with nix
-    parser_install_dir = "@parsers@",
+    ensure_installed = "all",
     highlight = {
       enable = true,
     },
