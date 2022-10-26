@@ -68,10 +68,16 @@ register({
   ["<leader>n"] = {
     function()
       vim.cmd([[!nix develop -c $SHELL -c "SHELL=$SHELL; neovide ."]])
-      vim.cmd("confirm qa")
+      if vim.v.shell_error == 0 then
+        vim.cmd("confirm qa")
+      else
+        print("Failed to open shell")
+        print("Error: " .. vim.v.shell_error)
+      end
     end,
-    "Nix develop",
+    "Reopen neovide in nix develop env",
   },
+  ["<leader>qq"] = { "<cmd>confirm qa<CR>", "Exit neovim" },
   ["<C-w>f"] = { close_floating, "Closes all floating windows" },
   -- ["<leader>p"] = { packer.sync, "Reload packer" },
 })
