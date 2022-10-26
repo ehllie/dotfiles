@@ -52,17 +52,17 @@ register({
   ["<C-k>"] = { "<C-w>k", "Move to top window" },
   ["<C-l>"] = { "<C-w>l", "Move to right window" },
 
-  ["<C-Up>"] = { ":resize +2<CR>", "Grow window vertical" },
-  ["<C-Down>"] = { ":resize -2<CR>", "Shrink window vertical" },
-  ["<C-Left>"] = { ":vertical resize -2<CR>", "Shrink window horizontal" },
-  ["<C-Right>"] = { ":vertical resize +2<CR>", "Grow window horizontal" },
+  ["<C-Up>"] = { "<cmd>resize +2<CR>", "Grow window vertical" },
+  ["<C-Down>"] = { "<cmd>resize -2<CR>", "Shrink window vertical" },
+  ["<C-Left>"] = { "<cmd>vertical resize -2<CR>", "Shrink window horizontal" },
+  ["<C-Right>"] = { "<cmd>vertical resize +2<CR>", "Grow window horizontal" },
 
-  ["<S-l>"] = { ":bnext<CR>", "Next buffer" },
-  ["<S-h>"] = { ":bprevious<CR>", "Previous window" },
+  ["<S-l>"] = { "<cmd>bnext<CR>", "Next buffer" },
+  ["<S-h>"] = { "<cmd>bprevious<CR>", "Previous window" },
   ["<S-q>"] = { "<cmd>Bdelete!<CR>", "Close buffer" },
 
   ["<leader>h"] = { "<cmd>nohlsearch<CR>", "Clear search highlighting" },
-  ["<leader><leader>"] = { "<cmd>:w<CR>", "Quick save" },
+  ["<leader><leader>"] = { "<cmd>w<CR>", "Quick save" },
   ["<leader>s"] = { toggle_format, "Toggle auto formatting" },
   ["<leader>v"] = { require("utils").to_shell, "Open current project in a virtual shell if one exists" },
   ["<leader>n"] = {
@@ -85,7 +85,7 @@ register({
 -- Insert --
 register({
   ["jk"] = { "<ESC>", "Exit insert mode" },
-  ["<C-s>"] = { "<cmd>:w<CR>", "Save" },
+  ["<C-s>"] = { "<cmd>w<CR>", "Save" },
 }, { mode = "i" })
 
 -- Visual --
@@ -93,7 +93,7 @@ register({
   p = { [["_dP]], "Paste" }, -- Doesn't overwrite the clipboard with the replaced text
   ["<"] = { "<gv", "Reduce indent" },
   [">"] = { ">gv", "Increase indent" },
-  ["@"] = { ":MultiMacro<CR>", "Run macro on selected lines" },
+  ["@"] = { "<cmd>MultiMacro<CR>", "Run macro on selected lines" },
 }, { mode = "v" })
 
 -- Command --
