@@ -17,8 +17,12 @@ let
     rm -rf $dir
   '';
 
-  vim-develop = pkgs.writeShellScriptBin "vim-develop" ''
-    nix develop -c $SHELL -c "SHELL=$SHELL; nvim $@"
+  develop = pkgs.writeShellScriptBin "develop" ''
+    if [ -z "$1" ]; then
+      nix develop -c $SHELL
+    else
+      nix develop -c $SHELL -c SHELL=$SHELL; "$@"
+    fi
   '';
 
 in
@@ -39,7 +43,7 @@ in
           locflake-switch = "${flakeRebuild "switch" dfconf.repoDir} --fast";
           vim = "nvim";
         };
-      packages = [ show-pkg vim-develop ];
+      packages = [ show-pkg develop ];
       sessionPath = [ "~/.local/bin" "${config.xdg.dataHome}/cargo/bin" ];
       sessionVariables = {
         EDITOR = "nvim";

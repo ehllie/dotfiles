@@ -67,7 +67,7 @@ register({
   ["<leader>v"] = { require("utils").to_shell, "Open current project in a virtual shell if one exists" },
   ["<leader>n"] = {
     function()
-      vim.cmd([[!nix develop -c $SHELL -c "SHELL=$SHELL; neovide ."]])
+      vim.cmd([[!develop neovide .]])
       if vim.v.shell_error == 0 then
         vim.cmd("confirm qa")
       else
