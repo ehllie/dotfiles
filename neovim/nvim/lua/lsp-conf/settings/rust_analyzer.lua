@@ -16,14 +16,6 @@ local function config()
   }
 
   rt.setup({
-    tools = {
-      on_initialized = function()
-        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave", "BufWritePost" }, {
-          callback = vim.lsp.codelens.refresh,
-          pattern = "*.rs",
-        })
-      end,
-    },
     server = {
       on_attach = opts.on_attach,
       capabilities = opts.capabilities,

@@ -65,11 +65,11 @@ local function lsp_keymaps(bufnr, extra)
     ["<leader>l"] = {
       name = "LSP info",
       i = { "<cmd>LspInfo<cr>", "LSP info" },
-      I = { "<cmd>LspInstallInfo<cr>", "LSPInstall info" },
       a = { vim.lsp.buf.code_action, "Code actions" },
       r = { vim.lsp.buf.rename, "Rename" },
       s = { vim.lsp.buf.signature_help, "Signature" },
       q = { vim.diagnostic.setloclist, "Show all diagnostics" },
+      l = { vim.lsp.codelens.run, "Run codelens" },
       j = {
         function()
           vim.diagnostic.goto_next({ buffer = bufnr })
@@ -80,7 +80,7 @@ local function lsp_keymaps(bufnr, extra)
         function()
           vim.diagnostic.goto_prev({ buffer = bufnr })
         end,
-        "Next diagnostic",
+        "Prev diagnostic",
       },
     },
   }
@@ -89,16 +89,24 @@ end
 
 M.can_format = { "rust_analyzer" }
 
+local has_codelens = { rust_analyzer = "*.rs", hls = { "*.hs", ".lhs" } }
+
 ---@param extra? fun(): table
 ---@return fun(client: table, bufnr: number): nil
 M.make_on_attach = function(extra)
   return function(client, bufnr)
     lsp_keymaps(bufnr, extra)
     local status_ok, illuminate = pcall(require, "illuminate")
-    if not status_ok then
-      return
+    if status_ok then
+      illuminate.on_attach(client)
     end
-    illuminate.on_attach(client)
+    local patterns = has_codelens[client.name]
+    if patterns then
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+        callback = vim.lsp.codelens.refresh,
+        pattern = patterns,
+      })
+    end
   end
 end
 
