@@ -59,7 +59,6 @@ local function config()
   dashboard.section.header.opts.hl = "Type"
   dashboard.section.buttons.val = buttons
   dashboard.section.buttons.opts.hl = "Keyword"
-  ---@diagnostic disable-next-line
   dashboard.section.footer.val = footer()
   dashboard.section.footer.opts.hl = "Identifier"
 
