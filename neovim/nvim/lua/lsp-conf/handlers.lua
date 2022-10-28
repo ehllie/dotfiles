@@ -1,8 +1,9 @@
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local lsp_status = require("lsp-status")
 
 local M = {}
 
-M.capabilities = cmp_nvim_lsp.default_capabilities()
+M.capabilities = vim.tbl_deep_extend("keep", cmp_nvim_lsp.default_capabilities(), lsp_status.capabilities)
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 M.setup = function()
@@ -100,6 +101,7 @@ M.make_on_attach = function(extra)
     if status_ok then
       illuminate.on_attach(client)
     end
+    lsp_status.on_attach(client)
     local patterns = has_codelens[client.name]
     if patterns then
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {

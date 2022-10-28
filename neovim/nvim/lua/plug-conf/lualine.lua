@@ -1,4 +1,6 @@
 local function config()
+  local lsp_status = require("lsp-status")
+
   local function hide_in_width()
     return vim.fn.winwidth(0) > 80
   end
@@ -22,6 +24,10 @@ local function config()
     colored = false,
     always_visible = true,
   }
+
+  local function progress()
+    return #vim.lsp.get_active_clients() > 0 and lsp_status.status_progress() or ""
+  end
 
   local diff = {
     "diff",
@@ -57,7 +63,7 @@ local function config()
     sections = {
       lualine_a = { "mode" },
       lualine_b = { { "b:gitsigns_head", icon = "" } },
-      lualine_c = { diagnostics },
+      lualine_c = { diagnostics, progress },
       lualine_x = { diff, spaces, "encoding", filetype },
       lualine_y = { location },
       lualine_z = { "progress" },
@@ -65,4 +71,8 @@ local function config()
   })
 end
 
-return { "nvim-lualine/lualine.nvim", config = config, requires = "lewis6991/gitsigns.nvim" }
+return {
+  "nvim-lualine/lualine.nvim",
+  config = config,
+  requires = { "lewis6991/gitsigns.nvim", "nvim-lua/lsp-status.nvim" },
+}

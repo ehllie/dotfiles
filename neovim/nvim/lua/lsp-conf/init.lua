@@ -53,6 +53,13 @@ return {
     "neovim/nvim-lspconfig",
     config = config,
     requires = "folke/which-key.nvim",
+    after = "lsp-status.nvim",
+  },
+  {
+    "nvim-lua/lsp-status.nvim",
+    config = function()
+      require("lsp-status").register_progress()
+    end,
   },
   require("lsp-conf.null-ls"),
   unpack(extended),
