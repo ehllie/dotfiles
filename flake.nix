@@ -8,7 +8,6 @@
     vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
     nil = { url = "github:oxalica/nil"; inputs.nixpkgs.follows = "nixpkgs"; };
     ante = { url = "github:jfecher/ante"; inputs.nixpkgs.follows = "nixpkgs"; };
-    volar.url = "github:ehllie/nixpkgs/volar";
     taffybar.url = "github:taffybar/taffybar";
   };
 
@@ -18,7 +17,6 @@
     , nixos-wsl
     , vscode-server
     , taffybar
-    , volar
     , nil
     , ante
     , ...
@@ -38,11 +36,6 @@
 
       system = "x86_64-linux";
 
-      volarPkgs = volar.legacyPackages.${system};
-      volarOverlay = self: super: {
-        nodePackages = super.nodePackages // { inherit (volarPkgs.nodePackages) volar; };
-      };
-
       inherit (nixpkgs) lib;
 
       flakeSystem = { dotfileConfig ? { }, extraModules ? [ ] }:
@@ -52,7 +45,6 @@
           hm = home-manager.nixosModules.home-manager;
           overlays = import ./overlays [
             taffybar.overlays
-            volarOverlay
             nil.overlays.default
             ante.overlays.default
           ];

@@ -462,7 +462,6 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
         "taffybar": "taffybar",
-        "volar": "volar",
         "vscode-server": "vscode-server"
       }
     },
@@ -546,22 +545,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "volar": {
-      "locked": {
-        "lastModified": 1665336096,
-        "narHash": "sha256-LORBbVeHFvwyeWXv48tgAkrtiirnZ4jAz77kHdtr1Z0=",
-        "owner": "ehllie",
-        "repo": "nixpkgs",
-        "rev": "6a214e152e93e0e15b7a56bdb2151105c64a34f5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ehllie",
-        "ref": "volar",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },

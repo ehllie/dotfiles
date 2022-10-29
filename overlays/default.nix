@@ -4,7 +4,7 @@ external:
     [
       [
         (import ./discord.nix)
-        (import ./tailwindcss-language-server.nix)
+        (import ./node-packages { inherit lib; })
         (import ./substitute-all-rec)
       ]
       external
