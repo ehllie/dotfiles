@@ -75,5 +75,8 @@ return packer.startup({
       require("packer").sync()
     end
   end,
-  config = { profile = { enable = true } },
+  config = {
+    profile = { enable = true },
+    git = { clone_timeout = 10 },
+  },
 })

@@ -8,7 +8,9 @@ local servers = {
   "rust_analyzer",
   "sumneko_lua",
   "tailwindcss",
-  "volar",
+  -- "volar",
+  "tsserver",
+  "svelte",
   "yamlls",
   "nil_ls",
 }

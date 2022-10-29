@@ -1,10 +1,15 @@
 { dfconf, extra, lib, pkgs, ... }:
+let
+  inherit (pkgs.nodePackages) prettier-plugin-svelte prettier-plugin-toml;
+in
 extra.userDefinitions {
   xdg.configFile.nvim = {
     recursive = true;
     source = with pkgs; substituteAllRec {
       src = ./nvim;
       nodejs16 = pkgs.nodejs-16_x;
+      prettierSvelte = prettier-plugin-svelte;
+      prettierToml = prettier-plugin-toml;
       inherit (pkgs) gcc;
       inherit (dfconf) fontsize graphical repoDir;
     };
@@ -40,6 +45,8 @@ extra.userDefinitions {
       nodePackages.pyright
       nodePackages.tailwindcss-language-server
       nodePackages.volar
+      nodePackages.typescript-language-server
+      nodePackages.svelte-language-server
       sumneko-lua-language-server
       nil
       rust-analyzer

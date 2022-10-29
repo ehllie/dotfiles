@@ -16,7 +16,16 @@ local function config()
 
     formatting.stylua.with({ extra_args = { "--indent-type", "spaces", "--indent-width", "2" } }),
 
-    formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
+    formatting.prettier.with({
+      extra_args = {
+        "--no-semi",
+        "--single-quote",
+        "--jsx-single-quote",
+        "--plugin=@prettierSvelte@/lib/node_modules/prettier-plugin-svelte",
+        "--plugin=@prettierToml@/lib/node_modules/prettier-plugin-toml",
+      },
+      extra_filetypes = { "svelte", "toml" },
+    }),
 
     formatting.nixpkgs_fmt,
 
