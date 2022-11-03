@@ -22,13 +22,13 @@ let
         sha512 = "awrNfaMtnHUr653GgGEs++LlAvW6w+DcPrOliSMXWCKo597CwL5Acf/wWdNkf/tfEQE3mjkeD1YOVZOUV/od1w==";
       };
     };
-    "@babel/parser-7.20.0" = {
+    "@babel/parser-7.20.1" = {
       name = "_at_babel_slash_parser";
       packageName = "@babel/parser";
-      version = "7.20.0";
+      version = "7.20.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@babel/parser/-/parser-7.20.0.tgz";
-        sha512 = "G9VgAhEaICnz8iiJeGJQyVl6J2nTjbW0xeisva0PK6XcKsga7BIaqm4ZF8Rg1Wbaqmy6znspNqhPaPkyukujzg==";
+        url = "https://registry.npmjs.org/@babel/parser/-/parser-7.20.1.tgz";
+        sha512 = "hp0AYxaZJhxULfM1zyp7Wgr+pSUKBcP3M+PHnSzWGdXOzg/kHWIgiUWARvubhUKGOEw3xqY4x+lyZ9ytBVcELw==";
       };
     };
     "@babel/types-7.20.0" = {
@@ -1089,7 +1089,7 @@ in
     dependencies = [
       sources."@babel/helper-string-parser-7.19.4"
       sources."@babel/helper-validator-identifier-7.19.1"
-      sources."@babel/parser-7.20.0"
+      sources."@babel/parser-7.20.1"
       sources."@babel/types-7.20.0"
       sources."@emmetio/abbreviation-2.2.3"
       sources."@emmetio/css-abbreviation-2.1.4"
