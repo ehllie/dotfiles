@@ -22,12 +22,13 @@
     , ...
     }:
     let
-      defaultConfig = {
+      defaultConfig = rec {
         userName = "ellie";
         userDesc = "Elizabeth";
         dotfileRepo = "github:ehllie/dotfiles";
         repoUrl = "https://github.com/ehllie/dotfiles.git";
-        repoDir = "$HOME/Code/dotfiles";
+        homeDir = "/home/" + userName;
+        repoDir = homeDir + "/Code/dotfiles";
         shell = "zsh";
         samba = false;
         fontsize = 8;

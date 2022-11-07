@@ -2,7 +2,8 @@
 let
   inherit (pkgs.nodePackages) prettier-plugin-svelte prettier-plugin-toml;
 in
-extra.userDefinitions {
+extra.userDefinitions ({ config, ... }: {
+
   xdg.configFile.nvim = {
     recursive = true;
     source = with pkgs; substituteAllRec {
@@ -10,8 +11,9 @@ extra.userDefinitions {
       nodejs16 = pkgs.nodejs-16_x;
       prettierSvelte = prettier-plugin-svelte;
       prettierToml = prettier-plugin-toml;
+      repoDir = dfconf.repoDir + "/neovim/nvim";
       inherit (pkgs) gcc;
-      inherit (dfconf) fontsize graphical repoDir;
+      inherit (dfconf) fontsize graphical;
     };
   };
 
@@ -67,4 +69,4 @@ extra.userDefinitions {
       NEOVIDE_MULTIGRID = true;
     };
   };
-}
+})

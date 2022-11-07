@@ -114,7 +114,7 @@ let
 
     users.users.${dfconf.userName} = {
       isNormalUser = true;
-      home = "/home/${dfconf.userName}";
+      home = dfconf.homeDir;
       description = dfconf.userDesc;
       extraGroups = [ "wheel" "networkmanager" "docker" ];
       initialPassword = "password"; # Change this asap obv
@@ -138,7 +138,7 @@ let
 
     home = {
       username = dfconf.userName;
-      homeDirectory = "/home/${dfconf.userName}";
+      homeDirectory = dfconf.homeDir;
       packages = userPackages;
       stateVersion = "22.05";
     };
