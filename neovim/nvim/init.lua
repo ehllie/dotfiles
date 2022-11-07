@@ -57,6 +57,13 @@ _G.symbols = {
   -- Variable = "",
 }
 
+_G.store = {
+  gcc = "@gcc@",
+  node_16 = "@nodejs16@",
+  prettier_svelte = "@prettierSvelte@",
+  prettier_toml = "@prettierToml@",
+}
+
 require("options")
 require("plug-conf")
 require("autocommands")

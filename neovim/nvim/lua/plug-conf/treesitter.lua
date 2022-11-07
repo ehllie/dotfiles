@@ -1,5 +1,5 @@
 local function config()
-  vim.opt.runtimepath:append("@gcc@")
+  vim.opt.runtimepath:append(store.gcc .. "/bin")
   require("nvim-treesitter.configs").setup({
     ensure_installed = "all",
     highlight = {
