@@ -4,6 +4,7 @@ local function config_dapui()
   local dapui = require("dapui")
   local register = require("which-key").register
   local ui_funcs = require("utils").right_ui
+  local vsdap = require("dap.ext.vscode")
 
   dapui.setup({
     icons = { expanded = "▾", collapsed = "▸" },
@@ -111,6 +112,7 @@ local function config_dapui()
         "Toggle repl",
       },
       l = { dap.run_last, "Run last" },
+      j = { vsdap.load_launchjs, "Load launch.js configurations" },
       u = { toggle, "Toggle UI" },
       t = { dap.terminate, "Terminate" },
       e = { dapui.eval, "Evaluate variable" },
