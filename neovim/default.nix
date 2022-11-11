@@ -66,7 +66,7 @@ extra.userDefinitions ({ config, ... }: {
     ];
 
     sessionVariables = {
-      NEOVIDE_MULTIGRID = true;
+      NEOVIDE_MULTIGRID = "true";
     };
   };
 })
