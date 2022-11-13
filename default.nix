@@ -123,6 +123,12 @@ let
     security.sudo = {
       enable = true;
       wheelNeedsPassword = true;
+      extraRules = [{
+        groups = [ "wheel" ];
+        commands = builtins.map
+          (command: { inherit command; options = [ "NOPASSWD" ]; })
+          [ "${pkgs.systemd}/bin/shutdown" "${pkgs.systemd}/bin/reboot" ];
+      }];
     };
 
     system = {
