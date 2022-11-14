@@ -156,7 +156,10 @@ let
         enable = true;
         userName = "Elizabeth Paź";
         userEmail = "me@ehllie.xyz";
-        extraConfig.init.defaultBranch = "main";
+        extraConfig = {
+          init.defaultBranch = "main";
+          merge.conflictStyle = "diff3";
+        };
         signing = {
           key = null;
           signByDefault = true;
