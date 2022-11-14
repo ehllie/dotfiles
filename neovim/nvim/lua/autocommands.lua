@@ -49,6 +49,9 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   end,
 })
 
+-- Alternative to the autoread option
+vim.cmd("autocmd CursorHold * checktime")
+
 -- Format before write
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   callback = function()
