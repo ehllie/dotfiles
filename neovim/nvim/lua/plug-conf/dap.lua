@@ -16,7 +16,7 @@ local function config_dapui()
       repl = "r",
       toggle = "t",
     },
-    expand_lines = vim.fn.has("nvim-0.7"),
+    expand_lines = true,
     layouts = {
       {
         elements = {

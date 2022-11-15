@@ -67,8 +67,8 @@ local catppuccin = {
           transparent_panel = false,
         },
         dap = {
-          enabled = false,
-          enable_ui = false,
+          enabled = true,
+          enable_ui = true,
         },
         which_key = true,
         indent_blankline = {
