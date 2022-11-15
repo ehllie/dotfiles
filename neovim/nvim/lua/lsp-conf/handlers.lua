@@ -1,10 +1,12 @@
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local lsp_status = require("lsp-status")
-
 local M = {}
 
-M.capabilities = vim.tbl_deep_extend("keep", cmp_nvim_lsp.default_capabilities(), lsp_status.capabilities)
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+function M.mk_capabilities()
+  local cmp_nvim_lsp = require("cmp_nvim_lsp")
+  local lsp_status = require("lsp-status")
+  local capabilities = vim.tbl_deep_extend("keep", cmp_nvim_lsp.default_capabilities(), lsp_status.capabilities)
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  return capabilities
+end
 
 M.setup = function()
   local signs = {
@@ -101,6 +103,7 @@ M.make_on_attach = function(extra)
     if status_ok then
       illuminate.on_attach(client)
     end
+    local lsp_status = require("lsp-status")
     lsp_status.on_attach(client)
     local patterns = has_codelens[client.name]
     if patterns then

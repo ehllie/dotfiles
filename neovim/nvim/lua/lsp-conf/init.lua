@@ -40,7 +40,7 @@ local function config()
   for server, server_opts in pairs(Basic) do
     opts = {
       on_attach = handlers.make_on_attach(),
-      capabilities = handlers.capabilities,
+      capabilities = handlers.mk_capabilities(),
     }
 
     opts = vim.tbl_deep_extend("force", opts, server_opts)

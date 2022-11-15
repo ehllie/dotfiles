@@ -12,7 +12,7 @@ local function config()
         ["K"] = { rt.hover_actions.hover_actions, "Rust hover actions" },
       }
     end),
-    capabilities = handlers.capabilities,
+    capabilities = handlers.mk_capabilities(),
   }
 
   rt.setup({

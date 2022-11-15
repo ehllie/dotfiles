@@ -1,4 +1,4 @@
-local _, _ = pcall(require, "impatient")
+pcall(require, "impatient")
 
 _G.do_auto_format = true
 _G.symbols = {
