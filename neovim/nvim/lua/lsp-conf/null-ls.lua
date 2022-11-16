@@ -7,7 +7,6 @@ local function config()
 
   local diagnostics = null_ls.builtins.diagnostics
   local formatting = null_ls.builtins.formatting
-  local code_actions = null_ls.builtins.code_actions
   local sources = {
     diagnostics.flake8.with({ extra_args = { "--max-line-length", "88", "--extend-ignore", "E203" } }),
     -- diagnostics.mypy,
@@ -36,8 +35,6 @@ local function config()
     formatting.cabal_fmt,
 
     formatting.trim_whitespace,
-
-    code_actions.gitsigns,
   }
 
   local lsp_filetypes = utils.keys(utils.fold(

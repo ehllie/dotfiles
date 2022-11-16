@@ -22,7 +22,7 @@ local function config()
 
   register({
     ["<leader>g"] = {
-      name = "Lazygit",
+      name = "Git",
       ["g"] = {
         function()
           lazygit:toggle()
