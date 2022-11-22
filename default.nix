@@ -8,7 +8,7 @@
     ./terminal
   ];
 
-  hostDefs = { config, lib, pkgs, ... }:
+  nixosDefs = { config, lib, pkgs, ... }:
     let
       systemPackages = with pkgs; [
         bash

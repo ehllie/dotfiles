@@ -25,7 +25,7 @@ utils.mkDefs {
       };
     });
 
-  hostDefs = { pkgs, ... }: cond {
+  nixosDefs = { pkgs, ... }: cond {
     services = {
       xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
       gnome.at-spi2-core.enable = true;

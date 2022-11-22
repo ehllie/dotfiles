@@ -4,7 +4,7 @@ let
   dfconf = utils.tryExtend { src = ./../secrets; default = "{}"; };
 in
 utils.mkDefs {
-  hostDefs = { config, lib, ... }:
+  nixosDefs = { config, lib, ... }:
     let
       enable = lib.attrByPath [ "fido" "enable" ] false dfconf;
       credential = lib.attrByPath [ "fido" "credential" ] "" dfconf;

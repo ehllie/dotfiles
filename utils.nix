@@ -13,7 +13,7 @@ let
         inherit (pkgs) stdenvNoCC haskellPackages;
         full = utils // rec {
 
-          mkDefs = { imports ? [ ], homeDefs ? { }, hostDefs ? { } }:
+          mkDefs = { imports ? [ ], homeDefs ? { }, nixosDefs ? { }, darwinDefs ? { } }:
             let
               importFunc = i:
                 let
@@ -28,14 +28,19 @@ let
                 else i;
 
               imported = map importFunc imports;
-              merge = { homeI, hostI }: { homeDefs, hostDefs }:
-                { homeI = homeI ++ homeDefs; hostI = hostI ++ hostDefs; };
+              merge = { homeI, nixosI, darwinI }: { homeDefs, nixosDefs, darwinDefs }:
+                {
+                  homeI = homeI ++ homeDefs;
+                  nixosI = nixosI ++ nixosDefs;
+                  darwinI = darwinI ++ darwinDefs;
+                };
 
-              imports' = foldl' merge { homeI = [ ]; hostI = [ ]; } imported;
+              imports' = foldl' merge { homeI = [ ]; nixosI = [ ]; darwinI = [ ]; } imported;
             in
             {
               homeDefs = [ homeDefs ] ++ imports'.homeI;
-              hostDefs = [ hostDefs ] ++ imports'.hostI;
+              nixosDefs = [ nixosDefs ] ++ imports'.nixosI;
+              darwinDefs = [ darwinDefs ] ++ imports'.darwinI;
             };
 
           condDefinitions = path: default: pred: definitions:
@@ -69,7 +74,7 @@ let
       in
       full;
 
-    mkOutputs = { dfconf, root, homeExtra ? [ ], hostExtra ? [ ] }:
+    mkOutputs = { dfconf, root, homeExtra ? [ ], nixosExtra ? [ ], darwinExtra ? [ ] }:
       let
         inherit (dfconf) userName hostName system hmMod;
         hm = mods:
@@ -85,17 +90,18 @@ let
         dotfileConfig = rootExpr { inherit utils dfconf; };
       in
       {
+        homeConfigurations."${userName}@${hostName}" =
+          homeManagerConfiguration {
+            inherit pkgs;
+            modules = dotfileConfig.homeDefs ++ homeExtra;
+          };
         nixosConfigurations.${hostName} = nixosSystem {
           inherit system;
-          modules = dotfileConfig.hostDefs ++ hostExtra ++ (hm home-manager.nixosModules);
-        };
-        homeConfigurations."${userName}@${hostName}" = homeManagerConfiguration {
-          inherit pkgs;
-          modules = dotfileConfig.homeDefs ++ homeExtra;
+          modules = dotfileConfig.nixosDefs ++ nixosExtra ++ (hm home-manager.nixosModules);
         };
         darwinConfigurations.${hostName} = darwinSystem {
           inherit system;
-          modules = dotfileConfig.hostDefs ++ hostExtra ++ (hm home-manager.darwinModules);
+          modules = dotfileConfig.darwinDefs ++ darwinExtra ++ (hm home-manager.darwinModules);
         };
       };
 

@@ -1,7 +1,7 @@
 { utils, dfconf }:
 let cond = utils.enumDefinitions [ "windowManager" ] "xmonad"; in
 utils.mkDefs {
-  hostDefs = { pkgs, ... }: cond {
+  nixosDefs = { pkgs, ... }: cond {
     environment.systemPackages = [ pkgs.xcompmgr ];
     gtk.iconCache.enable = true;
     security.polkit.enable = true;

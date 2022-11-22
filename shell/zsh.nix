@@ -3,7 +3,7 @@
 let cond = utils.enumDefinitions [ "shell" ] "zsh"; in
 utils.mkDefs {
 
-  hostDefs = { pkgs, ... }: cond {
+  nixosDefs = { pkgs, ... }: cond {
     environment = { pathsToLink = [ "/share/zsh" ]; };
     programs.zsh.enable = true;
     users.users.${dfconf.userName}.shell = pkgs.zsh;

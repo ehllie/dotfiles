@@ -1,7 +1,7 @@
 { utils, dfconf }:
 let cond = utils.enumDefinitions [ "windowManager" ] "gnome"; in
 utils.mkDefs {
-  hostDefs = cond {
+  nixosDefs = cond {
     services.xserver = {
       enable = true;
       displayManager.gdm.enable = true;

@@ -8,7 +8,7 @@ utils.mkDefs {
     ./rofi
   ];
 
-  hostDefs = { pkgs, ... }: cond {
+  nixosDefs = { pkgs, ... }: cond {
     services = {
       gnome.gnome-keyring.enable = true;
 

@@ -43,7 +43,7 @@
       inherit (utils) flattenConfigs mkOutputs;
       inherit (nixpkgs.lib) recursiveUpdate;
 
-      flakeConfig = args@{ dfconf, homeExtra ? [ ], hostExtra ? [ ], ... }:
+      flakeConfig = args@{ dfconf, homeExtra ? [ ], nixosExtra ? [ ], darwinExtra ? [ ], ... }:
         let
           overlays = import ./overlays [
             taffybar.overlays
@@ -51,17 +51,23 @@
             ante.overlays.default
           ];
           finalConf = recursiveUpdate defaultConfig dfconf;
+          hmExtra =
+            if finalConf.hmMod
+            then { home-manager = { useGlobalPkgs = true; useUserPackages = true; }; }
+            else { };
         in
         mkOutputs (args // {
           dfconf = finalConf;
           homeExtra = homeExtra ++ [
             overlays
           ];
-          hostExtra = hostExtra ++ [
+          nixosExtra = nixosExtra ++ [
             overlays
-            (if finalConf.hmMod
-            then { home-manager = { useGlobalPkgs = true; useUserPackages = true; }; }
-            else { })
+            hmExtra
+          ];
+          darwinExtra = darwinExtra ++ [
+            overlays
+            hmExtra
           ];
           root = ./.;
         });

@@ -49,7 +49,7 @@ utils.mkDefs
   ];
 
 
-  hostDefs = { pkgs, modulesPath, ... }: (cond {
+  nixosDefs = { pkgs, modulesPath, ... }: (cond {
 
     boot.blacklistedKernelModules = [ "pcspkr" ];
     fileSystems."/" = { device = "/dev/vg1/root"; fsType = "ext4"; };
