@@ -1,9 +1,17 @@
-rec {
-  mkUtils = { nixpkgs, dfconf }:
-    let
-      inherit (nixpkgs.lib) attrByPath mkIf mkOption types;
-      inherit (builtins) isBool isPath foldl';
-      utils = rec {
+{ nixpkgs, home-manager }:
+let
+  inherit (nixpkgs.lib)
+    attrByPath mkIf mkOption types nixosSystem recursiveUpdate;
+  inherit (home-manager.lib) homeManagerConfiguration;
+  inherit (builtins) isBool isPath foldl';
+  utils = rec {
+    init = { dfconf }:
+      let
+        inherit (dfconf) system;
+        pkgs = import nixpkgs { inherit system; };
+        inherit (pkgs) stdenvNoCC haskellPackages;
+      in
+      utils // rec {
 
         mkDefs = { imports ? [ ], homeDefs ? (_: { }), hostDefs ? (_: { }) }:
           let
@@ -33,45 +41,34 @@ rec {
         enumDefinitions' = path: val: condDefinitions path null (v: v != val);
 
         mkEnumOption = enumVal: mkOption { type = with types; nullOr (enum [ enumVal ]); };
+
+        tryImport = args@{ src, default ? "false", ... }:
+          let
+            valid = stdenvNoCC.mkDerivation {
+              name = if args ? name then args.name else baseNameOf (toString args.src);
+              nativeBuildInputs = [ haskellPackages.hnix ];
+              builder = ./valid.sh;
+              inherit src default;
+            };
+          in
+          import valid.out;
       };
-    in
-    utils;
 
-  /*
-    > mkDefs { ...; dfconf = { ... }; root = ({ utils, dfconf }: { ... } ) }
-    > { nixosConfigurations = { ... }; homeConfigurations = { ... }}
-  */
+    mkOutputs = { dfconf, root, homeExtra ? [ ], hostExtra ? [ ] }:
+      let
+        inherit (dfconf) userName hostName system;
+        utils = init { inherit dfconf; };
+        pkgs = import nixpkgs { inherit system; };
+        metaConfig = (import root) { inherit utils dfconf; };
+      in
+      {
+        nixosConfigurations.${hostName} =
+          nixosSystem { inherit system pkgs; modules = [ metaConfig.host ] ++ hostExtra; };
+        homeConfigurations."${userName}@${hostName}" =
+          homeManagerConfiguration { inherit pkgs; modules = [ metaConfig.home ] ++ homeExtra; };
+      };
 
-  mkOutputs = { nixpkgs, home-manager, dfconf, root, homeExtra ? [ ], hostExtra ? [ ] }:
-    let
-      inherit (dfconf) userName hostName system;
-      inherit (nixpkgs.lib) nixosSystem;
-      inherit (home-manager.lib) homeManagerConfiguration;
-
-      utils = mkUtils { inherit nixpkgs dfconf; };
-      pkgs = import nixpkgs { inherit system; };
-      metaConfig = (import root) { inherit utils dfconf; };
-    in
-    {
-      nixosConfigurations.${hostName} =
-        nixosSystem { inherit system pkgs; modules = [ metaConfig.host ] ++ hostExtra; };
-      homeConfigurations."${userName}@${hostName}" =
-        homeManagerConfiguration { inherit pkgs; modules = [ metaConfig.home ] ++ homeExtra; };
-    };
-
-  /*
-    > mapConfigs { ...; root = ({ utils, dfconf }: { ... } ); configs = [ { dfconf = { ... }; homeExtra = [ ... ]; hostExtra = [ ... ]; } ]; }
-    > { nixosConfigurations = { ... }; homeConfigurations = { ... }; }
-  */
-
-  mapConfigs = { nixpkgs, home-manager, root, configs }:
-    let
-      inherit (builtins) foldl';
-      inherit (nixpkgs.lib) recursiveUpdate;
-      individual = map
-        ({ dfconf, homeExtra ? [ ], hostExtra ? [ ] }:
-          mkOutputs { inherit nixpkgs home-manager dfconf root homeExtra hostExtra; })
-        configs;
-    in
-    foldl' recursiveUpdate { } individual;
-}
+    flattenConfigs = foldl' recursiveUpdate { };
+  };
+in
+utils
