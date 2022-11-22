@@ -1,8 +1,9 @@
-{ nixpkgs, home-manager }:
+{ nixpkgs, home-manager, darwin }:
 let
   inherit (nixpkgs.lib)
     attrByPath mkIf mkOption types nixosSystem recursiveUpdate;
   inherit (home-manager.lib) homeManagerConfiguration;
+  inherit (darwin.lib) darwinSystem;
   inherit (builtins) isBool isFunction isAttrs isPath foldl' functionArgs all elem attrNames;
   utils = rec {
     init = { dfconf }:
@@ -52,6 +53,8 @@ let
 
           mkEnumOption = enumVal: mkOption { type = with types; nullOr (enum [ enumVal ]); };
 
+          tryExtend = args: recursiveUpdate dfconf (tryImport args);
+
           tryImport = args@{ src, default ? "false", ... }:
             let
               valid = stdenvNoCC.mkDerivation {
@@ -82,16 +85,18 @@ let
         dotfileConfig = rootExpr { inherit utils dfconf; };
       in
       {
-        nixosConfigurations.${hostName} =
-          nixosSystem {
-            inherit system;
-            modules = dotfileConfig.hostDefs ++ hostExtra ++ (hm home-manager.nixosModules);
-          };
-        homeConfigurations."${userName}@${hostName}" =
-          homeManagerConfiguration {
-            inherit pkgs;
-            modules = dotfileConfig.homeDefs ++ homeExtra;
-          };
+        nixosConfigurations.${hostName} = nixosSystem {
+          inherit system;
+          modules = dotfileConfig.hostDefs ++ hostExtra ++ (hm home-manager.nixosModules);
+        };
+        homeConfigurations."${userName}@${hostName}" = homeManagerConfiguration {
+          inherit pkgs;
+          modules = dotfileConfig.homeDefs ++ homeExtra;
+        };
+        darwinConfigurations.${hostName} = darwinSystem {
+          inherit system;
+          modules = dotfileConfig.hostDefs ++ hostExtra ++ (hm home-manager.darwinModules);
+        };
       };
 
     flattenConfigs = foldl' recursiveUpdate { };

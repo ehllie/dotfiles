@@ -106,9 +106,12 @@ utils.mkDefs
       };
     };
   }) // {
-    imports = [
-      samba
-      (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+    imports =
+      if dfconf.hardware != null
+      then [
+        samba
+        (modulesPath + "/installer/scan/not-detected.nix")
+      ]
+      else [ ];
   };
 }

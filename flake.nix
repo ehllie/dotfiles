@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
+    darwin = { url = "github:lnl7/nix-darwin/master"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
     nil = { url = "github:oxalica/nil"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -15,6 +16,7 @@
     { self
     , nixpkgs
     , home-manager
+    , darwin
     , nixos-wsl
     , vscode-server
     , taffybar
@@ -25,6 +27,7 @@
       defaultConfig = rec {
         userName = "ellie";
         userDesc = "Elizabeth";
+        hardware = null;
         dotfileRepo = "github:ehllie/dotfiles";
         repoUrl = "https://github.com/ehllie/dotfiles.git";
         homeDir = "/home/" + userName;
@@ -36,8 +39,8 @@
         hmMod = true;
       };
 
-      utils = import ./utils.nix { inherit nixpkgs home-manager; };
-      inherit (utils) flattenConfigs mkOutputs init;
+      utils = import ./utils.nix { inherit nixpkgs home-manager darwin; };
+      inherit (utils) flattenConfigs mkOutputs;
       inherit (nixpkgs.lib) recursiveUpdate;
 
       flakeConfig = args@{ dfconf, homeExtra ? [ ], hostExtra ? [ ], ... }:
@@ -47,12 +50,8 @@
             nil.overlays.default
             ante.overlays.default
           ];
-          prevConf = recursiveUpdate defaultConfig dfconf;
-          utils = init { dfconf = prevConf; };
-          secrets = utils.tryImport { src = ./secrets; };
-          finalConf = recursiveUpdate prevConf (if secrets != false then secrets else { });
+          finalConf = recursiveUpdate defaultConfig dfconf;
         in
-        assert dfconf.hardware != null -> secrets != false;
         mkOutputs (args // {
           dfconf = finalConf;
           homeExtra = homeExtra ++ [
@@ -86,6 +85,13 @@
           windowManager = "xmonad";
           fontsize = 11;
           graphical = true;
+        };
+      })
+      (flakeConfig {
+        dfconf = {
+          system = "aarch64-darwin";
+          hostName = "nixm1";
+          fontsize = 11;
         };
       })
     ];
