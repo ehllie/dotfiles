@@ -1,6 +1,7 @@
-{ config, dfconf, extra, lib, pkgs, ... }:
-let
-  hostDefinitions = {
+{ utils, dfconf }:
+let cond = utils.enumDefinitions [ "windowManager" ] "xmonad"; in
+utils.mkDefs {
+  hostDefs = { pkgs, ... }: cond {
     environment.systemPackages = [ pkgs.xcompmgr ];
     gtk.iconCache.enable = true;
     security.polkit.enable = true;
@@ -24,7 +25,7 @@ let
     };
   };
 
-  userDefinitions = {
+  homeDefs = { pkgs, ... }: cond {
     xsession = {
       enable = true;
 
@@ -53,6 +54,4 @@ let
       };
     };
   };
-in
-extra.enumDefinitions [ "windowManager" ] "xmonad"
-  (extra.dualDefinitions { inherit userDefinitions hostDefinitions; })
+}

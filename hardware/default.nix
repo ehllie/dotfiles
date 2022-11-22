@@ -1,6 +1,6 @@
-{ config, dfconf, extra, lib, modulesPath, pkgs, ... }:
+{ utils, dfconf }:
 let
-  samba = extra.boolDefinitions [ "samba" ] {
+  samba = utils.boolDefinitions [ "samba" ] {
     services = {
       samba-wsdd.enable = true; # make shares visible for windows 10 clients
 
@@ -38,16 +38,19 @@ let
       allowedUDPPorts = [ 3702 ]; # wsdd
     };
   };
+  cond = utils.enumDefinitions' [ "hardware" ] null;
 in
+utils.mkDefs
 {
+
   imports = [
     ./dell-gram.nix
     ./desktop.nix
-    samba
-    (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  config = extra.enumDefinitions' [ "hardware" ] null {
+
+  hostDefs = { pkgs, modulesPath, ... }: (cond {
+
     boot.blacklistedKernelModules = [ "pcspkr" ];
     fileSystems."/" = { device = "/dev/vg1/root"; fsType = "ext4"; };
     swapDevices = [{ device = "/dev/vg1/swap"; }];
@@ -102,5 +105,10 @@ in
         drivers = with pkgs;[ brlaser ];
       };
     };
+  }) // {
+    imports = [
+      samba
+      (modulesPath + "/installer/scan/not-detected.nix")
+    ];
   };
 }

@@ -1,6 +1,7 @@
-{ config, dfconf, extra, lib, pkgs, ... }:
-let
-  hostDefinitions = {
+{ utils, dfconf }:
+let cond = utils.enumDefinitions [ "windowManager" ] "gnome"; in
+utils.mkDefs {
+  hostDefs = cond {
     services.xserver = {
       enable = true;
       displayManager.gdm.enable = true;
@@ -8,7 +9,7 @@ let
     };
   };
 
-  userDefinitions = {
+  homeDefs = { pkgs, ... }: cond {
     home.packages = with pkgs; [
       gtk-engine-murrine
       dconf
@@ -17,6 +18,4 @@ let
       gnome.gnome-themes-extra
     ];
   };
-in
-extra.enumDefinitions [ "windowManager" ] "gnome"
-  (extra.dualDefinitions { inherit userDefinitions hostDefinitions; })
+}

@@ -1,58 +1,64 @@
-{ config, dfconf, extra, lib, pkgs, ... }:
-let
-  protonmail-cli = pkgs.writeShellScriptBin "protonmail-cli" ''
-    systemctl --user stop protonmail-bridge.service
-    ${pkgs.protonmail-bridge}/bin/protonmail-bridge --cli
-    systemctl --user start protonmail-bridge.service
-  '';
-
-  userPackages = with pkgs; [
-    libreoffice
-    dmenu
-    xdotool
-    firefox
-    thunderbird
-    protonvpn-gui
-    pavucontrol
-    networkmanagerapplet
-    vlc
-    discord
-    protonmail-cli
-    spectacle
-    prismlauncher
+{ utils, dfconf }:
+let cond = utils.enumDefinitions' [ "windowManager" ] null; in
+utils.mkDefs {
+  imports = [
+    ./gnome.nix
+    ./xmonad
+    ./taffybar
+    ./rofi
   ];
-in
-{
-  imports = [ ./gnome.nix ./xmonad ./taffybar ./rofi ];
 
-  config = extra.enumDefinitions' [ "windowManager" ] null (extra.dualDefinitions {
-    hostDefinitions = {
-      services = {
-        gnome.gnome-keyring.enable = true;
+  hostDefs = { pkgs, ... }: cond {
+    services = {
+      gnome.gnome-keyring.enable = true;
 
-        xserver = {
-          desktopManager.xterm.enable = false;
-          excludePackages = [ pkgs.xterm ];
-          layout = "pl";
+      xserver = {
+        desktopManager.xterm.enable = false;
+        excludePackages = [ pkgs.xterm ];
+        layout = "pl";
 
-          libinput = {
-            enable = true;
-            touchpad. naturalScrolling = true;
-          };
-        };
-      };
-
-      programs = {
-        dconf.enable = true;
-
-        _1password-gui = {
+        libinput = {
           enable = true;
-          polkitPolicyOwners = [ dfconf.userName ];
+          touchpad. naturalScrolling = true;
         };
       };
     };
 
-    userDefinitions = {
+    programs = {
+      dconf.enable = true;
+
+      _1password-gui = {
+        enable = true;
+        polkitPolicyOwners = [ dfconf.userName ];
+      };
+    };
+  };
+
+  homeDefs = { pkgs, ... }:
+    let
+      protonmail-cli = pkgs.writeShellScriptBin "protonmail-cli" ''
+        systemctl --user stop protonmail-bridge.service
+        ${pkgs.protonmail-bridge}/bin/protonmail-bridge --cli
+        systemctl --user start protonmail-bridge.service
+      '';
+
+      userPackages = with pkgs; [
+        libreoffice
+        dmenu
+        xdotool
+        firefox
+        thunderbird
+        protonvpn-gui
+        pavucontrol
+        networkmanagerapplet
+        vlc
+        discord
+        protonmail-cli
+        spectacle
+        prismlauncher
+      ];
+    in
+    cond {
       systemd.user.services.protonmail-bridge = {
         Install.WantedBy = [ "default.target" ];
 
@@ -74,5 +80,4 @@ in
         sessionVariables.OP_BIOMETRIC_UNLOCK_ENABLED = true;
       };
     };
-  });
 }

@@ -12,14 +12,14 @@
   };
 
   outputs =
-    { nixpkgs
+    { self
+    , nixpkgs
     , home-manager
     , nixos-wsl
     , vscode-server
     , taffybar
     , nil
     , ante
-    , ...
     }:
     let
       defaultConfig = rec {
@@ -35,73 +35,49 @@
         colourscheme.catppuccin.enable = true;
       };
 
-      system = "x86_64-linux";
+      utils = import ./utils.nix { inherit nixpkgs home-manager; };
+      inherit (utils) flattenConfigs mkOutputs init;
+      inherit (nixpkgs.lib) recursiveUpdate;
 
-      inherit (nixpkgs) lib;
-
-      flakeSystem = { dotfileConfig ? { }, extraModules ? [ ] }:
+      flakeConfig = args@{ dfconf, homeExtra ? [ ], hostExtra ? [ ], ... }:
         let
-          dfconf = lib.recursiveUpdate defaultConfig dotfileConfig;
-          extra = (import ./lib) { inherit nixpkgs dfconf; };
-          hm = home-manager.nixosModules.home-manager;
           overlays = import ./overlays [
             taffybar.overlays
             nil.overlays.default
             ante.overlays.default
           ];
+          prevConf = recursiveUpdate defaultConfig dfconf;
+          utils = init { dfconf = prevConf; };
+          secrets = utils.tryImport { src = ./secrets; };
         in
-        lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit extra dfconf; };
-          modules = [ ./. hm overlays ] ++ extraModules;
-        };
+        assert dfconf.hardware != null -> secrets != false;
+        mkOutputs (args // {
+          dfconf = recursiveUpdate prevConf (if secrets != false then secrets else { });
+          homeExtra = homeExtra ++ [ overlays ];
+          hostExtra = hostExtra ++ [ overlays ];
+          root = ./.;
+        });
     in
-    {
-      nixosConfigurations = {
-        nixgram = flakeSystem {
-          dotfileConfig = ({
-            hostName = "nixgram";
-            hardware = "dell-gram";
-            windowManager = "xmonad";
-            samba = true;
-            graphical = true;
-          } // (import ./secrets));
+    flattenConfigs [
+      (flakeConfig {
+        dfconf = {
+          system = "x86_64-linux";
+          hostName = "nixgram";
+          hardware = "dell-gram";
+          windowManager = "xmonad";
+          samba = true;
+          graphical = true;
         };
-        nixdesk = flakeSystem {
-          dotfileConfig = ({
-            hostName = "nixdesk";
-            hardware = "desktop";
-            windowManager = "xmonad";
-            fontsize = 11;
-            graphical = true;
-          } // (import ./secrets));
+      })
+      (flakeConfig {
+        dfconf = {
+          system = "x86_64-linux";
+          hostName = "nixdesk";
+          hardware = "desktop";
+          windowManager = "xmonad";
+          fontsize = 11;
+          graphical = true;
         };
-        nixwsl = flakeSystem {
-          dotfileConfig = {
-            hostName = "nixwsl";
-            graphical = false;
-          };
-          extraModules = [
-            nixos-wsl.nixosModules.wsl
-            ({ extra, lib, config, ... }: extra.dualDefinitions {
-              hostDefinitions = {
-                wsl = {
-                  enable = true;
-                  automountPath = "/mnt";
-                  defaultUser = defaultConfig.userName;
-                  startMenuLaunchers = true;
-                  docker-desktop.enable = false;
-                  docker-native.enable = false;
-                };
-              };
-              userDefinitions = {
-                imports = [ vscode-server.nixosModules.home ];
-                services.vscode-server.enable = true;
-                dconf.enable = false;
-              };
-            })
-          ];
-        };
-      };
-    };
+      })
+    ];
 }

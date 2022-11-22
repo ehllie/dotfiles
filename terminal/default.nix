@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./alacritty.nix ]; }
+{ utils, ... }: utils.mkDefs { imports = [ ./alacritty.nix ]; }

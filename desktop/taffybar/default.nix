@@ -1,34 +1,34 @@
-{ config, dfconf, extra, lib, pkgs, ... }:
-let
-  userDefinitions = with pkgs; {
-    services.taffybar = {
-      enable = true;
-      package = haskellPackages.callCabal2nix "my-taffybar" ./. { };
-    };
-
-    systemd.user.services.status-notifier-item = {
-      Install.WantedBy = [ "taffybar.service" ];
-
-      Unit = {
-        Description = "Status Notifier Item";
-        PartOf = [ "tray.target" ];
+{ utils, dfconf }:
+let cond = utils.enumDefinitions [ "windowManager" ] "xmonad"; in
+utils.mkDefs {
+  homeDefs = ({ pkgs, ... }:
+    let inherit (pkgs.haskellPackages) status-notifier-item callCabal2nix; in {
+      services.taffybar = {
+        enable = true;
+        package = callCabal2nix "my-taffybar" ./. { };
       };
 
-      Service = {
-        Type = "dbus";
-        BusName = "org.kde.StatusNotifierWatcher";
-        ExecStart = "${haskellPackages.status-notifier-item}/bin/status-notifier-watcher";
-        Restart = "on-failure";
-      };
-    };
-  };
+      systemd.user.services.status-notifier-item = {
+        Install.WantedBy = [ "taffybar.service" ];
 
-  hostDefinitions = {
+        Unit = {
+          Description = "Status Notifier Item";
+          PartOf = [ "tray.target" ];
+        };
+
+        Service = {
+          Type = "dbus";
+          BusName = "org.kde.StatusNotifierWatcher";
+          ExecStart = "${status-notifier-item}/bin/status-notifier-watcher";
+          Restart = "on-failure";
+        };
+      };
+    });
+
+  hostDefs = { pkgs, ... }: cond {
     services = {
       xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
       gnome.at-spi2-core.enable = true;
     };
   };
-in
-extra.enumDefinitions [ "windowManager" ] "xmonad"
-  (extra.dualDefinitions { inherit hostDefinitions userDefinitions; })
+}

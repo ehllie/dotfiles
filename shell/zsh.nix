@@ -1,12 +1,15 @@
-{ config, dfconf, extra, lib, pkgs, ... }:
-let
-  hostDefinitions = {
+{ utils, dfconf }:
+# { config, dfconf, extra, lib, pkgs, ... }:
+let cond = utils.enumDefinitions [ "shell" ] "zsh"; in
+utils.mkDefs {
+
+  hostDefs = { pkgs, ... }: cond {
     environment = { pathsToLink = [ "/share/zsh" ]; };
     programs.zsh.enable = true;
     users.users.${dfconf.userName}.shell = pkgs.zsh;
   };
 
-  userDefinitions = ({ config, ... }: {
+  homeDefs = { config, pkgs, ... }: cond {
     home.packages = [ pkgs.ranger ];
 
     programs.zsh = {
@@ -39,20 +42,18 @@ let
 
         # Use ranger to switch directories and bind it to ctrl-o
         rangercd () {
-            tmp="$(mktemp)"
+          tmp="$(mktemp)"
             ranger --choosedir="$tmp" "$@"
             if [ -f "$tmp" ]; then
-                dir="$(cat "$tmp")"
+              dir="$(cat "$tmp")"
                 rm -f "$tmp"
                 [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-            fi
+                fi
         }
         bindkey -s '^o' 'rangercd\n'
 
         prompt_nix_shell_setup
       '';
     };
-  });
-in
-extra.enumDefinitions [ "shell" ] "zsh"
-  (extra.dualDefinitions { inherit userDefinitions hostDefinitions; })
+  };
+}

@@ -12,7 +12,7 @@ let
         inherit (pkgs) stdenvNoCC haskellPackages;
         full = utils // rec {
 
-          mkDefs = { imports ? [ ], homeDefs ? (_: { }), hostDefs ? (_: { }) }:
+          mkDefs = { imports ? [ ], homeDefs ? { }, hostDefs ? { } }:
             let
               importFunc = i:
                 let
