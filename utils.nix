@@ -68,7 +68,14 @@ let
 
     mkOutputs = { dfconf, root, homeExtra ? [ ], hostExtra ? [ ] }:
       let
-        inherit (dfconf) userName hostName system;
+        inherit (dfconf) userName hostName system hmMod;
+        hm = mods:
+          if hmMod
+          then [
+            mods.home-manager
+            { home-manager.users.${userName}.imports = dotfileConfig.homeDefs; }
+          ]
+          else [ ];
         utils = init { inherit dfconf; };
         pkgs = import nixpkgs { inherit system; };
         rootExpr = if isPath root then import root else root;
@@ -76,9 +83,15 @@ let
       in
       {
         nixosConfigurations.${hostName} =
-          nixosSystem { inherit system; modules = dotfileConfig.hostDefs ++ hostExtra; };
+          nixosSystem {
+            inherit system;
+            modules = dotfileConfig.hostDefs ++ hostExtra ++ (hm home-manager.nixosModules);
+          };
         homeConfigurations."${userName}@${hostName}" =
-          homeManagerConfiguration { inherit pkgs; modules = dotfileConfig.homeDefs ++ homeExtra; };
+          homeManagerConfiguration {
+            inherit pkgs;
+            modules = dotfileConfig.homeDefs ++ homeExtra;
+          };
       };
 
     flattenConfigs = foldl' recursiveUpdate { };

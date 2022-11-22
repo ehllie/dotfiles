@@ -33,6 +33,7 @@
         samba = false;
         fontsize = 8;
         colourscheme.catppuccin.enable = true;
+        hmMod = true;
       };
 
       utils = import ./utils.nix { inherit nixpkgs home-manager; };
@@ -49,12 +50,20 @@
           prevConf = recursiveUpdate defaultConfig dfconf;
           utils = init { dfconf = prevConf; };
           secrets = utils.tryImport { src = ./secrets; };
+          finalConf = recursiveUpdate prevConf (if secrets != false then secrets else { });
         in
         assert dfconf.hardware != null -> secrets != false;
         mkOutputs (args // {
-          dfconf = recursiveUpdate prevConf (if secrets != false then secrets else { });
-          homeExtra = homeExtra ++ [ overlays ];
-          hostExtra = hostExtra ++ [ overlays ];
+          dfconf = finalConf;
+          homeExtra = homeExtra ++ [
+            overlays
+          ];
+          hostExtra = hostExtra ++ [
+            overlays
+            (if finalConf.hmMod
+            then { home-manager = { useGlobalPkgs = true; useUserPackages = true; }; }
+            else { })
+          ];
           root = ./.;
         });
     in

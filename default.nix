@@ -67,11 +67,6 @@
         servers = [ "pl.pool.ntp.org" ];
       };
 
-      # home-manager = {
-      #   useGlobalPkgs = true;
-      #   useUserPackages = true;
-      # };
-
       users.users.${dfconf.userName} = {
         isNormalUser = true;
         home = dfconf.homeDir;
