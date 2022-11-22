@@ -98,7 +98,7 @@
           { index = 17; color = palette.rosewater; }
         ];
       };
-      gtk = {
+      gtk = lib.mkIf (! utils.isDarwin) {
         enable = true;
         theme = {
           package = pkgs.catppuccin-gtk;

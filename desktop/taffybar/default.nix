@@ -1,8 +1,9 @@
 { utils, dfconf }:
 let cond = utils.enumDefinitions [ "windowManager" ] "xmonad"; in
 utils.mkDefs {
-  homeDefs = ({ pkgs, ... }:
-    let inherit (pkgs.haskellPackages) status-notifier-item callCabal2nix; in {
+  homeDefs = { pkgs, ... }:
+    let inherit (pkgs.haskellPackages) status-notifier-item callCabal2nix; in
+    cond {
       services.taffybar = {
         enable = true;
         package = callCabal2nix "my-taffybar" ./. { };
@@ -23,7 +24,7 @@ utils.mkDefs {
           Restart = "on-failure";
         };
       };
-    });
+    };
 
   nixosDefs = { pkgs, ... }: cond {
     services = {

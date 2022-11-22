@@ -97,11 +97,12 @@
 
   homeDefs = { config, pkgs, ... }:
     let
+      graphical = utils.confVal [ "graphical" ] false;
       haskellPkgs = ps: with ps; [
         cabal-fmt
         fourmolu
         haskell-language-server
-      ] ++ (if dfconf.graphical then [
+      ] ++ (if graphical then [
         xmonad
         xmonad-contrib
         xmonad-extras
@@ -149,67 +150,133 @@
         pandoc
       ];
     in
+    utils.trisectDarwin
+      # Darwin only
+      {
+        # home.packages = with pkgs; [ ];
+        programs.ssh. extraConfig = "IdentityAgent \"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\"";
+      }
 
-    {
-      services.gpg-agent.enable = true;
+      # Linux only
+      {
+        services.gpg-agent.enable = true;
+        programs.ssh. extraConfig = "IdentityAgent ~/.1password/agent.sock";
+      }
+      # Unconditional
+      {
+        home = {
+          username = dfconf.userName;
+          homeDirectory = dfconf.homeDir;
+          inherit packages;
+          stateVersion = "22.05";
+        };
 
-      home = {
-        username = dfconf.userName;
-        homeDirectory = dfconf.homeDir;
-        inherit packages;
-        stateVersion = "22.05";
+        programs = {
+          home-manager.enable = true;
+
+          git = {
+            enable = true;
+            userName = "Elizabeth Paź";
+            userEmail = "me@ehllie.xyz";
+            extraConfig = {
+              init.defaultBranch = "main";
+              merge.conflictStyle = "diff3";
+            };
+            signing = {
+              key = null;
+              signByDefault = true;
+            };
+          };
+
+          gpg = {
+            enable = true;
+            homedir = "${config.xdg.dataHome}/gnupg";
+          };
+          # Host *
+          #   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+          ssh = {
+            enable = true;
+          };
+        };
+
+        xdg.configFile = {
+          "mypy/config".text = ''
+            [mypy]
+            python_version = 3.10
+            strict = True
+            no_implicit_optional = False
+          '';
+          "lazygit/config.yml".text = ''
+            git:
+              autoFetch: false
+          '';
+          "cabal/config".text = ''
+            repository hackage.haskell.org
+              url: http://hackage.haskell.org/
+
+            remote-repo-cache: ${config.xdg.cacheHome}/cabal/packages
+            extra-prog-path: ${config.xdg.dataHome}/cabal/bin
+            build-summary: ${config.xdg.dataHome}/cabal/logs/build.log
+            remote-build-reporting: none
+            jobs: $ncpus
+            installdir: ${config.xdg.dataHome}/cabal/bin
+          '';
+        };
       };
 
-      programs = {
-        home-manager.enable = true;
+  darwinDefs = { pkgs, ... }: {
 
-        git = {
-          enable = true;
-          userName = "Elizabeth Paź";
-          userEmail = "me@ehllie.xyz";
-          extraConfig = {
-            init.defaultBranch = "main";
-            merge.conflictStyle = "diff3";
-          };
-          signing = {
-            key = null;
-            signByDefault = true;
-          };
-        };
+    programs.zsh.enable = true;
+    security.pam.enableSudoTouchIdAuth = true;
+    nixpkgs.config.allowUnfree = true;
 
-        gpg = {
-          enable = true;
-          homedir = "${config.xdg.dataHome}/gnupg";
-        };
+    homebrew = {
+      enable = true;
+      casks = [
+        "neovide"
+        "1password"
+        "discord"
+        "microsoft-office"
+        "protonmail-bridge"
+        "protonvpn"
+      ];
+      onActivation.cleanup = "zap";
 
-        ssh = {
-          enable = true;
-          extraConfig = "IdentityAgent ~/.1password/agent.sock";
-        };
+    };
+
+    fonts = {
+      fontDir.enable = true;
+      fonts = with pkgs; [
+        cascadia-code
+        (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+      ];
+    };
+
+    environment = {
+      pathsToLink = [ "/share/zsh" ];
+      systemPackages = with pkgs; [ zsh coreutils ];
+    };
+    nix = {
+      extraOptions = "experimental-features = nix-command flakes";
+
+      settings = {
+        # sandbox = true;
+        trusted-substituters = [ "https://nix-community.cachix.org" ];
+        extra-substituters = [ "https://nix-community.cachix.org" ];
+        extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
       };
 
-      xdg.configFile = {
-        "mypy/config".text = ''
-          [mypy]
-          python_version = 3.10
-          strict = True
-          no_implicit_optional = False
-        '';
-        "lazygit/config.yml".text = ''
-          git:
-            autoFetch: false
-        '';
-        "cabal/config".text = ''
-          repository hackage.haskell.org
-            url: http://hackage.haskell.org/
-
-          remote-repo-cache: ${config.xdg.cacheHome}/cabal/packages
-          extra-prog-path: ${config.xdg.dataHome}/cabal/bin
-          build-summary: ${config.xdg.dataHome}/cabal/logs/build.log
-          remote-build-reporting: none
-          jobs: $ncpus
-          installdir: ${config.xdg.dataHome}/cabal/bin
-        '';
+      gc = {
+        automatic = true;
+        interval = { Hour = 24; };
+        options = "--delete-older-than 7d";
       };
     };
+    services.nix-daemon.enable = true;
+    users.users.${dfconf.userName} = {
+      home = dfconf.homeDir;
+      description = dfconf.userDesc;
+    };
+  };
 }

@@ -2,9 +2,10 @@
   description = "An alright configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    darwin = { url = "github:lnl7/nix-darwin/master"; inputs.nixpkgs.follows = "nixpkgs"; };
+    darwin = { url = "github:lnl7/nix-darwin/master"; inputs.nixpkgs.follows = "nixpkgs-darwin"; };
     nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
     nil = { url = "github:oxalica/nil"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -15,6 +16,7 @@
   outputs =
     { self
     , nixpkgs
+    , nixpkgs-darwin
     , home-manager
     , darwin
     , nixos-wsl
@@ -39,7 +41,7 @@
         hmMod = true;
       };
 
-      utils = import ./utils.nix { inherit nixpkgs home-manager darwin; };
+      utils = import ./utils.nix { inherit nixpkgs nixpkgs-darwin home-manager darwin; };
       inherit (utils) flattenConfigs mkOutputs;
       inherit (nixpkgs.lib) recursiveUpdate;
 
@@ -97,7 +99,10 @@
         dfconf = {
           system = "aarch64-darwin";
           hostName = "nixm1";
-          fontsize = 11;
+          homeDir = "/Users/ellie";
+          repoDir = homeDir + "/Code/dotfiles";
+          graphical = false;
+          fontsize = 13;
         };
       })
     ];

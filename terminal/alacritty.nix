@@ -1,7 +1,7 @@
 { utils, dfconf }:
 let cond = utils.enumDefinitions [ "windowManager" ] "xmonad"; in
 utils.mkDefs {
-  homeDefs = cond {
+  homeDefs = {
     home.shellAliases.ssh = "TERM=xterm-256color; ssh";
 
     programs = {

@@ -45,7 +45,8 @@ utils.mkDefs {
             vim = "nvim";
           };
         packages = [ show-pkg develop ];
-        sessionPath = [ "~/.local/bin" "${config.xdg.dataHome}/cargo/bin" ];
+        sessionPath = utils.trisectDarwin
+          [ "/opt/homebrew/bin" ] [ ] [ "~/.local/bin" "${config.xdg.dataHome}/cargo/bin" ];
         sessionVariables = {
           EDITOR = "nvim";
           VISUAL = "nvim";

@@ -17,52 +17,55 @@ utils.mkDefs {
       };
 
       home = {
-        packages = with pkgs; [
-          neovim
+        packages = with pkgs; utils.trisectDarwin
+          [ ]
+          [
+            # Clipboard integration
+            xclip
+            wl-clipboard
 
-          #Telescope
-          ripgrep
-          ripgrep-all
+            # Graphical env
+            neovide
+          ]
+          [
+            neovim
 
-          #Graphical env
-          neovide
+            # Telescope
+            ripgrep
+            ripgrep-all
 
-          #Clipboard integration
-          xclip
-          wl-clipboard
+            # Python and JS integration
+            python3Packages.pynvim
+            nodePackages.neovim
 
-          #Python and JS integration
-          python3Packages.pynvim
-          nodePackages.neovim
+            # LuaJIT and luarocks
+            luajit
+            luajitPackages.luarocks
 
-          #LuaJIT and luarocks
-          luajit
-          luajitPackages.luarocks
+            # LSPs
+            nodePackages.bash-language-server
+            nodePackages.yaml-language-server
+            nodePackages.vscode-langservers-extracted
+            nodePackages.pyright
+            nodePackages.tailwindcss-language-server
+            nodePackages.volar
+            nodePackages.typescript-language-server
+            nodePackages.svelte-language-server
+            sumneko-lua-language-server
+            nil
+            rust-analyzer
 
-          #LSPs
-          nodePackages.bash-language-server
-          nodePackages.yaml-language-server
-          nodePackages.vscode-langservers-extracted
-          nodePackages.pyright
-          nodePackages.tailwindcss-language-server
-          nodePackages.volar
-          nodePackages.typescript-language-server
-          nodePackages.svelte-language-server
-          sumneko-lua-language-server
-          nil
-          rust-analyzer
+            # Linters
+            clippy
+            shellcheck
 
-          #Linters
-          clippy
-          shellcheck
-
-          #Formatters
-          stylua
-          nixpkgs-fmt
-          nodePackages.prettier
-          rustfmt
-          beautysh
-        ];
+            # Formatters
+            stylua
+            nixpkgs-fmt
+            nodePackages.prettier
+            rustfmt
+            beautysh
+          ];
 
         sessionVariables = {
           NEOVIDE_MULTIGRID = "true";

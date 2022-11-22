@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, darwin }:
+{ nixpkgs, nixpkgs-darwin, home-manager, darwin }:
 let
   inherit (nixpkgs.lib)
     attrByPath mkIf mkOption types nixosSystem recursiveUpdate;
@@ -70,6 +70,19 @@ let
               };
             in
             import valid.out;
+          tryExtend = args: recursiveUpdate dfconf (tryImport args);
+
+          bisect = cond: onTrue: onFalse:
+            mkMerge [ (mkIf cond onTrue) (mkIf (! cond) onFalse) ];
+
+          trisect = cond: onTrue: onFalse: always:
+            mkMerge [ (mkIf cond onTrue) (mkIf (! cond) onFalse) always ];
+
+          isDarwin = pkgs.stdenv.buildPlatform.isDarwin;
+
+          bisectDarwin = bisect isDarwin;
+
+          trisectDarwin = trisect isDarwin;
         };
       in
       full;
