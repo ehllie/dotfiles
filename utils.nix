@@ -3,69 +3,82 @@ let
   inherit (nixpkgs.lib)
     attrByPath mkIf mkOption types nixosSystem recursiveUpdate;
   inherit (home-manager.lib) homeManagerConfiguration;
-  inherit (builtins) isBool isPath foldl';
+  inherit (builtins) isBool isFunction isAttrs isPath foldl' functionArgs all elem attrNames;
   utils = rec {
     init = { dfconf }:
       let
         inherit (dfconf) system;
         pkgs = import nixpkgs { inherit system; };
         inherit (pkgs) stdenvNoCC haskellPackages;
-      in
-      utils // rec {
+        full = utils // rec {
 
-        mkDefs = { imports ? [ ], homeDefs ? (_: { }), hostDefs ? (_: { }) }:
-          let
-            imported = map (p: assert isPath p; import p) imports;
-            merge = { homeI, hostI }: { home, host }:
-              { homeI = homeI ++ [ home ]; hostI = hostI ++ [ host ]; };
+          mkDefs = { imports ? [ ], homeDefs ? (_: { }), hostDefs ? (_: { }) }:
+            let
+              importFunc = i:
+                let
+                  dotfileFunc = all
+                    (x: elem x [ "utils" "dfconf" ])
+                    (attrNames (functionArgs i));
+                in
+                assert isAttrs i || isPath i || isFunction i;
+                if isPath i then importFunc (import i)
+                else if isAttrs i then i
+                else if dotfileFunc then i { utils = full; inherit dfconf; }
+                else i;
 
-            imports' = foldl' merge { homeI = [ ]; hostI = [ ]; } (map mkDefs imported);
-            extend = old: imps: old // { imports = (old.imports or [ ]) ++ imps; };
-          in
-          {
-            home = extend (homeDefs { inherit utils dfconf; }) imports'.homeI;
-            host = extend (hostDefs { inherit utils dfconf; }) imports'.hostI;
-          };
+              imported = map importFunc imports;
+              merge = { homeI, hostI }: { homeDefs, hostDefs }:
+                { homeI = homeI ++ homeDefs; hostI = hostI ++ hostDefs; };
 
-        condDefinitions = path: default: pred: definitions:
-          let
-            val = attrByPath path default dfconf;
-            enable = pred val;
-          in
-          mkIf enable definitions;
-
-        boolDefinitions = path: condDefinitions path false (v: assert isBool v; v);
-        boolDefinitions' = path: condDefinitions path false (v: assert isBool v; !v);
-
-        enumDefinitions = path: val: condDefinitions path null (v: v == val);
-        enumDefinitions' = path: val: condDefinitions path null (v: v != val);
-
-        mkEnumOption = enumVal: mkOption { type = with types; nullOr (enum [ enumVal ]); };
-
-        tryImport = args@{ src, default ? "false", ... }:
-          let
-            valid = stdenvNoCC.mkDerivation {
-              name = if args ? name then args.name else baseNameOf (toString args.src);
-              nativeBuildInputs = [ haskellPackages.hnix ];
-              builder = ./valid.sh;
-              inherit src default;
+              imports' = foldl' merge { homeI = [ ]; hostI = [ ]; } imported;
+            in
+            {
+              homeDefs = [ homeDefs ] ++ imports'.homeI;
+              hostDefs = [ hostDefs ] ++ imports'.hostI;
             };
-          in
-          import valid.out;
-      };
+
+          condDefinitions = path: default: pred: definitions:
+            let
+              val = attrByPath path default dfconf;
+              enable = pred val;
+            in
+            mkIf enable definitions;
+
+          boolDefinitions = path: condDefinitions path false (v: assert isBool v; v);
+          boolDefinitions' = path: condDefinitions path false (v: assert isBool v; !v);
+
+          enumDefinitions = path: val: condDefinitions path null (v: v == val);
+          enumDefinitions' = path: val: condDefinitions path null (v: v != val);
+
+          mkEnumOption = enumVal: mkOption { type = with types; nullOr (enum [ enumVal ]); };
+
+          tryImport = args@{ src, default ? "false", ... }:
+            let
+              valid = stdenvNoCC.mkDerivation {
+                name = if args ? name then args.name else baseNameOf (toString args.src);
+                nativeBuildInputs = [ haskellPackages.hnix ];
+                builder = ./valid.sh;
+                inherit src default;
+              };
+            in
+            import valid.out;
+        };
+      in
+      full;
 
     mkOutputs = { dfconf, root, homeExtra ? [ ], hostExtra ? [ ] }:
       let
         inherit (dfconf) userName hostName system;
         utils = init { inherit dfconf; };
         pkgs = import nixpkgs { inherit system; };
-        metaConfig = (import root) { inherit utils dfconf; };
+        rootExpr = if isPath root then import root else root;
+        dotfileConfig = rootExpr { inherit utils dfconf; };
       in
       {
         nixosConfigurations.${hostName} =
-          nixosSystem { inherit system pkgs; modules = [ metaConfig.host ] ++ hostExtra; };
+          nixosSystem { inherit system; modules = dotfileConfig.hostDefs ++ hostExtra; };
         homeConfigurations."${userName}@${hostName}" =
-          homeManagerConfiguration { inherit pkgs; modules = [ metaConfig.home ] ++ homeExtra; };
+          homeManagerConfiguration { inherit pkgs; modules = dotfileConfig.homeDefs ++ homeExtra; };
       };
 
     flattenConfigs = foldl' recursiveUpdate { };
