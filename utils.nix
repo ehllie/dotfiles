@@ -1,7 +1,7 @@
 { nixpkgs, nixpkgs-darwin, home-manager, darwin }:
 let
   inherit (nixpkgs.lib)
-    attrByPath mkIf mkOption types nixosSystem recursiveUpdate;
+    attrByPath mkIf mkMerge mkOption types nixosSystem recursiveUpdate;
   inherit (home-manager.lib) homeManagerConfiguration;
   inherit (darwin.lib) darwinSystem;
   inherit (builtins) isBool isFunction isAttrs isPath foldl' functionArgs all elem attrNames;
@@ -43,12 +43,10 @@ let
               darwinDefs = [ darwinDefs ] ++ imports'.darwinI;
             };
 
+          confVal = path: default: attrByPath path default dfconf;
+
           condDefinitions = path: default: pred: definitions:
-            let
-              val = attrByPath path default dfconf;
-              enable = pred val;
-            in
-            mkIf enable definitions;
+            mkIf (pred (confVal path default)) definitions;
 
           boolDefinitions = path: condDefinitions path false (v: assert isBool v; v);
           boolDefinitions' = path: condDefinitions path false (v: assert isBool v; !v);
@@ -57,8 +55,6 @@ let
           enumDefinitions' = path: val: condDefinitions path null (v: v != val);
 
           mkEnumOption = enumVal: mkOption { type = with types; nullOr (enum [ enumVal ]); };
-
-          tryExtend = args: recursiveUpdate dfconf (tryImport args);
 
           tryImport = args@{ src, default ? "false", ... }:
             let

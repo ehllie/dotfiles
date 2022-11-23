@@ -96,7 +96,7 @@
         };
       })
       (flakeConfig {
-        dfconf = {
+        dfconf = rec {
           system = "aarch64-darwin";
           hostName = "nixm1";
           homeDir = "/Users/ellie";
