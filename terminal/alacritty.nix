@@ -1,5 +1,4 @@
 { utils, dfconf }:
-let cond = utils.enumDefinitions [ "windowManager" ] "xmonad"; in
 utils.mkDefs {
   homeDefs = {
     home.shellAliases.ssh = "TERM=xterm-256color; ssh";
@@ -9,6 +8,11 @@ utils.mkDefs {
         enable = true;
 
         settings = {
+          window.dimensions = {
+            columns = 130;
+            lines = 36;
+          };
+
           font = {
             italic.style = "Italic";
             bold.style = "Bold";
@@ -16,7 +20,7 @@ utils.mkDefs {
             size = dfconf.fontsize + 2;
 
             normal = {
-              family = "Cascadia Code";
+              family = "CaskaydiaCove Nerd Font";
               style = "Regular";
             };
           };

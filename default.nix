@@ -240,6 +240,8 @@
         "microsoft-office"
         "protonmail-bridge"
         "protonvpn"
+        "firefox"
+        "steam"
       ];
       onActivation.cleanup = "zap";
 
