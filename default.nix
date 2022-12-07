@@ -245,6 +245,7 @@
         "pritunl"
         "adobe-acrobat-pro"
         "scroll-reverser"
+        "aldente"
       ];
       onActivation.cleanup = "zap";
 

@@ -33,6 +33,8 @@ local options = {
   wrap = false, -- display lines as one long line
   scrolloff = 8, -- is one of my fav
   sidescrolloff = 8,
+  winblend = 30,
+  pumblend = 30,
 }
 vim.opt.fillchars.eob = " "
 vim.opt.shortmess:append("c")

@@ -9,12 +9,14 @@ local function config()
   })
 
   local handlers = require("lsp-conf.handlers")
-  local opts = {
-    on_attach = handlers.make_on_attach(),
-    capabilities = handlers.mk_capabilities(),
-  }
+  local on_attach = handlers.make_on_attach()
+  local capabilities = handlers.mk_capabilities()
 
-  require("lspconfig").sumneko_lua.setup(opts)
+  require("lspconfig").sumneko_lua.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = { Lua = { workspace = { checkThirdParty = false } } },
+  })
 end
 
 return { extended = { "folke/neodev.nvim", config = config } }
