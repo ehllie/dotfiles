@@ -242,6 +242,9 @@
         "protonvpn"
         "firefox"
         "steam"
+        "pritunl"
+        "adobe-acrobat-pro"
+        "scroll-reverser"
       ];
       onActivation.cleanup = "zap";
 
