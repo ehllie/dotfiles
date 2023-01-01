@@ -21,7 +21,12 @@
     in
 
     {
-      nixpkgs.config.allowUnfree = true;
+      nixpkgs.config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          "python3.10-poetry-1.2.2"
+        ];
+      };
       time.timeZone = "Europe/Warsaw";
       i18n.defaultLocale = "en_IE.UTF-8";
       console.keyMap = "pl";
@@ -125,8 +130,6 @@
         (python3.withPackages pythonPkgs)
         poetry
 
-        ante
-
         lldb
         cargo
         rustc
@@ -229,7 +232,12 @@
 
     programs.zsh.enable = true;
     security.pam.enableSudoTouchIdAuth = true;
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [
+        "python3.10-poetry-1.2.2"
+      ];
+    };
 
     homebrew = {
       enable = true;
@@ -244,8 +252,15 @@
         "steam"
         "pritunl"
         "adobe-acrobat-pro"
-        "scroll-reverser"
+        "mos"
+        "xiv-on-mac"
         "aldente"
+        "teamviewer"
+        "calibre"
+        "prismlauncher"
+        "maccy"
+        "transmission"
+        "vlc"
       ];
       onActivation.cleanup = "zap";
 

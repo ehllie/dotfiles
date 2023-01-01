@@ -29,7 +29,7 @@ utils.mkDefs {
       sessionVariables = {
 
         # $HOME/.ghcup
-        GHCUP_USE_XDG_DIRS = true;
+        GHCUP_USE_XDG_DIRS = 1;
 
         # $HOME/.stack
         STACK_ROOT = "${dataHome}/stack";

@@ -98,7 +98,7 @@
       (flakeConfig {
         dfconf = rec {
           system = "aarch64-darwin";
-          hostName = "nixm1";
+          hostName = "EllMBP";
           homeDir = "/Users/ellie";
           repoDir = homeDir + "/Code/dotfiles";
           graphical = false;
