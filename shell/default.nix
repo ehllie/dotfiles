@@ -21,11 +21,13 @@ utils.mkDefs {
         rm -rf $dir
       '';
 
+      presence-fix = if utils.isDarwin then "TMPDIR=$TMPDIR;" else "";
+
       develop = pkgs.writeShellScriptBin "develop" ''
         if [ -z "$1" ]; then
           nix develop -c "$SHELL"
         else
-          nix develop -c "$SHELL" -c "SHELL=$SHELL; $*"
+          nix develop -c "$SHELL" -c "SHELL=$SHELL; ${presence-fix} $*"
         fi
       '';
 
