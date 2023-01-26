@@ -54,6 +54,7 @@ utils.mkDefs {
             sumneko-lua-language-server
             nil
             rust-analyzer
+            ccls
 
             # Linters
             clippy

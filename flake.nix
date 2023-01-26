@@ -8,9 +8,10 @@
     darwin = { url = "github:lnl7/nix-darwin/master"; inputs.nixpkgs.follows = "nixpkgs-darwin"; };
     nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     vscode-server = { url = "github:msteen/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
-    nil = { url = "github:oxalica/nil"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nil = { url = "github:oxalica/nil"; };
     ante = { url = "github:jfecher/ante"; inputs.nixpkgs.follows = "nixpkgs"; };
     taffybar.url = "github:taffybar/taffybar";
+    docs-gen = { url = "git+ssh://git@github.com/ehllie/docs-gen.git"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
@@ -24,6 +25,7 @@
     , taffybar
     , nil
     , ante
+    , docs-gen
     }:
     let
       defaultConfig = rec {
@@ -49,8 +51,10 @@
         let
           overlays = import ./overlays [
             taffybar.overlays
-            nil.overlays.default
+            # nil.overlays.default
+            (_: _: { inherit (nil.packages.${dfconf.system}) nil; })
             ante.overlays.default
+            docs-gen.overlays.default
           ];
           finalConf = recursiveUpdate defaultConfig dfconf;
           hmExtra =

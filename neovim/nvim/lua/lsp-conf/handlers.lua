@@ -90,7 +90,7 @@ local function lsp_keymaps(bufnr, extra)
   register(vim.tbl_deep_extend("force", base, extra and extra() or {}), { buffer = bufnr })
 end
 
-M.can_format = { "rust_analyzer" }
+M.can_format = { "rust_analyzer", "ccls" }
 
 local has_codelens = { rust_analyzer = "*.rs", hls = { "*.hs", ".lhs" } }
 

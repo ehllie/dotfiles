@@ -138,19 +138,24 @@
         nodePackages.pnpm
         nodejs
 
+        jdk
+
         git
         git-crypt
         lazygit
 
+        cachix
         wget
         zip
         unzip
+        docs-gen
 
         btop
         killall
         glow
         tree
         pandoc
+        jq
       ];
     in
     utils.trisectDarwin
@@ -261,6 +266,8 @@
         "maccy"
         "transmission"
         "vlc"
+        "signal"
+        "keycastr"
       ];
       onActivation.cleanup = "zap";
 
