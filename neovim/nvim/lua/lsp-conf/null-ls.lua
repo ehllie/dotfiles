@@ -18,9 +18,6 @@ local function config()
 
     formatting.prettier.with({
       extra_args = {
-        "--no-semi",
-        "--single-quote",
-        "--jsx-single-quote",
         ("--plugin=%s/lib/node_modules/prettier-plugin-svelte"):format(store.prettier_svelte),
         ("--plugin=%s/lib/node_modules/prettier-plugin-toml"):format(store.prettier_toml),
       },
