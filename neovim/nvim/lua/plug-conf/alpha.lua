@@ -56,11 +56,11 @@ local function config()
   end
 
   dashboard.section.header.val = header
-  dashboard.section.header.opts.hl = "Type"
+  dashboard.section.header.opts.hl = "Operator"
   dashboard.section.buttons.val = buttons
   dashboard.section.buttons.opts.hl = "Keyword"
   dashboard.section.footer.val = footer()
-  dashboard.section.footer.opts.hl = "Identifier"
+  dashboard.section.footer.opts.hl = "Special"
 
   dashboard.opts.opts.noautocmd = true
   require("alpha").setup(dashboard.opts)
