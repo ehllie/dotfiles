@@ -251,6 +251,7 @@
         "1password"
         "discord"
         "microsoft-office"
+        "microsoft-teams"
         "protonmail-bridge"
         "protonvpn"
         "firefox"
