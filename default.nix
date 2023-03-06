@@ -114,6 +114,7 @@
         taffybar
       ] else [ ]);
 
+
       pythonPkgs = ps: with ps; [
         black
         flake8
@@ -130,7 +131,7 @@
         (python3.withPackages pythonPkgs)
         poetry
 
-        lldb
+        # lldb
         cargo
         rustc
         gcc
@@ -269,11 +270,11 @@
         "vlc"
         "signal"
         "keycastr"
+        "keyboard-cleaner"
       ];
       onActivation.cleanup = "zap";
 
     };
-
     fonts = {
       fontDir.enable = true;
       fonts = with pkgs; [
