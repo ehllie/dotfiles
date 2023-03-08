@@ -73,7 +73,7 @@ in
     ./xdg.nix
     ./zsh
   ] ++
-  optionals isLinux [ ./linux.nix ] ++
+  optionals isLinux [ ./linux ] ++
   optionals isDarwin [ ./darwin.nix ];
 
   home = { inherit packages; };

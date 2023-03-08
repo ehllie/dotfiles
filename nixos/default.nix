@@ -17,14 +17,17 @@ in
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_IE.UTF-8";
   console.keyMap = "pl";
-  programs._1password.enable = true;
   fileSystems."/" = { device = "/dev/vg1/root"; fsType = "ext4"; };
   swapDevices = [{ device = "/dev/vg1/swap"; }];
   virtualisation.docker.enable = true;
   systemd.services.upower.enable = true;
   hardware.bluetooth.enable = true;
 
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ./xmonad.nix
+    ./rofi.nix
+  ];
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -126,6 +129,23 @@ in
     udisks2.enable = true;
     openssh.enable = true;
 
+    xserver = {
+      gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+      desktopManager.xterm.enable = false;
+      excludePackages = [ pkgs.xterm ];
+      layout = "pl";
+
+      libinput = {
+        enable = true;
+        touchpad.naturalScrolling = true;
+      };
+    };
+
+    gnome = {
+      gnome-keyring.enable = true;
+      at-spi2-core.enable = true;
+    };
+
     avahi = {
       enable = true;
       nssmdns = true;
@@ -133,7 +153,7 @@ in
 
     dbus = {
       enable = true;
-      packages = with pkgs;[ dconf ];
+      packages = [ pkgs.dconf ];
     };
 
     pipewire = {
@@ -146,7 +166,17 @@ in
 
     printing = {
       enable = true;
-      drivers = with pkgs;[ brlaser ];
+      drivers = [ pkgs.brlaser ];
+    };
+  };
+
+  programs = {
+    dconf.enable = true;
+    _1password.enable = true;
+
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ "ellie" ];
     };
   };
 
