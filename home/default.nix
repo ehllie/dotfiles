@@ -72,6 +72,7 @@ in
     ./neovim
     ./xdg.nix
     ./zsh.nix
+    ./doom
   ];
 
   home = { inherit packages; };

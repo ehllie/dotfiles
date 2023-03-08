@@ -10,6 +10,7 @@
     ante = { url = "github:jfecher/ante"; inputs.nixpkgs.follows = "nixpkgs"; };
     docs-gen.url = "git+ssh://git@github.com/SayInvest/docs-gen?branch=release-0.1.git";
     neovim = { url = "github:nix-community/neovim-nightly-overlay"; inputs.nixpkgs.follows = "nixpkgs"; };
+    doom.url = "github:nix-community/nix-doom-emacs";
   };
 
   outputs =
