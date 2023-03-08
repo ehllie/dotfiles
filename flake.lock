@@ -61,6 +61,22 @@
         "url": "ssh://git@github.com/SayInvest/docs-gen?branch=release-0.1.git"
       }
     },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1673956053,
+        "narHash": "sha256-4gtG9iQuiKITOjNQQeQIpoIB6b16fm+504Ch3sNKLd8=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "35bb57c0c8d8b62bbfd284272c928ceb64ddbde9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1676283394,
@@ -92,6 +108,21 @@
       }
     },
     "flake-utils_3": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_4": {
       "locked": {
         "lastModified": 1676283394,
         "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
@@ -127,9 +158,55 @@
         "type": "github"
       }
     },
-    "nil": {
+    "neovim": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "neovim-flake": "neovim-flake",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1678263338,
+        "narHash": "sha256-ZjudPy/r0zddSzo1rFKTvfYQFLsnRkrlKsfdT6I67m4=",
+        "owner": "nix-community",
+        "repo": "neovim-nightly-overlay",
+        "rev": "fab6a12847c8f8612a4b092f9152d47c00e6b075",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "neovim-nightly-overlay",
+        "type": "github"
+      }
+    },
+    "neovim-flake": {
       "inputs": {
         "flake-utils": "flake-utils_3",
+        "nixpkgs": [
+          "neovim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "contrib",
+        "lastModified": 1678245469,
+        "narHash": "sha256-vGK+GJHOa4llMsaiNXF6XoP7qbT5Br3THy6j+NXWksM=",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "06aed7c1776e9db769c77ce836c1995128a6afc6",
+        "type": "github"
+      },
+      "original": {
+        "dir": "contrib",
+        "owner": "neovim",
+        "repo": "neovim",
+        "type": "github"
+      }
+    },
+    "nil": {
+      "inputs": {
+        "flake-utils": "flake-utils_4",
         "nixpkgs": "nixpkgs_2",
         "rust-overlay": "rust-overlay"
       },
@@ -217,6 +294,7 @@
         "darwin": "darwin",
         "docs-gen": "docs-gen",
         "home-manager": "home-manager",
+        "neovim": "neovim",
         "nil": "nil",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-darwin": "nixpkgs-darwin"

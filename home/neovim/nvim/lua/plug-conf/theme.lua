@@ -2,7 +2,7 @@ local catppuccin = {
   "catppuccin/nvim",
   as = "catppuccin",
   run = ":CatppuccinCompile",
-  tag = "*",
+  -- tag = "*",
   config = function()
     vim.g.catppuccin_flavour = "frappe"
 
