@@ -26,7 +26,7 @@ let
   };
 in
 {
-  imports = [ ./taffybar ./xmonad ];
+  imports = [ ./taffybar ./xmonad ./rofi.nix ];
   services.gpg-agent.enable = true;
 
   programs.ssh.extraConfig = ''

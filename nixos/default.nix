@@ -26,7 +26,6 @@ in
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./xmonad.nix
-    ./rofi.nix
   ];
 
   nixpkgs.config = {
