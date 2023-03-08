@@ -6,9 +6,9 @@
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     darwin = { url = "github:lnl7/nix-darwin/master"; inputs.nixpkgs.follows = "nixpkgs-darwin"; };
-    nil = { url = "github:oxalica/nil"; };
+    nil.url = "github:oxalica/nil";
     ante = { url = "github:jfecher/ante"; inputs.nixpkgs.follows = "nixpkgs"; };
-    docs-gen = { url = "git+ssh://git@github.com/SayInvest/docs-gen?branch=release-0.1.git"; inputs.nixpkgs.follows = "nixpkgs"; };
+    docs-gen.url = "git+ssh://git@github.com/SayInvest/docs-gen?branch=release-0.1.git";
   };
 
   outputs =
@@ -20,7 +20,7 @@
     }@inputs:
     let
       inherit (builtins) listToAttrs;
-      inherit (nixpkgs.lib) concatMap mapAttrsToList nixosSystem;
+      inherit (nixpkgs.lib) concatMap mapAttrsToList nixosSystem optionals;
       inherit (darwin.lib) darwinSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
 
@@ -47,13 +47,17 @@
           allHosts);
     in
     {
-      homeConfigurations = enumerateHosts (pkgs: {
-        ellie = homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./home ./users/ellie ];
-          extraSpecialArgs = { inherit inputs; };
-        };
-      });
+      homeConfigurations = enumerateHosts (pkgs:
+        let inherit (pkgs.stdenv) isDarwin isLinux; in
+        {
+          ellie = homeManagerConfiguration {
+            inherit pkgs;
+            modules = [ ./home ./users/ellie.nix ] ++
+              optionals isDarwin [ ./home/darwin.nix ] ++
+              optionals isLinux [ ./home/linux ];
+            extraSpecialArgs = { inherit inputs; };
+          };
+        });
       nixosConfigurations = {
         dell-gram = nixosSystem {
           system = "x86_64-linux";

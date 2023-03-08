@@ -68,8 +68,4 @@
     };
   };
   services.nix-daemon.enable = true;
-  # users.users.${dfconf.userName} = {
-  #   home = dfconf.homeDir;
-  #   description = dfconf.userDesc;
-  # };
 }

@@ -71,10 +71,8 @@ in
     ./catppuccin
     ./neovim
     ./xdg.nix
-    ./zsh
-  ] ++
-  optionals isLinux [ ./linux ] ++
-  optionals isDarwin [ ./darwin.nix ];
+    ./zsh.nix
+  ];
 
   home = { inherit packages; };
 

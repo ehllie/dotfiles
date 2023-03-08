@@ -1,5 +1,6 @@
 { inputs, lib, pkgs, ... }:
 let
+  inherit (pkgs) system;
   inherit (inputs) ante nil docs-gen;
 in
 {
@@ -10,7 +11,7 @@ in
       (import ./substitute-all-rec)
       (import ./try-import)
       ante.overlays.default
-      nil.overlays.default
-      docs-gen.overlays.default
+      (_: _: { nil = nil.packages.${system}.nil; })
+      (_: _: { docs-gen = docs-gen.packages.${system}.docs-gen; })
     ];
 }
