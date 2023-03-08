@@ -8,6 +8,7 @@ in
       (import ./discord.nix)
       (import ./node-packages { inherit lib; })
       (import ./substitute-all-rec)
+      (import ./try-import)
       ante.overlays.default
       nil.overlays.default
       docs-gen.overlays.default
