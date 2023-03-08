@@ -55,9 +55,9 @@
         };
       });
       nixosConfigurations = {
-        test-host = nixosSystem {
+        dell-gram = nixosSystem {
           system = "x86_64-linux";
-          modules = [ ];
+          modules = [ ./nixos ./hosts/dell-gram.nix ];
           specialArgs = { inherit inputs; };
         };
       };
