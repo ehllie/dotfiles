@@ -1,5 +1,8 @@
-{ utils, dfconf }:
-utils.mkDefs {
+{ pkgs, ... }:
+let
+  inherit (pkgs.stdenv) isLinux;
+in
+{
   homeDefs = {
     home.shellAliases.ssh = "TERM=xterm-256color; ssh";
 
@@ -17,7 +20,7 @@ utils.mkDefs {
             italic.style = "Italic";
             bold.style = "Bold";
             bold_italic.style = "Bold Italic";
-            size = dfconf.fontsize + 2;
+            size = if isLinux then 13 else 15;
 
             normal = {
               family = "CaskaydiaCove Nerd Font";

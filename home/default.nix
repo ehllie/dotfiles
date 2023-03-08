@@ -67,6 +67,8 @@ in
 {
 
   imports = [
+    ./alacritty.nix
+    ./catppuccin
     ./neovim
     ./xdg.nix
     ./zsh
