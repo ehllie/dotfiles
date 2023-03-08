@@ -50,7 +50,7 @@
       homeConfigurations = enumerateHosts (pkgs: {
         ellie = homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home ./home/users/ellie ];
+          modules = [ ./home ./users/ellie ];
           extraSpecialArgs = { inherit inputs; };
         };
       });
