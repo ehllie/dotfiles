@@ -21,9 +21,17 @@ local function config()
     sources = { "nvim_diagnostic" },
     sections = { "error", "warn" },
     symbols = { error = " ", warn = " " },
-    colored = false,
     always_visible = true,
   }
+
+  local function macro_recording()
+    local recording_register = vim.fn.reg_recording()
+    if recording_register == "" then
+      return ""
+    else
+      return "Recording @" .. recording_register
+    end
+  end
 
   local function progress()
     return #vim.lsp.get_active_clients() > 0 and lsp_status.status_progress() or ""
@@ -31,8 +39,7 @@ local function config()
 
   local diff = {
     "diff",
-    colored = false,
-    symbols = { added = "", modified = "", removed = "" }, -- changes diff symbols
+    symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
     cond = hide_in_width,
     source = diff_source,
   }
@@ -63,7 +70,7 @@ local function config()
     sections = {
       lualine_a = { "mode" },
       lualine_b = { { "b:gitsigns_head", icon = "" } },
-      lualine_c = { diagnostics, progress },
+      lualine_c = { macro_recording, diagnostics, progress },
       lualine_x = { diff, spaces, "encoding", filetype },
       lualine_y = { location },
       lualine_z = { "progress" },
