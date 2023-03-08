@@ -57,6 +57,11 @@ in
           osflake-dry;
       }
     );
+
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
   };
 
   programs.zsh = {
