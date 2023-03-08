@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (pkgs.stdenv) isLinux;
+  inherit (pkgs.stdenv) isLinux isDarwin;
   inherit (lib) optionals attrValues;
   haskellPkgs = ps: attrValues
     {
@@ -65,6 +65,15 @@ let
   ];
 in
 {
+
+  imports = [
+    ./neovim
+    ./xdg.nix
+    ./zsh
+  ] ++
+  optionals isLinux [ ./linux.nix ] ++
+  optionals isDarwin [ ./darwin.nix ];
+
   home = { inherit packages; };
 
   programs = {
