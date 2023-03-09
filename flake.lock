@@ -48,17 +48,18 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1677248658,
-        "narHash": "sha256-xWbEPvBU2QeNZAdBmiNIOrruSvzKGZO6s6mfsD5pE+4=",
-        "ref": "refs/heads/main",
-        "rev": "f0fa2b6500280500e79d4414ebd31a9b56cc282c",
-        "revCount": 91,
+        "lastModified": 1675072884,
+        "narHash": "sha256-gF2NPIP3S7UNm/ZLanLRv0rpz+91veAs/RIYzrgyJqM=",
+        "ref": "release-0.1",
+        "rev": "62e0bffe053832f39b9b6610ad326da1873ef9de",
+        "revCount": 78,
         "type": "git",
-        "url": "ssh://git@github.com/SayInvest/docs-gen?branch=release-0.1.git"
+        "url": "ssh://git@github.com/SayInvest/docs-gen"
       },
       "original": {
+        "ref": "release-0.1",
         "type": "git",
-        "url": "ssh://git@github.com/SayInvest/docs-gen?branch=release-0.1.git"
+        "url": "ssh://git@github.com/SayInvest/docs-gen"
       }
     },
     "doom": {
@@ -282,11 +283,11 @@
     },
     "flake-utils_2": {
       "locked": {
-        "lastModified": 1676283394,
-        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
         "type": "github"
       },
       "original": {
@@ -401,16 +402,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1677142198,
-        "narHash": "sha256-Y/uC2ZmkQkyrdRZ5szZilhZ/46786Wio5CGTgL+Vb/c=",
+        "lastModified": 1671359686,
+        "narHash": "sha256-3MpC6yZo+Xn9cPordGz2/ii6IJpP2n8LE8e/ebUXLrs=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "03fb72201639e5274fee6d77b0d9c66e98329aba",
+        "rev": "04f574a1c0fde90b51bf68198e2297ca4e7cccf4",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }

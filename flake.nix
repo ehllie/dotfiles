@@ -8,7 +8,7 @@
     darwin = { url = "github:lnl7/nix-darwin/master"; inputs.nixpkgs.follows = "nixpkgs-darwin"; };
     nil.url = "github:oxalica/nil";
     ante = { url = "github:jfecher/ante"; inputs.nixpkgs.follows = "nixpkgs"; };
-    docs-gen.url = "git+ssh://git@github.com/SayInvest/docs-gen?branch=release-0.1.git";
+    docs-gen.url = "git+ssh://git@github.com/SayInvest/docs-gen?ref=release-0.1";
     doom.url = "github:nix-community/nix-doom-emacs";
   };
 
