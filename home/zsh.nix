@@ -27,12 +27,12 @@ let
   remote-op = "${remote-op-pkg}/bin/remote-op";
   repoDir = "${homeDirectory}/Code/dotfiles/home/neovim/nvim";
   hostName = "\${$(hostname)%%.*}";
-  flakeRebuild = cmd: loc: "sudo ${rebuild} ${cmd} --flake ${repoDir}#${hostName}";
+  flakeRebuild = cmd: loc: "${rebuild} ${cmd} --flake ${repoDir}#${hostName}";
 
   osflake-dry = "${remote-op} ${flakeRebuild "dry-activate" "."} --option tarball-ttl 0";
   osflake-switch = "${remote-op} ${flakeRebuild "switch" "."} --option tarball-ttl 0";
-  locflake-dry = "${flakeRebuild "dry-activate" repoDir} --fast";
-  locflake-switch = "${flakeRebuild "switch" repoDir} --fast";
+  locflake-dry = "${flakeRebuild "dry-activate" repoDir}" + (if isDarwin then "" else " --fast");
+  locflake-switch = "${flakeRebuild "switch" repoDir}" + (if isDarwin then "" else " --fast");
   vim = "nvim";
 
 in
