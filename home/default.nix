@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (pkgs.stdenv) isLinux isDarwin;
+  inherit (pkgs.stdenv) isLinux;
   inherit (lib) optionals attrValues;
   haskellPkgs = ps: attrValues
     {
@@ -69,10 +69,10 @@ in
   imports = [
     ./alacritty.nix
     ./catppuccin
+    ./doom
     ./neovim
     ./xdg.nix
-    ./zsh.nix
-    ./doom
+    ./shell.nix
   ];
 
   home = { inherit packages; };
