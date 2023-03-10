@@ -33,7 +33,6 @@ let
       inherit (pkgs)
         cabal-install
         poetry
-
         cargo
         rustc
         gcc
@@ -44,6 +43,8 @@ let
         git-crypt
         lazygit
 
+        ffmpeg
+        imagemagick
         cachix
         wget
         zip
