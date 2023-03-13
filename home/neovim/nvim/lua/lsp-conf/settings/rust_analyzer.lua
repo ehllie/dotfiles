@@ -19,18 +19,6 @@ local function config()
     server = {
       on_attach = opts.on_attach,
       capabilities = opts.capabilities,
-      settings = {
-        ["rust-analyzer"] = {
-          checkOnSave = {
-            command = "clippy",
-          },
-          cargo = {
-            extraEnv = {
-              CARGO_TARGET_DIR = "/tmp/rust-analyzer",
-            },
-          },
-        },
-      },
     },
   })
 end
