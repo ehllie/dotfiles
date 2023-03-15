@@ -68,6 +68,7 @@ return packer.startup({
     use(require("plug-conf.which-key"))
     use(require("plug-conf.gitsigns"))
     -- use(require("plug-conf.session-manager"))
+    use(require("plug-conf.neorg"))
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

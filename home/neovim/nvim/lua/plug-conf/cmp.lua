@@ -74,6 +74,7 @@ local function config()
     },
     sources = {
       { name = "copilot" },
+      { name = "neorg" },
       { name = "nvim_lsp" },
       { name = "nvim_lua" },
       { name = "luasnip" },
