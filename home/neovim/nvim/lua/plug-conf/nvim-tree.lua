@@ -1,10 +1,12 @@
 local function config()
-  local tree_cb = require("nvim-tree.config").nvim_tree_callback
+  local register = require("which-key").register
+  local api = require("nvim-tree.api")
 
   require("nvim-tree").setup({
     update_focused_file = {
       enable = true,
       update_cwd = true,
+      ignore_list = { "toggleterm" },
     },
     renderer = {
       root_folder_modifier = ":t",
@@ -59,17 +61,17 @@ local function config()
     view = {
       width = 30,
       side = "left",
-      mappings = {
-        list = {
-          { key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
-          { key = "h", cb = tree_cb("close_node") },
-          { key = "v", cb = tree_cb("vsplit") },
-        },
-      },
     },
+    on_attach = function(bufnr)
+      register({
+        l = { api.node.open.edit, "Open file" },
+        h = { api.node.navigate.parent_close, "Close directory" },
+        v = { api.node.open.vertical, "Open file in vertical split" },
+      }, { buffer = bufnr })
+    end,
   })
 
-  require("which-key").register({ ["<leader>e"] = { ":NvimTreeToggle<CR>", "Toggle NvimTree" } })
+  register({ ["<leader>e"] = { ":NvimTreeToggle<CR>", "Toggle NvimTree" } })
 end
 
 return { "kyazdani42/nvim-tree.lua", config = config, requires = "folke/which-key.nvim" }
