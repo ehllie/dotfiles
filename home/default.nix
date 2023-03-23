@@ -70,7 +70,6 @@ in
   imports = [
     ./alacritty.nix
     ./catppuccin
-    ./doom
     ./neovim
     ./xdg.nix
     ./shell.nix
