@@ -63,6 +63,8 @@ local function config()
       side = "left",
     },
     on_attach = function(bufnr)
+      api.config.mappings.default_on_attach(bufnr)
+
       register({
         l = { api.node.open.edit, "Open file" },
         h = { api.node.navigate.parent_close, "Close directory" },
