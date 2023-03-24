@@ -20,9 +20,9 @@ let
   presence-fix = if isDarwin then "TMPDIR=$TMPDIR;" else "";
   develop = pkgs.writeShellScriptBin "develop" ''
     if [ -z "$1" ]; then
-      nix develop -c "$SHELL"
+      direnv exec . "$SHELL"
     else
-      nix develop -c "$SHELL" -c "SHELL=$SHELL; ${presence-fix} $*"
+      direnv exec . "$SHELL" -c "SHELL=$SHELL; ${presence-fix} $*"
     fi
   '';
 
@@ -36,7 +36,6 @@ let
   osflake-switch = "${remote-op} ${flakeRebuild "switch" "."} --option tarball-ttl 0";
   locflake-dry = "${flakeRebuild "dry-activate" repoDir}" + (if isDarwin then "" else " --fast");
   locflake-switch = "${flakeRebuild "switch" repoDir}" + (if isDarwin then "" else " --fast");
-  vim = "nvim";
 
 in
 {
@@ -51,8 +50,9 @@ in
     shellAliases = {
       inherit
         locflake-switch
-        osflake-switch
-        vim;
+        osflake-switch;
+      vim = "nvim";
+      direnv-init = ''echo "use flake" >> .envrc && direnv allow'';
     } // (
       if isDarwin then
         { } else {
