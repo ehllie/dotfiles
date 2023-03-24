@@ -1,6 +1,23 @@
 -- Setup for minor plugins
 
 return {
+  "kyazdani42/nvim-web-devicons",
+  "moll/vim-bbye",
+  "nvim-lua/plenary.nvim", -- Useful lua functions used by lots of plugins
+  {
+    "AndrewRadev/bufferize.vim",
+    config = function()
+      require("which-key").register({ ["<leader>Bm"] = { "<cmd>Bufferize messages<cr>", "Bufferize" } }, { mode = "n" })
+    end,
+    requires = "folke/which-key.nvim",
+  },
+  {
+    "lambdalisue/suda.vim",
+    config = function()
+      require("which-key").register({ ["w!!"] = { "SudaWrite", "Write as superuser" } }, { mode = "c" })
+    end,
+    requires = "folke/which-key.nvim",
+  },
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -32,29 +49,6 @@ return {
       })
     end,
   },
-  -- {
-  --   "Xuyuanp/scrollbar.nvim",
-  --   config = function()
-  --     local scrollbar = require("scrollbar")
-  --     vim.api.nvim_create_autocmd({ "WinScrolled", "VimResized", "QuitPre" }, {
-  --       callback = function()
-  --         scrollbar.show()
-  --       end,
-  --     })
-  --
-  --     vim.api.nvim_create_autocmd({ "WinEnter", "FocusGained" }, {
-  --       callback = function()
-  --         scrollbar.show()
-  --       end,
-  --     })
-  --
-  --     vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "BufWinLeave", "FocusLost" }, {
-  --       callback = function()
-  --         scrollbar.clear()
-  --       end,
-  --     })
-  --   end,
-  -- },
   {
     "lewis6991/impatient.nvim",
     config = function()

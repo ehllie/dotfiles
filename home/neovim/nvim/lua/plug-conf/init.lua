@@ -35,19 +35,6 @@ return packer.startup({
   function(use)
     use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
 
-    use({
-      "kyazdani42/nvim-web-devicons",
-      {
-        "lambdalisue/suda.vim",
-        config = function()
-          require("which-key").register({ ["w!!"] = { "SudaWrite", "Write as superuser" } }, { mode = "c" })
-        end,
-        requires = "folke/which-key.nvim",
-      },
-      "moll/vim-bbye",
-      "nvim-lua/plenary.nvim", -- Useful lua functions used by lots of plugins
-    })
-
     -- Depencancy and config setup for plugins in separate files
     use(require("lsp-conf"))
     use(require("plug-conf.alpha"))
