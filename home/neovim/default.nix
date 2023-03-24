@@ -17,6 +17,9 @@ in
       inherit (pkgs) gcc;
       fontsize = if isLinux then 11 else 13;
     };
+    onChange = ''
+      nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    '';
   };
 
   home = {
