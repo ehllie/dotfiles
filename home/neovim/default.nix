@@ -69,9 +69,5 @@ in
         # Using the homebrew package on macOS
         neovide;
     });
-
-    sessionVariables = {
-      NEOVIDE_MULTIGRID = "true";
-    };
   };
 }

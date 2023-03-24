@@ -100,3 +100,8 @@ register({
 
 -- Command --
 register({}, { mode = "c" })
+
+-- Terminal --
+register({
+  ["<C-n>"] = { [[<C-\><C-n>]], "Exit terminal mode" },
+}, { mode = "t" })
