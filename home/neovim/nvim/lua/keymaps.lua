@@ -67,6 +67,7 @@ register({
   ["<leader><C-s>"] = { "<cmd>wa<CR>", "Quick save all" },
   ["<leader>s"] = { toggle_format, "Toggle auto formatting" },
   ["<leader>v"] = { require("utils").to_shell, "Open current project in a virtual shell if one exists" },
+  ["<leader>N"] = { "<CMD>!cd; develop neovide<CR>", "Open new fresh neovide window" },
   ["<leader>n"] = {
     function()
       vim.cmd([[!develop neovide .]])
