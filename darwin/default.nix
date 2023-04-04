@@ -34,6 +34,7 @@
       "transmission"
       "vlc"
       "xiv-on-mac"
+      "parallels"
     ];
     onActivation.cleanup = "zap";
 
