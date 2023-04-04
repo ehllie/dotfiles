@@ -61,7 +61,8 @@ in
         tailwindcss-language-server
         volar
         typescript-language-server
-        svelte-language-server;
+        svelte-language-server
+        eslint_d;
 
     }) ++ optionals isLinux (attrValues {
       inherit (pkgs)

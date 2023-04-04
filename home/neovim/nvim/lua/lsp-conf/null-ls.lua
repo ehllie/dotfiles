@@ -9,6 +9,7 @@ local function config()
   local formatting = null_ls.builtins.formatting
   local sources = {
     diagnostics.flake8.with({ extra_args = { "--max-line-length", "88", "--extend-ignore", "E203" } }),
+    diagnostics.eslint_d,
     -- diagnostics.mypy,
 
     formatting.black.with({ extra_args = { "--fast" } }),
