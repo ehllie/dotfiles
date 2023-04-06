@@ -53,6 +53,13 @@ in
         osflake-switch;
       vim = "nvim";
       direnv-init = ''echo "use flake" >> .envrc && direnv allow'';
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      top = "btm";
+      btop = "btm";
+      ls = "exa";
+      cat = "bat -pp";
+      tree = "et --size-left --dirs-first --icons";
     } // (
       if isDarwin then
         { } else {

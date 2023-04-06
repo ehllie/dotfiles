@@ -4,7 +4,9 @@ let
   inherit (inputs)
     ante
     nil
+    nixpkgs-unstable
     docs-gen;
+  unstable = import nixpkgs-unstable { inherit system; };
 in
 {
   nixpkgs.overlays =
@@ -16,5 +18,9 @@ in
       ante.overlays.default
       (_: _: { nil = nil.packages.${system}.nil; })
       (_: _: { docs-gen = docs-gen.packages.${system}.docs-gen; })
+      (_:_: {
+        inherit (unstable)
+          erdtree;
+      })
     ];
 }

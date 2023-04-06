@@ -51,10 +51,13 @@ let
         unzip
         docs-gen
 
-        btop
+        erdtree
+        bottom
+        exa
+        bat
+
         killall
         glow
-        tree
         pandoc
         jq;
     } ++ [
