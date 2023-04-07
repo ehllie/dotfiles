@@ -1,9 +1,22 @@
 -- Setup for minor plugins
 
 return {
-  "kyazdani42/nvim-web-devicons",
   "moll/vim-bbye",
   "nvim-lua/plenary.nvim", -- Useful lua functions used by lots of plugins
+  {
+    "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("nvim-web-devicons").setup({
+        override = {
+          svelte = {
+            icon = "",
+            color = "#ff3e00",
+            name = "svelte",
+          },
+        },
+      })
+    end,
+  },
   {
     "AndrewRadev/bufferize.vim",
     config = function()
