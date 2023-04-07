@@ -35,10 +35,11 @@
       "vlc"
       "xiv-on-mac"
       "parallels"
+      "orion"
     ];
     onActivation.cleanup = "zap";
-
   };
+
   fonts = {
     fontDir.enable = true;
     fonts = with pkgs; [
