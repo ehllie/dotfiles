@@ -1,19 +1,36 @@
-# Ellie's dotfiles
+# Starter nix flake
 
-A nix flake with my machine configurations. Constantly changing, and I'm probably spending way too much time on it.
-This is made with NixOs in mind, but there's plenty things that should apply to any distribution.
+I've made this starter config with by trimming down the one I have on the `main` branch.
+This config is not really made with many machines and users in mind, unlike the original,
+but I feel like that makes things clearer for new users of nix.
 
-## The configurations:
+## Bootstrapping on MacOS
 
-This flake provides 3 configurations for each of the machines I use it on.
+To get started using this config on MacOS, you will first need to get nix installed.
+I have not personally used it, but [The Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer)
+claims to fix some of the pain points I had with the [official installer](https://nixos.org/download.html#nix-install-macos) in the past.
 
-- My desktop with `nixosConfigurations.nixdesk`
-- My laptop with `nixosConfigurations.nixgram`
-- My wsl installation running on my work pc with `nixosConfigurations.nixwsl`
+After that, you will need to build the `darwinConfiguration` exposed in this flake,
+in order to be able to run `darwinRebuild` and actually activate it.
+On a fresh nix install, that will require, while inside this repository's directory, running:
 
-Most of the work has gone into my neovim configuration as I spend most of the time on my machines inside it.
-I have taken steps towards a custom graphical environment with xmonad, but at the moment I'd call it quite bare bone.
-If I ever get it to the point of being _pretty,_ I'll make sure to make one of those long readme pages with pictures and all.
+```console
+nix build --extra-experimental-features 'nix-command flakes' .#darwinConfigurations.your-hostname.system
+./result/sw/bin/darwin-rebuild switch --flake .#your-hostname
+```
 
-If you see me doing something stupid or hard to understand, feel free to open an issue.
-I love taking inspiration and learning from other people's configurations, so I'd love to be able to offer the same.
+On your next shell activation, you should have `darwinRebuild` available in the `PATH`.
+Then, if you put `home-manager` on the list `systemPackages` in your config,
+you should be able to activate your hm config with:
+
+```console
+home-manager switch --flake '.#your-username@your-hostname'
+```
+
+In case you don't have `home-manager` available, you can enter an ad-hoc shell with it with
+`nix-shell -p home-manager`.
+If `home-manager` complains about `nix command` and/or `nix flakes` include the flag
+`--extra-experimental-features 'nix-command flakes'`.
+
+After that, you should be done. You can rebuild your system wide config with `darwin-rebuild switch`
+and your user config with `home-manager switch`, and manage your dotfiles in a version controlled repository.

@@ -1,75 +1,67 @@
 {
-  description = "An alright configuration";
+  description = "Basic nix flake config";
 
+  # Flake schema reference: https://nixos.wiki/wiki/Flakes
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
+    # Using both a stable and unstable nixpkgs is a good idea, as it allows you to
+    # use the latest packages for some things, while still having a stable base.
+    # When a new version of nixpkgs comes out, like 23.05, you just need to change the
+    # nixpkgs.url to point to the new version, and then run `nix flake update` to update.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    darwin = { url = "github:lnl7/nix-darwin/master"; inputs.nixpkgs.follows = "nixpkgs-darwin"; };
-    nil.url = "github:oxalica/nil";
-    ante = { url = "github:jfecher/ante"; inputs.nixpkgs.follows = "nixpkgs"; };
-    docs-gen.url = "git+ssh://git@github.com/SayInvest/docs-gen?ref=release-0.1";
+    darwin = { url = "github:lnl7/nix-darwin/master"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
+  # Outputs is a function that as its arguments takes the optupts of specified flakes,
+  # as well as its own output (self). In case the syntax is unclear, here's the
+  # nix function syntax referrence: https://nixos.wiki/wiki/Overview_of_the_Nix_Language#Functions
   outputs =
     { self
-    , nixpkgs
     , home-manager
     , darwin
     , ...
     }@inputs:
     let
-      inherit (builtins) listToAttrs;
-      inherit (nixpkgs.lib) concatMap mapAttrsToList nixosSystem optionals;
+      # The `inherit` statement is somewhat equivalent to python's `from darwin.lib import darwinSystem`.
+      # It can also be used in attrsets,it's used that way later in this file in the homeManagerConfiguration call.
       inherit (darwin.lib) darwinSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
+      # Sharing the packages used in the system with the ones used in home-manager,
+      # so as not to inflate the store with duplicate packages.
+      pkgs = self.darwinConfigurations.${hostname}.pkgs;
 
-      allHosts = mapAttrsToList
-        (host: cfg: {
-          inherit host cfg;
-        })
-        (self.nixosConfigurations //
-          self.darwinConfigurations);
-
-      hostUserConfigs = { mkHMConf, host, cfg }:
-        mapAttrsToList
-          (user: value: {
-            name = "${user}@${host}";
-            inherit value;
-          })
-          (mkHMConf cfg.pkgs);
-
-      enumerateHosts = mkHMConf:
-        listToAttrs (concatMap
-          (hostInfo:
-            hostUserConfigs
-              (hostInfo // { inherit mkHMConf; }))
-          allHosts);
+      # Replace these with your own username and hostname.
+      username = "your-username";
+      hostname = "your-hostname";
     in
     {
-      homeConfigurations = enumerateHosts (pkgs:
-        let inherit (pkgs.stdenv) isDarwin isLinux; in
-        {
-          ellie = homeManagerConfiguration {
-            inherit pkgs;
-            modules = [ ./home ./users/ellie.nix ] ++
-              optionals isDarwin [ ./home/darwin.nix ] ++
-              optionals isLinux [ ./home/linux ];
-            extraSpecialArgs = { inherit inputs; };
-          };
-        });
-      nixosConfigurations = {
-        dell-gram = nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./nixos ./hosts/dell-gram.nix ];
-          specialArgs = { inherit inputs; };
+      # This is not part of the officaial flake schema, but it's the default output used by home-manager.
+      # Calling `home-manager switch --flake .` will use the output will try to use the config defined under
+      # `homeConfigurations.${USER}@${HOST}` (USER and HOST being shell env variables). You can also specify
+      # it explicitly with `home-manager switch --flake '.#your-username@your-hostname'`
+      homeConfigurations = {
+        "${username}@${hostname}" = homeManagerConfiguration {
+          inherit pkgs;
+          # This will import the file defined under ./home/default.nix
+          modules = [ ./home ];
+          # This lets us use the flake `inputs` inside our modules.
+          extraSpecialArgs = { inherit inputs; };
         };
       };
+
+      # Analogous to the homeConfigurations output, this is just the default output used by nix-darwin.
+      # It will likewise try to use the config defined under `darwinConfigurations.${HOST}` (HOST being a shell env variable),
+      # unless you explicitly specify it with `darwin-rebuild switch --flake .#your-hostname`.
       darwinConfigurations = {
-        EllMBP = darwinSystem {
+        ${hostname} = darwinSystem {
+          # Set system to aarch64-darwin for Apple Silicon and x86_64-darwin for Intel Macs
           system = "aarch64-darwin";
+          # Importing the darwin and overlays modules from ./darwin/default.nix and ./overlays/default.nix.
+          # They don't need to be separate files, but in case you want to configure a nixos machine at some point,
+          # you can reuse the overlays module for a lot things.
           modules = [ ./darwin ./overlays ];
+          # darwinSystem function uses specialArgs rather than extraSpecialArgs, but it does the same thing.
           specialArgs = { inherit inputs; };
         };
       };

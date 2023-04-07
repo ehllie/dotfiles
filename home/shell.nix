@@ -1,56 +1,19 @@
-{ config, lib, pkgs, ... }:
+# This is an example of how you might want to split up your modules.
+# I left my personal zsh config to give a more concrete example of how you might do things.
+{ config, pkgs, ... }:
 let
-  inherit (pkgs.stdenv) isDarwin;
-  inherit (lib) attrValues;
-  inherit (config.home) homeDirectory;
+  inherit (config.xdg) configHome cacheHome;
   inherit (pkgs)
+    ranger
+    powershell
     zsh-nix-shell
     zsh-vi-mode;
-
-  remote-op-pkg = pkgs.writeShellScriptBin "remote-op" ''
-    dir=$(mktemp -dt tmp.dotfiles-XXXXXX)
-    git clone https://github.com/ehllie/dotfiles.git --depth 1 $dir
-    cd $dir
-    git-crypt unlock
-    eval "$@"
-    cd
-    rm -rf $dir
-  '';
-
-  presence-fix = if isDarwin then "TMPDIR=$TMPDIR;" else "";
-  develop = pkgs.writeShellScriptBin "develop" ''
-    if [ -z "$1" ]; then
-      direnv exec . "$SHELL"
-    else
-      direnv exec . "$SHELL" -c "SHELL=$SHELL; ${presence-fix} $*"
-    fi
-  '';
-
-  rebuild = if isDarwin then "darwin-rebuild" else "sudo nixos-rebuild";
-  remote-op = "${remote-op-pkg}/bin/remote-op";
-  repoDir = "${homeDirectory}/Code/dotfiles/home/neovim/nvim";
-  hostName = "\${$(hostname)%%.*}";
-  flakeRebuild = cmd: loc: "${rebuild} ${cmd} --flake ${repoDir}#${hostName}";
-
-  osflake-dry = "${remote-op} ${flakeRebuild "dry-activate" "."} --option tarball-ttl 0";
-  osflake-switch = "${remote-op} ${flakeRebuild "switch" "."} --option tarball-ttl 0";
-  locflake-dry = "${flakeRebuild "dry-activate" repoDir}" + (if isDarwin then "" else " --fast");
-  locflake-switch = "${flakeRebuild "switch" repoDir}" + (if isDarwin then "" else " --fast");
-
 in
 {
   home = {
-    packages = attrValues {
-      inherit (pkgs)
-        powershell
-        ranger;
-      inherit develop;
-    };
-
+    # powershell and ranger have no home-manager configration modules, so I install them "manually" here
+    packages = [ ranger powershell ];
     shellAliases = {
-      inherit
-        locflake-switch
-        osflake-switch;
       vim = "nvim";
       direnv-init = ''echo "use flake" >> .envrc && direnv allow'';
       ".." = "cd ..";
@@ -60,14 +23,7 @@ in
       ls = "exa";
       cat = "bat -pp";
       tree = "et --size-left --dirs-first --icons";
-    } // (
-      if isDarwin then
-        { } else {
-        inherit
-          locflake-dry
-          osflake-dry;
-      }
-    );
+    };
 
     sessionVariables = {
       EDITOR = "nvim";
@@ -75,7 +31,9 @@ in
     };
   };
 
-
+  # This is how I configure my powershell using a `xdg.configFile` option.
+  # This will create a file with the provided contents at
+  # `$XDG_CONFIG_HOME/powershell/Microsoft.PowerShell_profile.ps1`
   xdg.configFile."powershell/Microsoft.PowerShell_profile.ps1".text = ''
     Invoke-Expression (&starship init powershell)
     Set-PSReadlineOption -EditMode Vi -ViModeIndicator Cursor
@@ -90,10 +48,10 @@ in
     zsh = {
       enable = true;
       defaultKeymap = "viins";
-      dotDir = ".config/zsh";
+      dotDir = "${configHome}/zsh";
       enableCompletion = true;
       enableSyntaxHighlighting = true;
-      history.path = "${config.xdg.cacheHome}/zsh/history";
+      history.path = "${cacheHome}/zsh/history";
 
       localVariables = {
         VI_MODE_RESET_PROMPT_ON_MODE_CHANGE = true;
@@ -112,7 +70,6 @@ in
       initExtra = ''
         source ${zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
         source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-
         # Use ranger to switch directories and bind it to ctrl-o
         rangercd () {
           tmp="$(mktemp)"
