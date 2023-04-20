@@ -35,7 +35,7 @@
       "vlc"
       "xiv-on-mac"
       "parallels"
-      "orion"
+      "slack"
     ];
     onActivation.cleanup = "zap";
   };
