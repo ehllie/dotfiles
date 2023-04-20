@@ -48,6 +48,7 @@ in
         # Formatters
         stylua
         nixpkgs-fmt
+        prisma-engines
         rustfmt
         beautysh;
       inherit (pkgs.nodePackages)
@@ -57,6 +58,7 @@ in
         bash-language-server
         yaml-language-server
         vscode-langservers-extracted
+        prisma-language-server
         pyright
         tailwindcss-language-server
         volar

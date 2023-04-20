@@ -9,6 +9,7 @@ local servers = {
   "lua_ls",
   "tailwindcss",
   -- "volar",
+  "prismals",
   "tsserver",
   "svelte",
   "yamlls",

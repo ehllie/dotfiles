@@ -25,6 +25,8 @@ local function config()
       extra_filetypes = { "svelte", "toml" },
     }),
 
+    formatting.prismaFmt,
+
     formatting.nixpkgs_fmt,
 
     formatting.beautysh.with({ extra_args = { "-i", "2", "-s", "fnonly" } }),
