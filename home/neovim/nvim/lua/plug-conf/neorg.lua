@@ -5,8 +5,8 @@ return {
     require("neorg").setup({
       load = {
         ["core.defaults"] = {}, -- Loads default behaviour
-        ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
-        ["core.norg.dirman"] = { -- Manages Neorg workspaces
+        ["core.concealer"] = {}, -- Adds pretty icons to your documents
+        ["core.dirman"] = { -- Manages Neorg workspaces
           config = {
             workspaces = {
               work = "~/Documents/Org/work",
@@ -14,7 +14,7 @@ return {
             },
           },
         },
-        ["core.norg.completion"] = { -- Enables completion of Neorg keywords
+        ["core.completion"] = { -- Enables completion of Neorg keywords
           config = {
             engine = "nvim-cmp",
           },
