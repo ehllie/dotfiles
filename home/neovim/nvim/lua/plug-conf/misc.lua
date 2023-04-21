@@ -11,7 +11,7 @@ return {
           svelte = {
             icon = "",
             color = "#ff3e00",
-            name = "svelte",
+            name = "Svelte",
           },
         },
       })
