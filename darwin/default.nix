@@ -36,6 +36,7 @@
       "xiv-on-mac"
       "parallels"
       "slack"
+      "docker"
     ];
     onActivation.cleanup = "zap";
   };

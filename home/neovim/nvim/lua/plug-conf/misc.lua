@@ -14,6 +14,13 @@ return {
             name = "Svelte",
           },
         },
+        override_by_filename = {
+          dockerfile = {
+            icon = "",
+            color = "#0db7ed",
+            name = "Dockerfile",
+          },
+        },
       })
     end,
   },
