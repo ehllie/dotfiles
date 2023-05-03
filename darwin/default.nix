@@ -37,6 +37,7 @@
       "parallels"
       "slack"
       "docker"
+      "google-chrome"
     ];
     onActivation.cleanup = "zap";
   };
