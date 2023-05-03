@@ -59,7 +59,7 @@ in
       btop = "btm";
       ls = "exa";
       cat = "bat -pp";
-      tree = "et --size-left --dirs-first --icons";
+      tree = "erd --dirs-first --icons --human";
     } // (
       if isDarwin then
         { } else {
