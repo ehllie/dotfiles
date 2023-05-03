@@ -64,7 +64,7 @@ in
         volar
         typescript-language-server
         svelte-language-server
-        eslint_d;
+        eslint;
 
     }) ++ optionals isLinux (attrValues {
       inherit (pkgs)
