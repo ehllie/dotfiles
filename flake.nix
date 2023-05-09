@@ -69,39 +69,39 @@
       # Combined list attrsets containing the hostname
       # and it's configuration for all nixos and darwin systems.
       allHosts = mapAttrsToList
-        (host: cfg: {
-          inherit host cfg;
-        })
+        (host: systemConf: systemConf //
+          { inherit host; })
         (self.nixosConfigurations //
           self.darwinConfigurations);
 
-      hostUserConfigs = { mkHMConf, host, cfg }:
-        mapAttrsToList
-          (user: value: {
-            name = "${user}@${host}";
-            inherit value;
-          })
-          (mkHMConf cfg.pkgs);
-
-      enumerateHosts = mkHMConf:
+      # Creates home-manager confgurations for each user on each host.
+      # Tries to import users/${user} for each user.
+      # Conditionally imports home/darwin and home/linux based on the host system.
+      userConfigs = users:
         listToAttrs (concatMap
-          (hostInfo:
-            hostUserConfigs
-              (hostInfo // { inherit mkHMConf; }))
+          ({ host, pkgs, ... }:
+            let
+              inherit (pkgs.stdenv) isDarwin isLinux;
+            in
+            map
+              (user: {
+                name = "${user}@${host}";
+                value = homeManagerConfiguration {
+                  inherit pkgs;
+                  extraSpecialArgs = { inherit inputs; };
+                  modules = [ ./home (importModule "users/${user}") ] ++
+                    optionals isDarwin [ (importModule "home/darwin") ] ++
+                    optionals isLinux [ (importModule "home/linux") ];
+
+                };
+              })
+              users)
           allHosts);
     in
     {
-      homeConfigurations = enumerateHosts (pkgs:
-        let inherit (pkgs.stdenv) isDarwin isLinux; in
-        {
-          ellie = homeManagerConfiguration {
-            inherit pkgs;
-            modules = [ ./home ./users/ellie.nix ] ++
-              optionals isDarwin [ ./home/darwin.nix ] ++
-              optionals isLinux [ ./home/linux ];
-            extraSpecialArgs = { inherit inputs; };
-          };
-        });
+      homeConfigurations = userConfigs [
+        "ellie"
+      ];
       nixosConfigurations = systemsWith nixosSystem ./nixos [
         {
           host = "dell-gram";
