@@ -1,19 +1,17 @@
 # Ellie's dotfiles
 
-A nix flake with my machine configurations. Constantly changing, and I'm probably spending way too much time on it.
-This is made with NixOs in mind, but there's plenty things that should apply to any distribution.
+A nix flake with my machine configurations. It feels mostly done as I'm not spending nearly as much time maintaining it as I used to at the beginning.
+Nowadays I mainly use nix on my darwin machine, but I kept the nixos configuration for my old laptop here as well.
 
 ## The configurations:
 
-This flake provides 3 configurations for each of the machines I use it on.
+I use a couple fancy function to generate the attributes `nixosConfigurations`, `darwinConfigurations` and `homeConfigurations`.
+Their explanation is in the comments inside the let bindings. Just usual nix user reinventing the wheel stuff.
 
-- My desktop with `nixosConfigurations.nixdesk`
-- My laptop with `nixosConfigurations.nixgram`
-- My wsl installation running on my work pc with `nixosConfigurations.nixwsl`
-
-Most of the work has gone into my neovim configuration as I spend most of the time on my machines inside it.
-I have taken steps towards a custom graphical environment with xmonad, but at the moment I'd call it quite bare bone.
-If I ever get it to the point of being _pretty,_ I'll make sure to make one of those long readme pages with pictures and all.
+Most of the work has gone into my neovim configuration as I spend most of the inside it.
+I've tried doing my custom linux desktop _rice_, but I've found myself to not be that interested in it.
+That's mainly the reason why I switched to macOS, I get to use my nix managed dotfiles for all things cli and don't have to concern myself with the desktop.
 
 If you see me doing something stupid or hard to understand, feel free to open an issue.
 I love taking inspiration and learning from other people's configurations, so I'd love to be able to offer the same.
+There's a simpler version of a flake.nix on the [`starter-template` branch](https://github.com/ehllie/dotfiles/tree/starter-template)
