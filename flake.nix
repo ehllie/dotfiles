@@ -29,11 +29,45 @@
     , ...
     }@inputs:
     let
-      inherit (builtins) listToAttrs;
+      inherit (builtins) listToAttrs pathExists;
       inherit (nixpkgs.lib) concatMap mapAttrsToList nixosSystem optionals;
       inherit (darwin.lib) darwinSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
 
+
+      # Import a module of a given name if it exists.
+      # First check for a `.nix` file, then a directory.
+      importModule = name:
+        let
+          file = self + "/${name}.nix";
+          dir = self + "/${name}";
+        in
+        if pathExists file then import file
+        else if pathExists dir then import dir
+        else { };
+
+      # Generates an atterset of nixosConfigurations or darwinConfigurations.
+      # systemBuilder: The function to use to build the system. i.e. nixosSystem or darwinSystem
+      # defaultModule: The module to always include in the system. i.e. ./nixos or ./darwin
+      # hosts: A list of host declarations. i.e. [ { host = "foo"; system = "aarch64-darwin"; } ... ]
+      systemsWith = systemBuilder: defaultModule: hosts:
+        listToAttrs (map
+          ({ host, system }: {
+            name = host;
+            value = systemBuilder {
+              inherit system;
+              specialArgs = { inherit inputs; };
+              modules = [
+                defaultModule
+                ./overlays
+                (importModule "hosts/${host}")
+              ];
+            };
+          })
+          hosts);
+
+      # Combined list attrsets containing the hostname
+      # and it's configuration for all nixos and darwin systems.
       allHosts = mapAttrsToList
         (host: cfg: {
           inherit host cfg;
@@ -68,19 +102,17 @@
             extraSpecialArgs = { inherit inputs; };
           };
         });
-      nixosConfigurations = {
-        dell-gram = nixosSystem {
+      nixosConfigurations = systemsWith nixosSystem ./nixos [
+        {
+          host = "dell-gram";
           system = "x86_64-linux";
-          modules = [ ./nixos ./hosts/dell-gram.nix ];
-          specialArgs = { inherit inputs; };
-        };
-      };
-      darwinConfigurations = {
-        EllMBP = darwinSystem {
+        }
+      ];
+      darwinConfigurations = systemsWith darwinSystem ./darwin [
+        {
+          host = "EllMBP";
           system = "aarch64-darwin";
-          modules = [ ./darwin ./overlays ];
-          specialArgs = { inherit inputs; };
-        };
-      };
+        }
+      ];
     };
 }
