@@ -18,9 +18,14 @@ in
       ante.overlays.default
       (_: _: { nil = nil.packages.${system}.nil; })
       (_: _: { docs-gen = docs-gen.packages.${system}.docs-gen; })
-      (_:_: {
+      (_: prev: {
         inherit (unstable)
           erdtree;
+        nodePackages = prev.nodePackages //
+          {
+            inherit (unstable.nodePackages)
+              volar;
+          };
       })
     ];
 }
