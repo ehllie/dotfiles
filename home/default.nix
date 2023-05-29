@@ -80,6 +80,8 @@ in
 
   home = { inherit packages; };
 
+  nixpkgs.config.allowUnfree = true;
+
   programs = {
     home-manager.enable = true;
 

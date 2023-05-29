@@ -41,7 +41,7 @@ _G.symbols = {
 
 _G.store = {
   gcc = "@gcc@",
-  node_16 = "@nodejs16@",
+  node = "@nodejs@",
   prettier_svelte = "@prettierSvelte@",
   prettier_toml = "@prettierToml@",
 }

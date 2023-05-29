@@ -10,7 +10,7 @@ in
     recursive = true;
     source = pkgs.substituteAllRec {
       src = ./nvim;
-      nodejs16 = pkgs.nodejs-16_x;
+      nodejs = pkgs.nodejs;
       prettierSvelte = prettier-plugin-svelte;
       prettierToml = prettier-plugin-toml;
       repoDir = "${homeDirectory}/Code/dotfiles/home/neovim/nvim";

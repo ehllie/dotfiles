@@ -31,7 +31,7 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
-      "python3.10-poetry-1.2.2"
+      "openssl-1.1.1t"
     ];
   };
 

@@ -20,7 +20,6 @@ in
       (_: _: { docs-gen = docs-gen.packages.${system}.docs-gen; })
       (_: prev: {
         inherit (unstable)
-          neovim
           erdtree;
         nodePackages = prev.nodePackages //
           {
