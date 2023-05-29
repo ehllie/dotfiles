@@ -38,6 +38,8 @@
       "slack"
       "docker"
       "google-chrome"
+      "yacreader"
+      "spotify"
     ];
     onActivation.cleanup = "zap";
   };
