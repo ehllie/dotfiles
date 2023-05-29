@@ -42,8 +42,8 @@
           file = self + "/${name}.nix";
           dir = self + "/${name}";
         in
-        if pathExists file then import file
-        else if pathExists dir then import dir
+        if pathExists file then file
+        else if pathExists dir then dir
         else { };
 
       # Generates an atterset of nixosConfigurations or darwinConfigurations.
@@ -92,7 +92,6 @@
                   modules = [ ./home (importModule "users/${user}") ] ++
                     optionals isDarwin [ (importModule "home/darwin") ] ++
                     optionals isLinux [ (importModule "home/linux") ];
-
                 };
               })
               users)
