@@ -40,6 +40,7 @@
       "google-chrome"
       "yacreader"
       "spotify"
+      "soundsource"
     ];
     onActivation.cleanup = "zap";
   };
