@@ -37,7 +37,7 @@ let
         rustc
         gcc
         nodejs
-        jdk
+        jdk17
 
         git
         git-crypt
