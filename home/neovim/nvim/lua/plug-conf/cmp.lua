@@ -109,8 +109,16 @@ return {
       vim.opt.runtimepath:append(store.node .. "/bin")
       vim.defer_fn(function()
         require("copilot").setup({
-          ft_disable = { "help", "dashboard", "dap-repl" },
+          suggestion = { enabled = false },
+          filetypes = {
+            help = false,
+            dashboard = false,
+            ["dap-repl"] = false,
+          },
           copilot_node_command = store.node .. "/bin/node",
+        })
+        require("which-key").register({
+          ["<leader>p"] = { "<cmd>Copilot panel<CR>", "Open copilot panel" },
         })
       end, 100)
     end,
