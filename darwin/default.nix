@@ -41,6 +41,9 @@
       "yacreader"
       "spotify"
       "soundsource"
+      "via"
+      "obsidian"
+      "nvidia-geforce-now"
     ];
     onActivation.cleanup = "zap";
   };
