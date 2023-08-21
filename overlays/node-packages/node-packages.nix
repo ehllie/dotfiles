@@ -4,22 +4,202 @@
 
 let
   sources = {
-    "prettier-2.8.8" = {
-      name = "prettier";
-      packageName = "prettier";
-      version = "2.8.8";
+    "@ampproject/remapping-2.2.1" = {
+      name = "_at_ampproject_slash_remapping";
+      packageName = "@ampproject/remapping";
+      version = "2.2.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/prettier/-/prettier-2.8.8.tgz";
-        sha512 = "tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==";
+        url = "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.1.tgz";
+        sha512 = "lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==";
       };
     };
-    "svelte-3.59.1" = {
+    "@jridgewell/gen-mapping-0.3.3" = {
+      name = "_at_jridgewell_slash_gen-mapping";
+      packageName = "@jridgewell/gen-mapping";
+      version = "0.3.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.3.tgz";
+        sha512 = "HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==";
+      };
+    };
+    "@jridgewell/resolve-uri-3.1.1" = {
+      name = "_at_jridgewell_slash_resolve-uri";
+      packageName = "@jridgewell/resolve-uri";
+      version = "3.1.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.1.tgz";
+        sha512 = "dSYZh7HhCDtCKm4QakX0xFpsRDqjjtZf/kjI/v3T3Nwt5r8/qz/M19F9ySyOqU94SXBmeG9ttTul+YnR4LOxFA==";
+      };
+    };
+    "@jridgewell/set-array-1.1.2" = {
+      name = "_at_jridgewell_slash_set-array";
+      packageName = "@jridgewell/set-array";
+      version = "1.1.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@jridgewell/set-array/-/set-array-1.1.2.tgz";
+        sha512 = "xnkseuNADM0gt2bs+BvhO0p78Mk762YnZdsuzFV018NoG1Sj1SCQvpSqa7XUaTam5vAGasABV9qXASMKnFMwMw==";
+      };
+    };
+    "@jridgewell/sourcemap-codec-1.4.15" = {
+      name = "_at_jridgewell_slash_sourcemap-codec";
+      packageName = "@jridgewell/sourcemap-codec";
+      version = "1.4.15";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.15.tgz";
+        sha512 = "eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==";
+      };
+    };
+    "@jridgewell/trace-mapping-0.3.19" = {
+      name = "_at_jridgewell_slash_trace-mapping";
+      packageName = "@jridgewell/trace-mapping";
+      version = "0.3.19";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.19.tgz";
+        sha512 = "kf37QtfW+Hwx/buWGMPcR60iF9ziHa6r/CZJIHbmcm4+0qrXiVdxegAH0F6yddEVQ7zdkjcGCgCzUu+BcbhQxw==";
+      };
+    };
+    "@types/estree-1.0.1" = {
+      name = "_at_types_slash_estree";
+      packageName = "@types/estree";
+      version = "1.0.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@types/estree/-/estree-1.0.1.tgz";
+        sha512 = "LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==";
+      };
+    };
+    "acorn-8.10.0" = {
+      name = "acorn";
+      packageName = "acorn";
+      version = "8.10.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/acorn/-/acorn-8.10.0.tgz";
+        sha512 = "F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==";
+      };
+    };
+    "aria-query-5.3.0" = {
+      name = "aria-query";
+      packageName = "aria-query";
+      version = "5.3.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/aria-query/-/aria-query-5.3.0.tgz";
+        sha512 = "b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==";
+      };
+    };
+    "axobject-query-3.2.1" = {
+      name = "axobject-query";
+      packageName = "axobject-query";
+      version = "3.2.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/axobject-query/-/axobject-query-3.2.1.tgz";
+        sha512 = "jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==";
+      };
+    };
+    "code-red-1.0.4" = {
+      name = "code-red";
+      packageName = "code-red";
+      version = "1.0.4";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/code-red/-/code-red-1.0.4.tgz";
+        sha512 = "7qJWqItLA8/VPVlKJlFXU+NBlo/qyfs39aJcuMT/2ere32ZqvF5OSxgdM5xOfJJ7O429gg2HM47y8v9P+9wrNw==";
+      };
+    };
+    "css-tree-2.3.1" = {
+      name = "css-tree";
+      packageName = "css-tree";
+      version = "2.3.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/css-tree/-/css-tree-2.3.1.tgz";
+        sha512 = "6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==";
+      };
+    };
+    "dequal-2.0.3" = {
+      name = "dequal";
+      packageName = "dequal";
+      version = "2.0.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz";
+        sha512 = "0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==";
+      };
+    };
+    "estree-walker-3.0.3" = {
+      name = "estree-walker";
+      packageName = "estree-walker";
+      version = "3.0.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/estree-walker/-/estree-walker-3.0.3.tgz";
+        sha512 = "7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==";
+      };
+    };
+    "is-reference-3.0.1" = {
+      name = "is-reference";
+      packageName = "is-reference";
+      version = "3.0.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/is-reference/-/is-reference-3.0.1.tgz";
+        sha512 = "baJJdQLiYaJdvFbJqXrcGv3WU3QCzBlUcI5QhbesIm6/xPsvmO+2CDoi/GMOFBQEQm+PXkwOPrp9KK5ozZsp2w==";
+      };
+    };
+    "locate-character-3.0.0" = {
+      name = "locate-character";
+      packageName = "locate-character";
+      version = "3.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/locate-character/-/locate-character-3.0.0.tgz";
+        sha512 = "SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==";
+      };
+    };
+    "magic-string-0.30.3" = {
+      name = "magic-string";
+      packageName = "magic-string";
+      version = "0.30.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/magic-string/-/magic-string-0.30.3.tgz";
+        sha512 = "B7xGbll2fG/VjP+SWg4sX3JynwIU0mjoTc6MPpKNuIvftk6u6vqhDnk1R80b8C2GBR6ywqy+1DcKBrevBg+bmw==";
+      };
+    };
+    "mdn-data-2.0.30" = {
+      name = "mdn-data";
+      packageName = "mdn-data";
+      version = "2.0.30";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/mdn-data/-/mdn-data-2.0.30.tgz";
+        sha512 = "GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==";
+      };
+    };
+    "periscopic-3.1.0" = {
+      name = "periscopic";
+      packageName = "periscopic";
+      version = "3.1.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/periscopic/-/periscopic-3.1.0.tgz";
+        sha512 = "vKiQ8RRtkl9P+r/+oefh25C3fhybptkHKCZSPlcXiJux2tJF55GnEj3BVn4A5gKfq9NWWXXrxkHBwVPUfH0opw==";
+      };
+    };
+    "prettier-3.0.2" = {
+      name = "prettier";
+      packageName = "prettier";
+      version = "3.0.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/prettier/-/prettier-3.0.2.tgz";
+        sha512 = "o2YR9qtniXvwEZlOKbveKfDQVyqxbEIWn48Z8m3ZJjBjcCmUy3xZGIv+7AkaeuaTr6yPXJjwv07ZWlsWbEy1rQ==";
+      };
+    };
+    "source-map-js-1.0.2" = {
+      name = "source-map-js";
+      packageName = "source-map-js";
+      version = "1.0.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/source-map-js/-/source-map-js-1.0.2.tgz";
+        sha512 = "R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==";
+      };
+    };
+    "svelte-4.2.0" = {
       name = "svelte";
       packageName = "svelte";
-      version = "3.59.1";
+      version = "4.2.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/svelte/-/svelte-3.59.1.tgz";
-        sha512 = "pKj8fEBmqf6mq3/NfrB9SLtcJcUvjYSWyePlfCqN9gujLB25RitWK8PvFzlwim6hD/We35KbPlRteuA6rnPGcQ==";
+        url = "https://registry.npmjs.org/svelte/-/svelte-4.2.0.tgz";
+        sha512 = "kVsdPjDbLrv74SmLSUzAsBGquMs4MPgWGkGLpH+PjOYnFOziAvENVzgJmyOCV2gntxE32aNm8/sqNKD6LbIpeQ==";
       };
     };
   };
@@ -28,14 +208,34 @@ in
   prettier-plugin-svelte = nodeEnv.buildNodePackage {
     name = "prettier-plugin-svelte";
     packageName = "prettier-plugin-svelte";
-    version = "2.10.0";
+    version = "3.0.3";
     src = fetchurl {
-      url = "https://registry.npmjs.org/prettier-plugin-svelte/-/prettier-plugin-svelte-2.10.0.tgz";
-      sha512 = "GXMY6t86thctyCvQq+jqElO+MKdB09BkL3hexyGP3Oi8XLKRFaJP1ud/xlWCZ9ZIa2BxHka32zhHfcuU+XsRQg==";
+      url = "https://registry.npmjs.org/prettier-plugin-svelte/-/prettier-plugin-svelte-3.0.3.tgz";
+      sha512 = "dLhieh4obJEK1hnZ6koxF+tMUrZbV5YGvRpf2+OADyanjya5j0z1Llo8iGwiHmFWZVG/hLEw/AJD5chXd9r3XA==";
     };
     dependencies = [
-      sources."prettier-2.8.8"
-      sources."svelte-3.59.1"
+      sources."@ampproject/remapping-2.2.1"
+      sources."@jridgewell/gen-mapping-0.3.3"
+      sources."@jridgewell/resolve-uri-3.1.1"
+      sources."@jridgewell/set-array-1.1.2"
+      sources."@jridgewell/sourcemap-codec-1.4.15"
+      sources."@jridgewell/trace-mapping-0.3.19"
+      sources."@types/estree-1.0.1"
+      sources."acorn-8.10.0"
+      sources."aria-query-5.3.0"
+      sources."axobject-query-3.2.1"
+      sources."code-red-1.0.4"
+      sources."css-tree-2.3.1"
+      sources."dequal-2.0.3"
+      sources."estree-walker-3.0.3"
+      sources."is-reference-3.0.1"
+      sources."locate-character-3.0.0"
+      sources."magic-string-0.30.3"
+      sources."mdn-data-2.0.30"
+      sources."periscopic-3.1.0"
+      sources."prettier-3.0.2"
+      sources."source-map-js-1.0.2"
+      sources."svelte-4.2.0"
     ];
     buildInputs = globalBuildInputs;
     meta = {
