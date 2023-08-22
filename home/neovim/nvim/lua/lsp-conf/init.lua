@@ -65,6 +65,7 @@ return {
       require("lsp-status").register_progress()
     end,
   },
-  require("lsp-conf.null-ls"),
+  require("lsp-conf.formatter"),
+  require("lsp-conf.linter"),
   unpack(extended),
 }

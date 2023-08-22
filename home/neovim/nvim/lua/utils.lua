@@ -3,10 +3,40 @@ local plen_str = require("plenary.strings")
 local M = {}
 
 ---@generic T
----@param str `T`
+---@param x `T`
 ---@return `T`
-function M.id(str)
-  return str
+function M.id(x)
+  return x
+end
+
+---@generic T
+---@param x T
+---@return fun(): T
+function M.const(x)
+  return function()
+    return x
+  end
+end
+
+---@param tab1 table
+---@param tab2 table
+---@return table
+function M.concat(tab1, tab2)
+  local result = { unpack(tab1) }
+  for i = 1, #tab2 do
+    result[#result + 1] = tab2[i]
+  end
+  return result
+end
+
+---@param tab table
+---@param key_name string
+---@param prefix table
+---@return table
+function M.prefix_key(tab, key_name, prefix)
+  return vim.tbl_deep_extend("force", tab, {
+    [key_name] = M.concat(prefix, tab[key_name] or {}),
+  })
 end
 
 ---Returns a table of keys from a table
