@@ -1,8 +1,10 @@
 local function config()
   require("neodev").setup({
     override = function(root_dir, library)
-      if require("neodev.util").has_file(root_dir, "@repoDir@") then
+      if root_dir:find("@repoDir@") then
         library.enabled = true
+        library.plugins = true
+        library.types = true
         library.plugins = true
       end
     end,
