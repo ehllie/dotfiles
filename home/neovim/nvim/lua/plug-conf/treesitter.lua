@@ -11,11 +11,6 @@ local function config()
     autotag = {
       enable = true,
     },
-    rainbow = {
-      enable = true,
-      extended_mode = true,
-      max_file_lines = nil,
-    },
     indent = { enable = true, disable = { "python", "css" } },
     textobjects = {
       select = {
@@ -46,5 +41,5 @@ end
 return {
   "nvim-treesitter/nvim-treesitter",
   config = config,
-  requires = { "windwp/nvim-ts-autotag", "p00f/nvim-ts-rainbow", "nvim-treesitter/nvim-treesitter-textobjects" },
+  requires = { "windwp/nvim-ts-autotag", "nvim-treesitter/nvim-treesitter-textobjects" },
 }

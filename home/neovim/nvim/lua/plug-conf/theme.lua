@@ -84,7 +84,6 @@ local catppuccin = {
         bufferline = true,
         markdown = false,
         lightspeed = false,
-        ts_rainbow = true,
         hop = true,
         notify = false,
         telekasten = false,
