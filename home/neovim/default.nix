@@ -4,6 +4,14 @@ let
   inherit (pkgs.stdenv) isLinux;
   inherit (lib) optionals attrValues;
   inherit (config.home) homeDirectory;
+  # Old neovim config using packer
+  old_neovim = pkgs.neovim.override {
+    extraMakeWrapperArgs = lib.escapeShellArgs [
+      "--set"
+      "NVIM_APPNAME"
+      "onvim"
+    ];
+  };
 in
 {
   xdg.configFile.nvim = {
@@ -19,6 +27,22 @@ in
     };
     onChange = ''
       nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    '';
+  };
+
+  xdg.configFile.onvim = {
+    recursive = true;
+    source = pkgs.substituteAllRec {
+      src = ./onvim;
+      nodejs = pkgs.nodejs;
+      prettierSvelte = prettier-plugin-svelte;
+      prettierToml = prettier-plugin-toml;
+      repoDir = "${homeDirectory}/Code/dotfiles/home/neovim/onvim";
+      inherit (pkgs) gcc;
+      fontsize = if isLinux then 11 else 13;
+    };
+    onChange = ''
+      onvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
     '';
   };
 
@@ -74,6 +98,8 @@ in
 
         # Using the homebrew package on macOS
         neovide;
-    });
+    }) ++ [
+      (pkgs.writeShellScriptBin "onvim" "${old_neovim}/bin/nvim \"$@\" ")
+    ];
   };
 }
