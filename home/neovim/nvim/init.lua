@@ -46,11 +46,27 @@ _G.store = {
   prettier_toml = "@prettierToml@",
 }
 
-require("options")
-require("plug-conf")
-require("autocommands")
-require("keymaps")
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("ehllie.options")
+require("ehllie.autocommands")
+-- Plugins configured by files in the lua/ehllie/plugins directory
+require("lazy").setup("ehllie.plugins", {
+  lockfile = "@repoDir@/lazy-lock.json",
+})
+require("ehllie.keymaps")
 
 if vim.g.neovide then
-  require("neovide")
+  require("ehllie.neovide")
 end

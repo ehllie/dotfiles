@@ -15,6 +15,7 @@ in
       (import ./node-packages { inherit lib; })
       (import ./substitute-all-rec)
       (import ./try-import)
+      (import ./neovim.nix)
       ante.overlays.default
       (_: _: { nil = nil.packages.${system}.nil; })
       (_: _: { docs-gen = docs-gen.packages.${system}.docs-gen; })
