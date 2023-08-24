@@ -16,13 +16,14 @@ function M.const(x)
   end
 end
 
----@param tab1 table
----@param tab2 table
+---Given two tables, returns a new table with the values of the second appended to the first
+---@param first table
+---@param second table
 ---@return table
-function M.concat(tab1, tab2)
-  local result = { unpack(tab1) }
-  for i = 1, #tab2 do
-    result[#result + 1] = tab2[i]
+function M.concat(first, second)
+  local result = { unpack(first) }
+  for i = 1, #second do
+    result[#result + 1] = second[i]
   end
   return result
 end
@@ -53,9 +54,9 @@ end
 ---@generic T2
 ---@generic T3
 ---@generic T4
----@param fun fun(k: T2, v: T2): (T3, T4)
----@param tab { [T1]: T2 }
----@return { [T3]: T4 }
+---@param fun fun(k: T1, v: T2): (T3, T4)
+---@param tab table<T1, T2>
+---@return table<T3, T4>
 function M.transform_table(fun, tab)
   local result = {}
   for k, v in pairs(tab) do
