@@ -99,7 +99,6 @@ return {
             "toml",
           },
           prefix_args({
-            ("--plugin=%s/lib/node_modules/prettier-plugin-svelte"):format(store.prettier_svelte),
             ("--plugin=%s/lib/node_modules/prettier-plugin-toml"):format(store.prettier_toml),
           }, formatters.prettier)
         )

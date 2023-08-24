@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (pkgs.nodePackages) prettier-plugin-svelte prettier-plugin-toml;
+  inherit (pkgs.nodePackages) prettier-plugin-toml;
   inherit (pkgs.stdenv) isLinux;
   inherit (lib) optionals attrValues;
   inherit (config.home) homeDirectory;
@@ -11,7 +11,6 @@ in
     source = pkgs.substituteAllRec {
       src = ./nvim;
       nodejs = pkgs.nodejs;
-      prettierSvelte = prettier-plugin-svelte;
       prettierToml = prettier-plugin-toml;
       repoDir = "${homeDirectory}/Code/dotfiles/home/neovim/nvim";
       inherit (pkgs) gcc;

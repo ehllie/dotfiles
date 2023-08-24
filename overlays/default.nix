@@ -25,6 +25,7 @@ in
         nodePackages = prev.nodePackages //
           {
             inherit (unstable.nodePackages)
+              svelte-language-server
               volar;
           };
       })
