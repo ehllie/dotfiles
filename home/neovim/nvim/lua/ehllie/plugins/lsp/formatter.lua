@@ -31,7 +31,7 @@ return {
           },
           prisma = {
             utils.const({
-              exe = "prisma",
+              exe = "prisma-fmt",
               args = { "format" },
               stdin = true,
             }),
@@ -57,7 +57,7 @@ return {
           cabal = {
             utils.const({
               exe = "cabal-fmt",
-              to_stdin = true,
+              stdin = true,
             }),
           },
           ["*"] = {
