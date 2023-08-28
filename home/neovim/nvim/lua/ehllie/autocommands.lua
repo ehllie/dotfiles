@@ -62,3 +62,11 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     end
   end,
 })
+
+-- Disable undo file for .env files
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*.env" },
+  callback = function()
+    vim.opt_local.undofile = false
+  end,
+})
