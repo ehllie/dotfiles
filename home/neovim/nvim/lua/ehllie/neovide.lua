@@ -46,6 +46,10 @@ register({
     end,
     "Decrease gui font size",
   },
+  ["<C-0>"] = {
+    reset_gui_font,
+    "Reset gui font size",
+  },
 }, { mode = "i" })
 
 register({
@@ -61,6 +65,8 @@ register({
     end,
     "Decrease gui font size",
   },
-
-  -- ["<leader>nf"] = { "<cmd>let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", "Toggle fulscreen mode" },
+  ["<C-0>"] = {
+    reset_gui_font,
+    "Reset gui font size",
+  },
 }, { mode = "n" })
