@@ -1,5 +1,9 @@
-local packer_ok, packer = pcall(require, "packer")
 local which_key_ok, wk = pcall(require, "which-key")
+
+if not which_key_ok then
+  return
+end
+local register = wk.register
 
 -- Modes
 --   normal_mode = "n",
@@ -8,14 +12,6 @@ local which_key_ok, wk = pcall(require, "which-key")
 --   visual_block_mode = "x",
 --   term_mode = "t",
 --   command_mode = "c",
-
-if not which_key_ok then
-  if packer_ok then
-    vim.keymap.set("n", "<leader>p", packer.sync, {})
-  end
-  return
-end
-local register = wk.register
 
 local function toggle_format()
   _G.do_auto_format = not do_auto_format
