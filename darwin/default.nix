@@ -4,9 +4,6 @@
   security.pam.enableSudoTouchIdAuth = true;
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = [
-      "openssl-1.1.1u"
-    ];
   };
 
   homebrew = {
