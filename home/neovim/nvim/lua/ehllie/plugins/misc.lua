@@ -62,6 +62,7 @@ return {
         "packer",
       },
     },
+    tag = "v2.20.8",
   },
   {
     "RRethy/vim-illuminate",
