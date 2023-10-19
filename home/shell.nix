@@ -93,7 +93,11 @@ in
       dotDir = ".config/zsh";
       enableCompletion = true;
       enableSyntaxHighlighting = true;
-      history.path = "${config.xdg.cacheHome}/zsh/history";
+
+      history = {
+        ignoreSpace = true;
+        path = "${config.xdg.cacheHome}/zsh/history";
+      };
 
       localVariables = {
         VI_MODE_RESET_PROMPT_ON_MODE_CHANGE = true;
