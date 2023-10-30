@@ -130,5 +130,18 @@ in
         bindkey -s '^o' 'rangercd\n'
       '';
     };
+
+    tmux = {
+      enable = true;
+      baseIndex = 1;
+      clock24 = true;
+
+      extraConfig = ''
+        set-option -g status-position top
+        bind '"' split-window -c "#{pane_current_path}"
+        bind % split-window -h -c "#{pane_current_path}"
+        bind c new-window -c "#{pane_current_path}"
+      '';
+    };
   };
 }

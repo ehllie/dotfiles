@@ -8,93 +8,106 @@ let
     else if flavour == "frappe" then import ./frappe.nix
     else if flavour == "macchiato" then import ./macchiato.nix
     else import ./mocha.nix;
+
+  toWord = str:
+    let
+      chars = lib.strings.stringToCharacters str;
+      head = builtins.head chars;
+      tail = builtins.tail chars;
+    in
+    lib.strings.concatStrings ([ (lib.strings.toUpper head) ] ++ tail);
 in
 {
-  programs.alacritty.settings.colors = {
-    primary = {
-      background = palette.base;
-      foreground = palette.text;
-      dim_foreground = palette.text;
-      bright_foreground = palette.text;
-    };
+  programs = {
+    kitty.theme = "Catppuccin-${toWord flavour}";
 
-    cursor = {
-      text = palette.base;
-      cursor = palette.rosewater;
-    };
-    vi_mode_cursor = {
-      text = palette.base;
-      cursor = palette.lavender;
-    };
 
-    search = {
-      matches = {
-        foreground = palette.base;
-        background = palette.subtext0;
+    alacritty.settings.colors = {
+      primary = {
+        background = palette.base;
+        foreground = palette.text;
+        dim_foreground = palette.text;
+        bright_foreground = palette.text;
       };
-      focused_match = {
-        foreground = palette.base;
-        background = palette.green;
+
+      cursor = {
+        text = palette.base;
+        cursor = palette.rosewater;
       };
-      footer_bar = {
-        foreground = palette.base;
-        background = palette.subtext0;
+      vi_mode_cursor = {
+        text = palette.base;
+        cursor = palette.lavender;
       };
-    };
 
-    hints = {
-      start = {
-        foreground = palette.base;
-        background = palette.yellow;
+      search = {
+        matches = {
+          foreground = palette.base;
+          background = palette.subtext0;
+        };
+        focused_match = {
+          foreground = palette.base;
+          background = palette.green;
+        };
+        footer_bar = {
+          foreground = palette.base;
+          background = palette.subtext0;
+        };
       };
-      end = {
-        foreground = palette.base;
-        background = palette.subtext0;
+
+      hints = {
+        start = {
+          foreground = palette.base;
+          background = palette.yellow;
+        };
+        end = {
+          foreground = palette.base;
+          background = palette.subtext0;
+        };
       };
-    };
 
-    selection = {
-      text = palette.base;
-      background = palette.rosewater;
-    };
+      selection = {
+        text = palette.base;
+        background = palette.rosewater;
+      };
 
-    normal = {
-      black = palette.surface1;
-      red = palette.red;
-      green = palette.green;
-      yellow = palette.yellow;
-      blue = palette.blue;
-      magenta = palette.pink;
-      cyan = palette.teal;
-      white = palette.subtext1;
-    };
+      normal = {
+        black = palette.surface1;
+        red = palette.red;
+        green = palette.green;
+        yellow = palette.yellow;
+        blue = palette.blue;
+        magenta = palette.pink;
+        cyan = palette.teal;
+        white = palette.subtext1;
+      };
 
-    bright = {
-      black = palette.surface2;
-      red = palette.red;
-      green = palette.green;
-      yellow = palette.yellow;
-      blue = palette.blue;
-      magenta = palette.pink;
-      cyan = palette.teal;
-      white = palette.subtext0;
-    };
+      bright = {
+        black = palette.surface2;
+        red = palette.red;
+        green = palette.green;
+        yellow = palette.yellow;
+        blue = palette.blue;
+        magenta = palette.pink;
+        cyan = palette.teal;
+        white = palette.subtext0;
+      };
 
-    dim = {
-      black = palette.surface1;
-      red = palette.red;
-      green = palette.green;
-      yellow = palette.yellow;
-      blue = palette.blue;
-      magenta = palette.pink;
-      cyan = palette.teal;
-      white = palette.subtext1;
-    };
+      dim = {
+        black = palette.surface1;
+        red = palette.red;
+        green = palette.green;
+        yellow = palette.yellow;
+        blue = palette.blue;
+        magenta = palette.pink;
+        cyan = palette.teal;
+        white = palette.subtext1;
+      };
 
-    indexed_colors = [
-      { index = 16; color = palette.peach; }
-      { index = 17; color = palette.rosewater; }
-    ];
+      indexed_colors = [
+        { index = 16; color = palette.peach; }
+        { index = 17; color = palette.rosewater; }
+      ];
+    };
   };
   gtk = mkIf isLinux {
     enable = true;

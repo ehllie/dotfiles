@@ -71,7 +71,7 @@ in
 {
 
   imports = [
-    ./alacritty.nix
+    # ./alacritty.nix
     ./catppuccin
     ./neovim
     ./xdg.nix
@@ -84,6 +84,14 @@ in
 
   programs = {
     home-manager.enable = true;
+
+    kitty = {
+      enable = true;
+      font = {
+        size = 13;
+        name = "CaskaydiaCove Nerd Font";
+      };
+    };
 
     git = {
       enable = true;
