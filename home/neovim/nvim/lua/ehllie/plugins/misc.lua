@@ -3,25 +3,7 @@
 return {
   "moll/vim-bbye",
   "nvim-lua/plenary.nvim", -- Useful lua functions used by lots of plugins
-  {
-    "kyazdani42/nvim-web-devicons",
-    opts = {
-      override = {
-        svelte = {
-          icon = "",
-          color = "#ff3e00",
-          name = "Svelte",
-        },
-      },
-      override_by_filename = {
-        dockerfile = {
-          icon = "",
-          color = "#0db7ed",
-          name = "Dockerfile",
-        },
-      },
-    },
-  },
+  "kyazdani42/nvim-web-devicons",
   {
     "AndrewRadev/bufferize.vim",
     config = function()
