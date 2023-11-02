@@ -109,8 +109,8 @@ in
         zstyle ':completion:*' menu select
         zmodload zsh/complist
         compinit
-        _comp_options+=(globdots)		# Include hidden files.
-        unsetopt completealiases		# Include aliases.
+        _comp_options+=(globdots)  # Include hidden files.
+        unsetopt completealiases   # Include aliases.
       '';
 
       initExtra = ''
@@ -130,26 +130,42 @@ in
         bindkey -s '^o' 'rangercd\n'
 
         if [ "$TMUX" = "" ]; then
-          start-tmux() {
-            tmux a || tmux
-          }
-          exec start-tmux
+          exec tmux a
         fi
       '';
     };
 
-    tmux = {
-      enable = true;
-      baseIndex = 1;
-      clock24 = true;
-      mouse = true;
+    tmux =
+      let inherit (pkgs) tmuxPlugins; in
+      {
+        enable = true;
+        baseIndex = 1;
+        clock24 = true;
+        mouse = true;
+        newSession = true;
 
-      extraConfig = ''
-        set-option -g status-position top
-        bind '"' split-window -c "#{pane_current_path}"
-        bind % split-window -h -c "#{pane_current_path}"
-        bind c new-window -c "#{pane_current_path}"
-      '';
-    };
+        extraConfig = ''
+          set-option -g status-position top
+          bind '"' split-window -c "#{pane_current_path}"
+          bind % split-window -h -c "#{pane_current_path}"
+          bind c new-window -c "#{pane_current_path}"
+        '';
+
+        plugins = [
+          {
+            plugin = tmuxPlugins.resurrect;
+            extraConfig = ''
+              set -g @resurrect-dir ${config.xdg.stateHome}/tmux-ressurect
+              set -g @resurrect-strategy-nvim 'session'
+            '';
+          }
+          {
+            plugin = tmuxPlugins.continuum;
+            extraConfig = ''
+              set -g @continuum-restore 'on'
+            '';
+          }
+        ];
+      };
   };
 }
