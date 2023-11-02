@@ -58,22 +58,8 @@ register({
   ["<leader><C-s>"] = { "<cmd>wa<CR>", "Quick save all" },
   ["<leader>s"] = { toggle_format, "Toggle auto formatting" },
   ["<leader>v"] = { require("ehllie.utils").to_shell, "Open current project in a virtual shell if one exists" },
-  ["<leader>N"] = { "<CMD>!cd; develop neovide<CR>", "Open new fresh neovide window" },
-  ["<leader>n"] = {
-    function()
-      vim.cmd([[!develop neovide .]])
-      if vim.v.shell_error == 0 then
-        vim.cmd("confirm qa")
-      else
-        print("Failed to open shell")
-        print("Error: " .. vim.v.shell_error)
-      end
-    end,
-    "Reopen neovide in nix develop env",
-  },
   ["<leader>qq"] = { "<cmd>confirm qa<CR>", "Exit neovim" },
   ["<C-w>f"] = { close_floating, "Closes all floating windows" },
-  -- ["<leader>p"] = { packer.sync, "Reload packer" },
 })
 
 -- Insert --
