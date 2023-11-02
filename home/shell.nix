@@ -147,6 +147,8 @@ in
 
         extraConfig = ''
           set-option -g status-position top
+
+          # Opens new windows in the current directory
           bind '"' split-window -c "#{pane_current_path}"
           bind % split-window -h -c "#{pane_current_path}"
           bind c new-window -c "#{pane_current_path}"
@@ -164,6 +166,12 @@ in
             plugin = tmuxPlugins.continuum;
             extraConfig = ''
               set -g @continuum-restore 'on'
+            '';
+          }
+          {
+            plugin = tmuxPlugins.yank;
+            extraConfig = ''
+              set -g @yank_action 'copy-pipe'
             '';
           }
         ];

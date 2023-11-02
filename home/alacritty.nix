@@ -28,11 +28,5 @@ in
         };
       };
     };
-
-    tmux = {
-      enable = true;
-      terminal = "xterm-256color";
-      extraConfig = ''set-option -ga terminal-overrides ",xterm-256color:Tc"'';
-    };
   };
 }
