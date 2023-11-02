@@ -143,6 +143,7 @@ in
         clock24 = true;
         mouse = true;
         newSession = true;
+        terminal = "tmux-256color";
 
         extraConfig = ''
           set-option -g status-position top
