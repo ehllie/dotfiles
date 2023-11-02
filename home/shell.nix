@@ -118,7 +118,7 @@ in
         source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
         # Use ranger to switch directories and bind it to ctrl-o
-        rangercd () {
+        rangercd() {
           tmp="$(mktemp)"
           ranger --choosedir="$tmp" "$@"
           if [ -f "$tmp" ]; then
@@ -128,6 +128,13 @@ in
           fi
         }
         bindkey -s '^o' 'rangercd\n'
+
+        if [ "$TMUX" = "" ]; then
+          start-tmux() {
+            tmux a || tmux
+          }
+          exec start-tmux
+        fi
       '';
     };
 
@@ -135,6 +142,7 @@ in
       enable = true;
       baseIndex = 1;
       clock24 = true;
+      mouse = true;
 
       extraConfig = ''
         set-option -g status-position top
