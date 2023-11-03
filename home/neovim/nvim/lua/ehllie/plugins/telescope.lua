@@ -4,9 +4,9 @@ return {
     config = function()
       local actions = require("telescope.actions")
       local builtin = require("telescope.builtin")
-      require("telescope").setup({
+      local telescope = require("telescope")
+      telescope.setup({
         defaults = {
-
           prompt_prefix = " ",
           selection_caret = " ",
           path_display = { "smart" },
@@ -20,14 +20,24 @@ return {
               ["<C-j>"] = actions.move_selection_next,
               ["<C-k>"] = actions.move_selection_previous,
             },
-            n = {
-              q = actions.close,
+            n = { q = actions.close },
+          },
+        },
+
+        extensions = {
+          undo = {
+            side_by_side = true,
+            layout_strategy = "vertical",
+            layout_config = {
+              preview_height = 0.8,
             },
           },
         },
       })
-      local register = require("which-key").register
-      register({
+
+      telescope.load_extension("undo")
+
+      require("which-key").register({
         f = {
           name = "Telescope",
           f = { builtin.find_files, "Find files" },
@@ -36,10 +46,15 @@ return {
           h = { builtin.help_tags, "Neovim documentation" },
           l = { builtin.diagnostics, "LSP diagnostics" },
           a = { builtin.builtin, "Select a builtin picker" },
+          u = { telescope.extensions.undo.undo, "Undo tree" },
         },
       }, { prefix = "<leader>" })
     end,
-    dependencies = "folke/which-key.nvim",
+    dependencies = {
+      "folke/which-key.nvim",
+      "nvim-lua/plenary.nvim",
+      "debugloop/telescope-undo.nvim",
+    },
   },
   {
     "ahmedkhalf/project.nvim",
