@@ -19,99 +19,53 @@
       url = "github:jfecher/ante";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    ez-configs = {
+      url = "github:ehllie/ez-configs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-darwin.follows = "nixpkgs-darwin";
+        flake-parts.follows = "flake-parts";
+        darwin.follows = "darwin";
+        home-manager.follows = "home-manager";
+      };
+
+    };
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , home-manager
-    , darwin
-    , ...
-    }@inputs:
-    let
-      inherit (builtins) listToAttrs pathExists;
-      inherit (nixpkgs.lib) concatMap mapAttrsToList nixosSystem optionals;
-      inherit (darwin.lib) darwinSystem;
-      inherit (home-manager.lib) homeManagerConfiguration;
-
-
-      # Import a module of a given name if it exists.
-      # First check for a `.nix` file, then a directory.
-      importModule = name:
-        let
-          file = self + "/${name}.nix";
-          dir = self + "/${name}";
-        in
-        if pathExists file then file
-        else if pathExists dir then dir
-        else { };
-
-      # Generates an atterset of nixosConfigurations or darwinConfigurations.
-      # systemBuilder: The function to use to build the system. i.e. nixosSystem or darwinSystem
-      # defaultModule: The module to always include in the system. i.e. ./nixos or ./darwin
-      # hosts: A list of host declarations. i.e. [ { host = "foo"; system = "aarch64-darwin"; } ... ]
-      systemsWith = systemBuilder: defaultModule: hosts:
-        listToAttrs (map
-          ({ host, system }: {
-            name = host;
-            value = systemBuilder {
-              inherit system;
-              specialArgs = { inherit inputs; };
-              modules = [
-                defaultModule
-                ./overlays
-                (importModule "hosts/${host}")
-              ];
-            };
-          })
-          hosts);
-
-      # Combined list attrsets containing the hostname
-      # and it's configuration for all nixos and darwin systems.
-      allHosts = mapAttrsToList
-        (host: systemConf: systemConf //
-          { inherit host; })
-        (self.nixosConfigurations //
-          self.darwinConfigurations);
-
-      # Creates home-manager confgurations for each user on each host.
-      # Tries to import users/${user} for each user.
-      # Conditionally imports home/darwin and home/linux based on the host system.
-      userConfigs = users:
-        listToAttrs (concatMap
-          ({ host, pkgs, ... }:
-            let
-              inherit (pkgs.stdenv) isDarwin isLinux;
-            in
-            map
-              (user: {
-                name = "${user}@${host}";
-                value = homeManagerConfiguration {
-                  inherit pkgs;
-                  extraSpecialArgs = { inherit inputs; };
-                  modules = [ ./home (importModule "users/${user}") ] ++
-                    optionals isDarwin [ (importModule "home/darwin") ] ++
-                    optionals isLinux [ (importModule "home/linux") ];
-                };
-              })
-              users)
-          allHosts);
-    in
-    {
-      homeConfigurations = userConfigs [
-        "ellie"
+  outputs = inputs@{ flake-parts, ez-configs, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ez-configs.flakeModule
       ];
-      nixosConfigurations = systemsWith nixosSystem ./nixos [
-        {
-          host = "dell-gram";
-          system = "x86_64-linux";
-        }
-      ];
-      darwinConfigurations = systemsWith darwinSystem ./darwin [
-        {
-          host = "EllMBP";
-          system = "aarch64-darwin";
-        }
-      ];
+
+      systems = [ ];
+
+      ezConfigs = {
+        root = ./.;
+        globalArgs = { inherit inputs; };
+        hm.users = [
+          {
+            name = "ellie";
+          }
+        ];
+
+        darwin.hosts = [
+          {
+            name = "EllMBP";
+            arch = "aarch64";
+          }
+        ];
+
+        nixos.hosts = [
+          {
+            name = "dell-gram";
+            arch = "x86_64";
+          }
+        ];
+      };
     };
 }

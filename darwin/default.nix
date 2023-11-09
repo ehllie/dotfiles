@@ -1,5 +1,9 @@
 { pkgs, ... }: {
 
+  imports = [
+    ../overlays
+  ];
+
   programs.zsh.enable = true;
   security.pam.enableSudoTouchIdAuth = true;
   nixpkgs.config = {
