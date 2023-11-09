@@ -25,6 +25,8 @@ in
         nodePackages = prev.nodePackages //
           {
             inherit (unstable.nodePackages)
+              prettier
+              prettier-plugin-toml
               svelte-language-server
               volar;
           };
