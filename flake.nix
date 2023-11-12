@@ -36,36 +36,19 @@
     };
   };
 
-  outputs = inputs@{ flake-parts, ez-configs, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs: inputs.flake-parts.lib.mkFlake
+    { inherit inputs; }
+    {
       imports = [
-        ez-configs.flakeModule
+        inputs.ez-configs.flakeModule
       ];
 
       systems = [ ];
 
+      # see https://github.com/ehllie/ez-configs/blob/main/README.md
       ezConfigs = {
         root = ./.;
         globalArgs = { inherit inputs; };
-        hm.users = [
-          {
-            name = "ellie";
-          }
-        ];
-
-        darwin.hosts = [
-          {
-            name = "EllMBP";
-            arch = "aarch64";
-          }
-        ];
-
-        nixos.hosts = [
-          {
-            name = "dell-gram";
-            arch = "x86_64";
-          }
-        ];
       };
     };
 }
