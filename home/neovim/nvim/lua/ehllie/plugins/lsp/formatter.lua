@@ -60,6 +60,11 @@ return {
               stdin = true,
             }),
           },
+          toml = {
+            prefix_args({
+              ("--plugin=%s/lib/node_modules/prettier-plugin-toml/lib/api.js"):format(store.prettier_toml),
+            }, formatters.prettier),
+          },
           ["*"] = {
             filetypes.any.remove_trailing_whitespace,
           },
@@ -77,31 +82,25 @@ return {
             args = { "-i", "2", "-s", "fnonly" },
           })
         ),
-        many_filetypes(
-          {
-            "javascript",
-            "javascriptreact",
-            "typescript",
-            "typescriptreact",
-            "vue",
-            "css",
-            "scss",
-            "less",
-            "html",
-            "json",
-            "jsonc",
-            "yaml",
-            "markdown",
-            "markdown.mdx",
-            "graphql",
-            "handlebars",
-            "svelte",
-            "toml",
-          },
-          prefix_args({
-            ("--plugin=%s/lib/node_modules/prettier-plugin-toml/lib/api.js"):format(store.prettier_toml),
-          }, formatters.prettier)
-        )
+        many_filetypes({
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "vue",
+          "css",
+          "scss",
+          "less",
+          "html",
+          "json",
+          "jsonc",
+          "yaml",
+          "markdown",
+          "markdown.mdx",
+          "graphql",
+          "handlebars",
+          "svelte",
+        }, formatters.prettier)
       ),
     })
 
