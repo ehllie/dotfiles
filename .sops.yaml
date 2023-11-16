@@ -1,0 +1,10 @@
+keys:
+  - &ellie age1v88s5yurnsje83q2xdnph6gwfjyq20gxlth9w5ddac9wyuj6rszqyl5hsf
+  - &dell-builder age1t3l8398djcpphaz6sxfvlvj4r7law724fc6u7jxzcpcmykqzt3ds0n64hh
+
+creation_rules:
+  - path_regex: sops/builder/tunnel-credentials$
+    key_groups:
+      - age:
+          - *ellie
+          - *dell-builder

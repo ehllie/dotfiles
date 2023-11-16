@@ -72,6 +72,7 @@ in
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
+      SOPS_AGE_KEY_FILE = config.xdg.configHome + "/sops/keys/age/keys.txt";
     };
   };
 

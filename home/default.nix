@@ -42,6 +42,7 @@ let
         git
         git-crypt
         lazygit
+        cloudflared
 
         ffmpeg
         imagemagick
@@ -59,7 +60,8 @@ let
         killall
         glow
         pandoc
-        jq;
+        jq
+        ;
     } ++ [
     pkgs.nodePackages.pnpm
     (pkgs.ghc.withPackages haskellPkgs)
@@ -76,6 +78,7 @@ in
     ./neovim
     ./xdg.nix
     ./shell.nix
+    ./builder-ssh.nix
   ];
 
   home = { inherit packages; };
@@ -117,9 +120,7 @@ in
       homedir = "${config.xdg.dataHome}/gnupg";
     };
 
-    ssh = {
-      enable = true;
-    };
+    ssh.enable = true;
 
     direnv = {
       enable = true;

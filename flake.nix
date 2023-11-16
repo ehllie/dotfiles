@@ -32,7 +32,14 @@
         darwin.follows = "darwin";
         home-manager.follows = "home-manager";
       };
-
+    };
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -41,14 +48,42 @@
     {
       imports = [
         inputs.ez-configs.flakeModule
+        inputs.devenv.flakeModule
       ];
 
-      systems = [ ];
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
 
       # see https://github.com/ehllie/ez-configs/blob/main/README.md
       ezConfigs = {
         root = ./.;
         globalArgs = { inherit inputs; };
+        nixos.hosts.dell-builder.importDefault = false;
+        darwin.hosts.EllMBP.userHomeModules = [ "root" ];
+        hm.users.root.importDefault = false;
+      };
+
+      perSystem = { pkgs, lib, system, ... }: {
+
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+          overlays = [ inputs.sops-nix.overlays.default ];
+        };
+        devenv.shells.default = {
+          packages = lib.attrValues {
+            inherit (pkgs)
+              age
+              cloudflared
+              nixos-rebuild
+              sops
+              ssh-to-age
+              ;
+          };
+        };
       };
     };
 }
