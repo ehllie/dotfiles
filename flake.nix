@@ -27,10 +27,7 @@
       url = "github:ehllie/ez-configs";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        nixpkgs-darwin.follows = "nixpkgs-darwin";
         flake-parts.follows = "flake-parts";
-        darwin.follows = "darwin";
-        home-manager.follows = "home-manager";
       };
     };
     devenv = {
@@ -64,7 +61,7 @@
         globalArgs = { inherit inputs; };
         nixos.hosts.dell-builder.importDefault = false;
         darwin.hosts.EllMBP.userHomeModules = [ "root" ];
-        hm.users.root.importDefault = false;
+        home.users.root.importDefault = false;
       };
 
       perSystem = { pkgs, lib, system, ... }: {
