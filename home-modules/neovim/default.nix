@@ -12,7 +12,7 @@ in
       src = ./nvim;
       nodejs = pkgs.nodejs;
       prettierToml = prettier-plugin-toml;
-      repoDir = "${homeDirectory}/Code/dotfiles/home/neovim/nvim";
+      repoDir = "${homeDirectory}/Code/dotfiles/home-modules/neovim/nvim";
       inherit (pkgs) gcc;
       fontsize = if isLinux then 11 else 13;
     };
