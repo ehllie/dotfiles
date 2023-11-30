@@ -4,6 +4,7 @@ let
   inherit (inputs)
     ante
     nil
+    yazi
     nixpkgs-unstable;
   unstable = import nixpkgs-unstable { inherit system; };
 in
@@ -16,6 +17,7 @@ in
       (import ./try-import)
       (import ./neovim.nix)
       ante.overlays.default
+      yazi.overlays.default
       (_: _: { nil = nil.packages.${system}.nil; })
       (_: prev: {
         inherit (unstable)
