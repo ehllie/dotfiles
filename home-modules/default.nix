@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ osConfig, config, lib, pkgs, ... }:
 let
   inherit (pkgs.stdenv) isLinux;
   inherit (lib) optionals attrValues;
@@ -50,11 +50,10 @@ let
         wget
         zip
         unzip
-        docs-gen
 
         erdtree
         bottom
-        exa
+        eza
         bat
 
         killall

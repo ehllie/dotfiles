@@ -57,7 +57,7 @@ in
       "..." = "cd ../..";
       top = "btm";
       btop = "btm";
-      ls = "exa";
+      ls = "eza";
       cat = "bat -pp";
       tree = "erd --layout inverted --icons --human";
     } // (
@@ -83,6 +83,8 @@ in
   '';
 
   programs = {
+    joshuto.enable = true;
+
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -93,7 +95,7 @@ in
       defaultKeymap = "viins";
       dotDir = ".config/zsh";
       enableCompletion = true;
-      enableSyntaxHighlighting = true;
+      syntaxHighlighting.enable = true;
 
       history = {
         ignoreSpace = true;

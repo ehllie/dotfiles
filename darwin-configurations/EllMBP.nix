@@ -7,6 +7,8 @@ in
 
   users.users.root.home = "/var/root";
 
+  nixpkgs.hostPlatform = "aarch64-darwin";
+
   nix = {
     distributedBuilds = true;
 
