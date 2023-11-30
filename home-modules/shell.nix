@@ -83,8 +83,6 @@ in
   '';
 
   programs = {
-    joshuto.enable = true;
-
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -119,18 +117,6 @@ in
       initExtra = ''
         source ${zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
         source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-
-        # Use ranger to switch directories and bind it to ctrl-o
-        rangercd() {
-          tmp="$(mktemp)"
-          ranger --choosedir="$tmp" "$@"
-          if [ -f "$tmp" ]; then
-            dir="$(cat "$tmp")"
-            rm -f "$tmp"
-            [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-          fi
-        }
-        bindkey -s '^o' 'rangercd\n'
 
         if [ "$TMUX" = "" ]; then
           exec tmux a
