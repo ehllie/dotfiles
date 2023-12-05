@@ -22,6 +22,14 @@ return {
         server = {
           on_attach = opts.on_attach,
           capabilities = opts.capabilities,
+
+          settings = {
+            ["rust-analyzer"] = {
+              checkOnSave = {
+                command = "clippy",
+              },
+            },
+          },
         },
       })
     end,

@@ -6,6 +6,8 @@ let inherit (config.sops.secrets) tunnel-credentials; in
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/0c6eec1f-335f-448f-b5cc-85edd7f3018a"; }
