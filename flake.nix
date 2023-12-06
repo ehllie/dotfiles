@@ -29,10 +29,6 @@
         flake-parts.follows = "flake-parts";
       };
     };
-    devenv = {
-      url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,7 +44,6 @@
     {
       imports = [
         inputs.ez-configs.flakeModule
-        inputs.devenv.flakeModule
       ];
 
       systems = [
@@ -73,7 +68,8 @@
           inherit system;
           overlays = [ inputs.sops-nix.overlays.default ];
         };
-        devenv.shells.default = {
+        devShells.default = pkgs.mkShell {
+          name = "default-shell";
           packages = lib.attrValues {
             inherit (pkgs)
               age

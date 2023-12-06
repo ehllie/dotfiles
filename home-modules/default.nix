@@ -43,6 +43,7 @@ let
         git-crypt
         lazygit
         cloudflared
+        gh
 
         ffmpeg
         imagemagick
