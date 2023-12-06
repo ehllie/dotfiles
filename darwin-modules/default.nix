@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
 
   imports = [
     ../overlays
@@ -73,6 +73,10 @@
       automatic = true;
       options = "--delete-older-than 7d";
       interval = { Hour = 3; Minute = 15; Weekday = 6; };
+    };
+
+    registry = {
+      nixpkgs.flake = inputs.nixpkgs-darwin;
     };
   };
   services.nix-daemon.enable = true;

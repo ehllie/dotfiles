@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, pkgs, ... }:
+{ inputs, lib, modulesPath, pkgs, ... }:
 let
   inherit (lib) attrValues;
   systemPackages = attrValues {
@@ -56,6 +56,8 @@ in
       dates = "daily";
       options = "--delete-older-than 7d";
     };
+
+    registry.nixpkgs.flake = inputs.nixpkgs;
   };
 
   fonts.fonts = with pkgs; [
