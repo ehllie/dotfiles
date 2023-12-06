@@ -56,6 +56,12 @@ return {
       padding = 0,
     }
 
+    local filename = {
+      "filename",
+      path = 4,
+      shorting_target = 15,
+    }
+
     local spaces = function()
       return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
     end
@@ -72,7 +78,7 @@ return {
       sections = {
         lualine_a = { "mode" },
         lualine_b = { { "b:gitsigns_head", icon = "" } },
-        lualine_c = { macro_recording, diagnostics, progress },
+        lualine_c = { macro_recording, diagnostics, filename, progress },
         lualine_x = { diff, spaces, "encoding", filetype },
         lualine_y = { location },
         lualine_z = { "progress" },
