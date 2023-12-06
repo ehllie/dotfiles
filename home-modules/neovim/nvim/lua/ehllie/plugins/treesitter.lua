@@ -19,6 +19,8 @@ return {
       end
     end
 
+    require("nvim-treesitter.install").compilers = { store.gcc .. "/bin/gcc" }
+
     require("nvim-treesitter.configs").setup(opts)
   end,
   opts = {
