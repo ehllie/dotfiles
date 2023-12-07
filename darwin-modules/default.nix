@@ -18,6 +18,7 @@
       "aldente"
       "anydesk"
       "calibre"
+      "chatterino"
       "discord"
       "docker"
       "google-chrome"
