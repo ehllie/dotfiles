@@ -58,6 +58,10 @@ in
     };
 
     registry.nixpkgs.flake = inputs.nixpkgs;
+
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs}"
+    ];
   };
 
   fonts.fonts = with pkgs; [

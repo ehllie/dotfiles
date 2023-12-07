@@ -78,6 +78,10 @@
     registry = {
       nixpkgs.flake = inputs.nixpkgs-darwin;
     };
+
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs-darwin}"
+    ];
   };
   services.nix-daemon.enable = true;
 }
