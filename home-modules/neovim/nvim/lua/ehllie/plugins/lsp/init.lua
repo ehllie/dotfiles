@@ -14,6 +14,7 @@ local servers = {
   "yamlls",
   "nil_ls",
   "ccls",
+  "elixirls",
 }
 
 ---@type table<table>

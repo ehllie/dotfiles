@@ -36,6 +36,7 @@ in
         nil
         rust-analyzer
         ccls
+        elixir-ls
 
         # Linters
         clippy
