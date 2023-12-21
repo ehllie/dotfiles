@@ -24,6 +24,7 @@
       "google-chrome"
       "keycastr"
       "linearmouse"
+      "logitech-g-hub"
       "maccy"
       "microsoft-office"
       "microsoft-teams"
