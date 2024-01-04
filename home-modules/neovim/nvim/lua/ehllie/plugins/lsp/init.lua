@@ -54,7 +54,11 @@ return {
 
       handlers.setup()
     end,
-    dependencies = { "lsp-status.nvim", "folke/which-key.nvim" },
+    dependencies = { "lsp-status.nvim", "folke/which-key.nvim", "folke/neoconf.nvim" },
+  },
+  {
+    "folke/neoconf.nvim",
+    config = true,
   },
   {
     "nvim-lua/lsp-status.nvim",
