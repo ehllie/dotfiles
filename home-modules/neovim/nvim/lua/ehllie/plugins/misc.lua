@@ -19,14 +19,11 @@ return {
     dependencies = "folke/which-key.nvim",
   },
   {
-    "norcalli/nvim-colorizer.lua",
+    "NvChad/nvim-colorizer.lua",
     opts = {
-      "css",
-      "html",
-      "javascript",
-      "lua",
-      "typescript",
-      "vue",
+      user_default_options = {
+        tailwind = true,
+      },
     },
   },
   {

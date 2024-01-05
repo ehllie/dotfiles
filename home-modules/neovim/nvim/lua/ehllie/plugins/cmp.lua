@@ -26,6 +26,10 @@ return {
     dependencies = { "zbirenbaum/copilot-cmp" },
   },
   {
+    "roobert/tailwindcss-colorizer-cmp.nvim",
+    config = true,
+  },
+  {
     "zbirenbaum/copilot-cmp",
     config = true,
   },
@@ -33,6 +37,7 @@ return {
     "hrsh7th/nvim-cmp",
     config = function()
       local cmp = require("cmp")
+      local tw_colorizer = require("tailwindcss-colorizer-cmp")
       require("luasnip.loaders.from_vscode").lazy_load()
 
       local kind_icons = {
@@ -102,12 +107,11 @@ return {
               vim_item.kind_hl_group = "CmpItemKindCopilot"
             end
 
-            return vim_item
+            return tw_colorizer.formatter(entry, vim_item)
           end,
         },
         sources = {
           { name = "copilot" },
-          { name = "neorg" },
           { name = "nvim_lsp" },
           { name = "nvim_lua" },
           { name = "luasnip" },
@@ -138,6 +142,7 @@ return {
       "rafamadriz/friendly-snippets",
       "saadparwaiz1/cmp_luasnip",
       "zbirenbaum/copilot-cmp",
+      "roobert/tailwindcss-colorizer-cmp.nvim",
     },
   },
 }
