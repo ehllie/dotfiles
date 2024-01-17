@@ -40,25 +40,24 @@ return {
       local lspconfig = require("lspconfig")
 
       local handlers = require("ehllie.plugins.lsp.handlers")
-      local opts = {}
+      local default_opts = {}
 
       for server, server_opts in pairs(Basic) do
-        opts = {
+        default_opts = {
           on_attach = handlers.make_on_attach(),
           capabilities = handlers.mk_capabilities(),
         }
 
-        opts = vim.tbl_deep_extend("force", opts, server_opts)
-        lspconfig[server].setup(opts)
+        default_opts = vim.tbl_deep_extend("force", default_opts, server_opts)
+
+        require("ehllie.utils").allow_reconfigure({ "lspconfig", server }, function(opts)
+          lspconfig[server].setup(opts)
+        end, default_opts)
       end
 
       handlers.setup()
     end,
-    dependencies = { "lsp-status.nvim", "folke/which-key.nvim", "folke/neoconf.nvim" },
-  },
-  {
-    "folke/neoconf.nvim",
-    config = true,
+    dependencies = { "lsp-status.nvim", "folke/which-key.nvim" },
   },
   {
     "nvim-lua/lsp-status.nvim",

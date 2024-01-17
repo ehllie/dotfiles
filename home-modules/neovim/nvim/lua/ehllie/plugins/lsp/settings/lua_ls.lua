@@ -17,11 +17,15 @@ return {
       local on_attach = handlers.make_on_attach()
       local capabilities = handlers.mk_capabilities()
 
-      require("lspconfig").lua_ls.setup({
+      local default_opts = {
         on_attach = on_attach,
         capabilities = capabilities,
         settings = { Lua = { workspace = { checkThirdParty = false } } },
-      })
+      }
+
+      require("ehllie.utils").allow_reconfigure({ "lspconfig", "lua_ls" }, function(opts)
+        require("lspconfig").lua_ls.setup(opts)
+      end, default_opts)
     end,
   },
 }

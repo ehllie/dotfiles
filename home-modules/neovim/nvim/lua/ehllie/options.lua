@@ -35,6 +35,7 @@ local options = {
   sidescrolloff = 8,
   winblend = 30,
   pumblend = 30,
+  exrc = true, -- allow sourcing of local .nvim.lua/.nvimrc/.exrc files
 }
 vim.opt.fillchars.eob = " "
 vim.opt.shortmess:append("c")

@@ -17,7 +17,7 @@ return {
         }
       end)
 
-      vim.g.rustaceanvim = {
+      local default_opts = {
         server = {
           on_attach = on_attach,
           settings = {
@@ -44,6 +44,10 @@ return {
           },
         },
       }
+
+      require("ehllie.utils").allow_reconfigure("rustaceanvim", function(opts)
+        vim.g.rustaceanvim = opts
+      end, default_opts)
     end,
   },
 }

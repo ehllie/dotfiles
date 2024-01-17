@@ -235,4 +235,32 @@ function M.to_shell()
   run_shell(find_shell())
 end
 
+---Allow for reconfiguring the plugin by setting a reconfigure function under the name string/ path
+---@param name string | table<string>
+---@param default_fn fun(table: table): nil
+---@param default_opts table
+function M.allow_reconfigure(name, default_fn, default_opts)
+  if type(name) == "string" then
+    name = { name }
+  end
+
+  last = name[#name]
+  local call_queue = reconfigure_plugin
+  for i = 1, #name - 1 do
+    call_queue = call_queue[name[i]]
+  end
+
+  local function reconfigure(local_opts)
+    if type(local_opts) == "function" then
+      local_opts(default_opts)
+    else
+      default_fn(vim.tbl_deep_extend("force", default_opts, local_opts or {}))
+    end
+  end
+
+  reconfigure({})
+
+  call_queue[last] = reconfigure
+end
+
 return M
