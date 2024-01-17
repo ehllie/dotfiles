@@ -65,7 +65,7 @@ return {
       require("lsp-status").register_progress()
     end,
   },
-  require("ehllie.plugins.lsp.formatter"),
+  require("ehllie.plugins.lsp.conform"),
   require("ehllie.plugins.lsp.linter"),
   unpack(extended),
 }

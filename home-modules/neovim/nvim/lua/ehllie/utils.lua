@@ -244,7 +244,7 @@ function M.allow_reconfigure(name, default_fn, default_opts)
     name = { name }
   end
 
-  last = name[#name]
+  local last = name[#name]
   local call_queue = reconfigure_plugin
   for i = 1, #name - 1 do
     call_queue = call_queue[name[i]]
