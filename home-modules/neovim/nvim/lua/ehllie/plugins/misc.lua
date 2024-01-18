@@ -20,11 +20,18 @@ return {
   },
   {
     "NvChad/nvim-colorizer.lua",
+    config = function(_, opts)
+      require("colorizer").setup(opts)
+      require("which-key").register({
+        ["<leader>tc"] = { "<cmd>ColorizerToggle<CR>", "Toggle colorizer" },
+      })
+    end,
     opts = {
       user_default_options = {
         tailwind = true,
       },
     },
+    dependencies = "folke/which-key.nvim",
   },
   {
     "lukas-reineke/indent-blankline.nvim",
