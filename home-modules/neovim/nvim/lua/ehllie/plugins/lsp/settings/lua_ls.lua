@@ -4,9 +4,10 @@ return {
     config = function()
       require("neodev").setup({
         override = function(root_dir, library)
-          if root_dir:find("@repoDir@") then
+          local filename = vim.fn.expand("%:t")
+          if filename == ".nvim.lua" or root_dir:find("@repoDir@") then
             library.enabled = true
-            library.plugins = true
+            library.runtime = true
             library.types = true
             library.plugins = true
           end
