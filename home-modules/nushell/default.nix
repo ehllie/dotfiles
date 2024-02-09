@@ -1,13 +1,12 @@
 { config, osConfig, lib, ... }:
 let
-  envPaths = lib.concatStringsSep ":"
-    (builtins.filter
-      (s: s != "")
-      ([ osConfig.environment.systemPath ] ++ config.home.sessionPath));
-  escapedPath = builtins.replaceStrings
+  replaceShellVars = builtins.replaceStrings
     [ "$HOME" "$USER" ]
-    [ config.home.homeDirectory config.home.username ]
-    envPaths;
+    [ config.home.homeDirectory config.home.username ];
+
+  systemPaths = builtins.filter builtins.isString (builtins.split ":" osConfig.environment.systemPath);
+  envPaths = builtins.map replaceShellVars (systemPaths ++ config.home.sessionPath);
+  escapedPath = builtins.toJSON envPaths;
 
   sessionVariables = builtins.mapAttrs
     (_: builtins.toString)

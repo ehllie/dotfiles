@@ -11,7 +11,7 @@ in
     mouse = true;
     newSession = true;
     terminal = "tmux-256color";
-    shell = "${nuBin} -l";
+    shell = "${nuBin}";
 
     extraConfig = ''
       set-option -g status-position top
