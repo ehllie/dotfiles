@@ -16,7 +16,10 @@
     };
     ante = {
       url = "github:jfecher/ante";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        parts.follows = "flake-parts";
+      };
     };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
