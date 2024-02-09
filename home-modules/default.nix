@@ -80,6 +80,7 @@ in
     ./shell.nix
     ./builder-ssh.nix
     ./yazi.nix
+    ./nushell
   ];
 
   home = { inherit packages; };
@@ -98,6 +99,7 @@ in
       };
 
       extraConfig = ''
+        shell ${config.programs.nushell.package}/bin/nu -l
         bold_font CaskaydiaCove NF Bold
         italic_font CaskaydiaCove NF Italic
         bold_italic_font CaskaydiaCove NF Bold Italic
@@ -126,6 +128,7 @@ in
     direnv = {
       enable = true;
       enableZshIntegration = true;
+      enableNushellIntegration = true;
       nix-direnv.enable = true;
       stdlib = ''
         # Two things to know:

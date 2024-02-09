@@ -15,6 +15,7 @@ local servers = {
   "nil_ls",
   "ccls",
   "elixirls",
+  "nushell",
 }
 
 ---@type table<table>

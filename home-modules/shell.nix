@@ -1,41 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, osConfig, lib, pkgs, ... }:
 let
-  inherit (pkgs.stdenv) isDarwin;
+  inherit (osConfig.networking) hostName;
+  inherit (pkgs.stdenv) isDarwin isLinux;
   inherit (lib) attrValues;
-  inherit (config.home) homeDirectory;
+  inherit (config.home) username;
   inherit (pkgs)
     zsh-nix-shell
     zsh-vi-mode;
 
-  remote-op-pkg = pkgs.writeShellScriptBin "remote-op" ''
-    dir=$(mktemp -dt tmp.dotfiles-XXXXXX)
-    git clone https://github.com/ehllie/dotfiles.git --depth 1 $dir
-    cd $dir
-    git-crypt unlock
-    eval "$@"
-    cd
-    rm -rf $dir
-  '';
 
-  presence-fix = if isDarwin then "TMPDIR=$TMPDIR;" else "";
-  develop = pkgs.writeShellScriptBin "develop" ''
-    if [ -z "$1" ]; then
-      direnv exec . "$SHELL"
-    else
-      direnv exec . "$SHELL" -c "SHELL=$SHELL; ${presence-fix} $*"
-    fi
-  '';
-
-  rebuild = if isDarwin then "darwin-rebuild" else "sudo nixos-rebuild";
-  remote-op = "${remote-op-pkg}/bin/remote-op";
-  repoDir = "${homeDirectory}/Code/dotfiles/home/neovim/nvim";
-  hostName = "\${$(hostname)%%.*}";
-  flakeRebuild = cmd: loc: "${rebuild} ${cmd} --flake ${repoDir}#${hostName}";
-
-  osflake-dry = "${remote-op} ${flakeRebuild "dry-activate" "."} --option tarball-ttl 0";
-  osflake-switch = "${remote-op} ${flakeRebuild "switch" "."} --option tarball-ttl 0";
-  locflake-dry = "${flakeRebuild "dry-activate" repoDir}" + (if isDarwin then "" else " --fast");
-  locflake-switch = "${flakeRebuild "switch" repoDir}" + (if isDarwin then "" else " --fast");
+  homeSwitch = "home-manager switch --flake '.#${username}@${hostName}'";
+  nixosSwitch = "nixos-rebuild switch --flake '.#${hostName}'";
+  darwinSwitch = "darwin-rebuild switch --flake '.#${hostName}'";
 
 in
 {
@@ -44,15 +20,13 @@ in
       inherit (pkgs)
         powershell
         ranger;
-      inherit develop;
     };
 
     shellAliases = {
-      inherit
-        locflake-switch
-        osflake-switch;
+      inherit homeSwitch;
+
       vim = "nvim";
-      direnv-init = ''echo "use flake" >> .envrc && direnv allow'';
+      direnv-init = ''echo "use flake" >> .envrc'';
       ".." = "cd ..";
       "..." = "cd ../..";
       top = "btm";
@@ -62,11 +36,10 @@ in
       tree = "erd --layout inverted --icons --human";
     } // (
       if isDarwin then
-        { } else {
-        inherit
-          locflake-dry
-          osflake-dry;
-      }
+        { inherit darwinSwitch; }
+      else if isLinux then
+        { inherit nixosSwitch; }
+      else { }
     );
 
     sessionVariables = {
@@ -83,9 +56,22 @@ in
   '';
 
   programs = {
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      enableNushellIntegration = true;
+    };
+
+    carapace = {
+      enable = true;
+      enableZshIntegration = true;
+      enableNushellIntegration = true;
+    };
+
     starship = {
       enable = true;
       enableZshIntegration = true;
+      enableNushellIntegration = true;
     };
 
     zsh = {
@@ -133,14 +119,17 @@ in
         mouse = true;
         newSession = true;
         terminal = "tmux-256color";
+        shell = "${config.programs.nushell.package}/bin/nu -l";
 
         extraConfig = ''
           set-option -g status-position top
+          set-option -g default-command "${config.programs.nushell.package}/bin/nu -l"
 
           # Opens new windows in the current directory
           bind '"' split-window -c "#{pane_current_path}"
           bind % split-window -h -c "#{pane_current_path}"
           bind c new-window -c "#{pane_current_path}"
+
         '';
 
         plugins = [
