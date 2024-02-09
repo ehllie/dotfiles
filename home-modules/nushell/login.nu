@@ -1,3 +1,3 @@
 if not "TMUX" in $env {
-  tmux a
+  exec tmux a
 }
