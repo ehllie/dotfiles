@@ -5,6 +5,10 @@ function M.mk_capabilities()
   local lsp_status = require("lsp-status")
   local capabilities = vim.tbl_deep_extend("keep", cmp_nvim_lsp.default_capabilities(), lsp_status.capabilities)
   capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
   return capabilities
 end
 

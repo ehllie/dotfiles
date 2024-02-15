@@ -37,7 +37,7 @@ local options = {
   pumblend = 30,
   exrc = true, -- allow sourcing of local .nvim.lua/.nvimrc/.exrc files
 }
-vim.opt.fillchars.eob = " "
+vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 vim.opt.shortmess:append("c")
 vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
