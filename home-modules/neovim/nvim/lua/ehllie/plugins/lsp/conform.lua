@@ -58,7 +58,7 @@ return {
         prettier_toml = {
           command = "prettier",
           args = {
-            ("--plugin=%s/lib/node_modules/prettier-plugin-toml/lib/api.js"):format(store.prettier_toml),
+            ("--plugin=%s/lib/node_modules/prettier-plugin-toml/lib/index.js"):format(store.prettier_toml),
             "--stdin-filepath",
             "$FILENAME",
           },
