@@ -29,12 +29,7 @@ in
     ../overlays
   ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [
-      "openssl-1.1.1u"
-    ];
-  };
+  nixpkgs.config = import ../nixpkgs-config.nix;
 
   environment = {
     pathsToLink = [ "/share/zsh" ];

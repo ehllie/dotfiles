@@ -6,9 +6,7 @@
 
   programs.zsh.enable = true;
   security.pam.enableSudoTouchIdAuth = true;
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
+  nixpkgs.config = import ../nixpkgs-config.nix;
 
   homebrew = {
     enable = true;
