@@ -33,12 +33,6 @@ in
         '';
       }
       {
-        plugin = tmuxPlugins.continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-        '';
-      }
-      {
         plugin = tmuxPlugins.yank;
         extraConfig = ''
           set -g @yank_action 'copy-pipe'
