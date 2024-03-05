@@ -37,6 +37,7 @@ in
         rust-analyzer
         ccls
         elixir-ls
+        sqls
 
         # Linters
         clippy
