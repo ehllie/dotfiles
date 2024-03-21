@@ -17,6 +17,7 @@ local servers = {
   "elixirls",
   "nushell",
   "sqls",
+  "gleam",
 }
 
 ---@type table<table>

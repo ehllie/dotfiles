@@ -40,6 +40,7 @@ in
         gcc
         nodejs
         jdk17
+        gleam
 
         git
         git-crypt
