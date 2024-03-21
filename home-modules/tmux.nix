@@ -1,7 +1,6 @@
 { pkgs, config, ... }:
 let
   inherit (pkgs) tmuxPlugins;
-  nuBin = "${config.programs.nushell.package}/bin/nu";
 in
 {
   programs.tmux = {
@@ -11,11 +10,9 @@ in
     mouse = true;
     newSession = true;
     terminal = "tmux-256color";
-    shell = "${nuBin}";
 
     extraConfig = ''
       set-option -g status-position top
-      set-option -g default-command "${nuBin} -l"
 
       # Opens new windows in the current directory
       bind '"' split-window -c "#{pane_current_path}"

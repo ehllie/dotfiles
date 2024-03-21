@@ -100,7 +100,6 @@ in
       };
 
       extraConfig = ''
-        shell ${config.programs.nushell.package}/bin/nu -l
         bold_font CaskaydiaCove NF Bold
         italic_font CaskaydiaCove NF Italic
         bold_italic_font CaskaydiaCove NF Bold Italic

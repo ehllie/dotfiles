@@ -7,7 +7,7 @@
       builder-ssh
       catppuccin
       neovim
-      nushell
+      # nushell
       shell-generic
       shell-utils
       tmux
