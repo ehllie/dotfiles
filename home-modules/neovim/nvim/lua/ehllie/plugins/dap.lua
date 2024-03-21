@@ -122,7 +122,7 @@ return {
         },
       },
     },
-    dependencies = { "mfussenegger/nvim-dap", "folke/which-key.nvim" },
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "folke/which-key.nvim" },
   },
   {
     "mfussenegger/nvim-dap-python",
