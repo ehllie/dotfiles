@@ -1,8 +1,9 @@
-{ config, inputs, lib, modulesPath, pkgs, ... }:
+{ config, inputs, lib, modulesPath, pkgs, ezModules, ... }:
 let inherit (config.sops.secrets) tunnel-credentials; in
 {
   imports = [
     inputs.sops-nix.nixosModules.default
+    ezModules.foundry-vtt
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
@@ -67,6 +68,7 @@ let inherit (config.sops.secrets) tunnel-credentials; in
         default = "http_status:404";
         ingress = {
           "builder.ehllie.xyz".service = "ssh://127.0.0.1:22";
+          "vtt.ehllie.xyz".service = "http://127.0.0.1:30000";
         };
       };
 

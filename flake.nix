@@ -71,6 +71,9 @@
           inherit system;
           overlays = [ inputs.sops-nix.overlays.default ];
         };
+
+        packages.foundry-vtt = pkgs.callPackage ./packages/foundry-vtt.nix { };
+
         devShells.default = pkgs.mkShell {
           name = "default-shell";
           packages = lib.attrValues {
