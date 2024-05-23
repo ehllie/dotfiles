@@ -32,6 +32,7 @@
       "prismlauncher"
       "protonmail-bridge"
       "protonvpn"
+      "rwts-pdfwriter"
       "signal"
       "slack"
       "soundsource"
