@@ -3,10 +3,10 @@ let
   user = "foundryvtt";
   group = "foundryvtt";
   dataDir = "/var/lib/foundryvtt";
-  pkg = inputs.self.packages.${pkgs.stdenv.system}.foundry-vtt;
+  foundryvttPkg = inputs.self.packages.${pkgs.stdenv.system}.foundryvtt;
 in
 {
-  environment.systemPackages = [ pkg pkgs.nodejs ];
+  environment.systemPackages = [ foundryvttPkg pkgs.nodejs ];
   networking.firewall.allowedUDPPorts = [ 30000 ];
 
   users = {
@@ -31,8 +31,7 @@ in
         Restart = "on-failure";
         RestartSec = "5";
         TimeoutStartSec = "10";
-        WorkingDirectory = pkg;
-        ExecStart = "${pkgs.nodejs}/bin/node resources/app/main.js --dataPath='${dataDir}'";
+        ExecStart = "${pkgs.nodejs}/bin/node ${foundryvttPkg}/resources/app/main.js --dataPath='${dataDir}'";
       };
     };
   };
