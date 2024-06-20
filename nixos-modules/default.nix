@@ -59,7 +59,7 @@ in
     ];
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     cascadia-code
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
   ];

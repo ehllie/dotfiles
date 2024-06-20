@@ -49,8 +49,7 @@
   };
 
   fonts = {
-    fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       cascadia-code
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     ];
