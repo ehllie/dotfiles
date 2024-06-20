@@ -2,7 +2,7 @@ return {
   extended = {
 
     "mrcjkb/rustaceanvim",
-    version = "^3",
+    version = "^4",
     ft = { "rust" },
     config = function()
       local handlers = require("ehllie.plugins.lsp.handlers")
