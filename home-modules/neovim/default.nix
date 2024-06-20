@@ -38,6 +38,7 @@ in
         ccls
         elixir-ls
         sqls
+        tailwindcss-language-server
 
         # Linters
         clippy
@@ -58,7 +59,6 @@ in
         vscode-langservers-extracted
         prisma-language-server
         pyright
-        tailwindcss-language-server
         volar
         typescript-language-server
         svelte-language-server

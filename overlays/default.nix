@@ -21,7 +21,9 @@ in
       (_: _: { nil = nil.packages.${system}.nil; })
       (_: prev: {
         inherit (unstable)
-          erdtree;
+          erdtree
+          neovim
+          ;
         nodePackages = prev.nodePackages //
           {
             inherit (unstable.nodePackages)
