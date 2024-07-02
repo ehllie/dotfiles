@@ -107,6 +107,9 @@ M.make_on_attach = function(extra)
     if status_ok then
       illuminate.on_attach(client)
     end
+    if client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
     local lsp_status = require("lsp-status")
     lsp_status.on_attach(client)
     local patterns = has_codelens[client.name]
