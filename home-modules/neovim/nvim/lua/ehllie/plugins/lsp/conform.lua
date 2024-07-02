@@ -17,7 +17,7 @@ return {
         "force",
         {
           lua = { "stylua" },
-          pyton = { "black", "isort" },
+          python = { "black", "isort" },
           haskell = { "fourmolu" },
           cabal = { "cabal-fmt" },
           toml = { "prettier_toml" },
