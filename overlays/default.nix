@@ -22,6 +22,7 @@ in
         inherit (unstable)
           erdtree
           neovim-unwrapped
+          gleam
           ;
         nodePackages = prev.nodePackages //
           {
@@ -29,7 +30,7 @@ in
               prettier
               prettier-plugin-toml
               svelte-language-server
-              volar;
+              ;
           };
       })
       (import ./neovim.nix)
