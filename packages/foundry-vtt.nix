@@ -1,6 +1,10 @@
 { requireFile, unzip, runCommandLocal }:
 let
   buildInfos = {
+    "330" = {
+      major = "12";
+      sha256 = "0nq9d06s8l2q0yhf1ypska98xxpcg1y1516kilrhgmhrmxm4p7y1";
+    };
     "324" = {
       major = "12";
       sha256 = "1c3jsbj87rphhrcq38ixwlalr189h25x9rnxa1bgpbzqb6fngpjc";
@@ -37,5 +41,5 @@ let
     buildInfos;
 in
 
-allBuilds."324"
+allBuilds."330"
 
