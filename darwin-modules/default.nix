@@ -1,11 +1,15 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ezModules, ... }: {
 
   imports = [
     ../overlays
+    ezModules.pam-reattach
   ];
 
   programs.zsh.enable = true;
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam = {
+    enablePamReattach = true;
+    enableSudoTouchIdAuth = true;
+  };
   nixpkgs.config = import ../nixpkgs-config.nix;
 
   homebrew = {
