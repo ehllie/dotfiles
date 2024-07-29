@@ -15,14 +15,13 @@ in
       (import ./node-packages { inherit lib; })
       (import ./substitute-all-rec)
       (import ./try-import)
-      (import ./neovim.nix)
       ante.overlays.default
       yazi.overlays.default
       (_: _: { nil = nil.packages.${system}.nil; })
       (_: prev: {
         inherit (unstable)
           erdtree
-          neovim
+          neovim-unwrapped
           ;
         nodePackages = prev.nodePackages //
           {
@@ -33,5 +32,6 @@ in
               volar;
           };
       })
+      (import ./neovim.nix)
     ];
 }

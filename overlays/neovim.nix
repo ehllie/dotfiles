@@ -1,4 +1,6 @@
 self: super: {
   neovim =
-    super.neovim-unwrapped.override {treesitter-parsers = {};};
+    self.neovim-unwrapped.overrideAttrs (old: {
+      treesitter-parsers = { };
+    });
 }
