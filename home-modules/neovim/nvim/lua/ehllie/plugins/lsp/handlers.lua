@@ -58,40 +58,45 @@ end
 ---@param extra? fun(): table
 ---@return nil
 local function lsp_keymaps(bufnr, extra)
-  local register = require("which-key").register
   local base = {
-    g = {
-      name = "LSP info",
-      D = { vim.lsp.buf.declaration, "Declaration" },
-      d = { vim.lsp.buf.definition, "Definition" },
-      I = { vim.lsp.buf.implementation, "Implementation" },
-      r = { vim.lsp.buf.references, "References" },
-      l = { vim.diagnostic.open_float, "Diagnostics" },
+    { "<leader>l", group = "LSP info" },
+    { "<leader>la", vim.lsp.buf.code_action, desc = "Code actions" },
+    { "<leader>li", "<cmd>LspInfo<cr>", desc = "LSP info" },
+    {
+      "<leader>lj",
+      function()
+        vim.diagnostic.goto_next({ buffer = bufnr })
+      end,
+      desc = "Next diagnostic",
     },
-    K = { vim.lsp.buf.hover, "Inspect" },
-    ["<leader>l"] = {
-      name = "LSP info",
-      i = { "<cmd>LspInfo<cr>", "LSP info" },
-      a = { vim.lsp.buf.code_action, "Code actions" },
-      r = { vim.lsp.buf.rename, "Rename" },
-      s = { vim.lsp.buf.signature_help, "Signature" },
-      q = { vim.diagnostic.setloclist, "Show all diagnostics" },
-      l = { vim.lsp.codelens.run, "Run codelens" },
-      j = {
-        function()
-          vim.diagnostic.goto_next({ buffer = bufnr })
-        end,
-        "Next diagnostic",
-      },
-      k = {
-        function()
-          vim.diagnostic.goto_prev({ buffer = bufnr })
-        end,
-        "Prev diagnostic",
-      },
+    {
+      "<leader>lk",
+      function()
+        vim.diagnostic.goto_prev({ buffer = bufnr })
+      end,
+      desc = "Prev diagnostic",
     },
+    { "<leader>ll", vim.lsp.codelens.run, desc = "Run codelens" },
+    { "<leader>lq", vim.diagnostic.setloclist, desc = "Show all diagnostics" },
+    { "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },
+    { "<leader>ls", vim.lsp.buf.signature_help, desc = "Signature" },
+
+    { "K", vim.lsp.buf.hover, desc = "Inspect" },
+
+    { "g", group = "LSP info" },
+    { "gD", vim.lsp.buf.declaration, desc = "Declaration" },
+    { "gI", vim.lsp.buf.implementation, desc = "Implementation" },
+    { "gd", vim.lsp.buf.definition, desc = "Definition" },
+    { "gl", vim.diagnostic.open_float, desc = "Diagnostics" },
+    { "gr", vim.lsp.buf.references, desc = "References" },
   }
-  register(vim.tbl_deep_extend("force", base, extra and extra() or {}), { buffer = bufnr })
+  require("which-key").add({
+    {
+      buffer = bufnr,
+      extra and extra() or {},
+      base,
+    },
+  })
 end
 
 M.can_format = { "*.rs", "*.c", "*.h", "*.nix", "*.ex", "*.exs", "*.gleam" }

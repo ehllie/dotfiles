@@ -3,7 +3,6 @@ local which_key_ok, wk = pcall(require, "which-key")
 if not which_key_ok then
   return
 end
-local register = wk.register
 
 -- Modes
 --   normal_mode = "n",
@@ -37,49 +36,46 @@ vim.api.nvim_create_user_command("MultiMacro", function(arg_tab)
   vim.cmd("nohlsearch")
 end, { nargs = 0, range = true })
 
--- Normal --
-register({
-  ["<C-h>"] = { "<C-w>h", "Move to left window" },
-  ["<C-j>"] = { "<C-w>j", "Move to bottom window" },
-  ["<C-k>"] = { "<C-w>k", "Move to top window" },
-  ["<C-l>"] = { "<C-w>l", "Move to right window" },
+wk.add({
+  { -- Normal mode mappings
+    { "<C-Down>", "<cmd>resize -2<CR>", desc = "Shrink window vertical" },
+    { "<C-Left>", "<cmd>vertical resize -2<CR>", desc = "Shrink window horizontal" },
+    { "<C-Right>", "<cmd>vertical resize +2<CR>", desc = "Grow window horizontal" },
+    { "<C-Up>", "<cmd>resize +2<CR>", desc = "Grow window vertical" },
+    { "<C-h>", "<C-w>h", desc = "Move to left window" },
+    { "<C-j>", "<C-w>j", desc = "Move to bottom window" },
+    { "<C-k>", "<C-w>k", desc = "Move to top window" },
+    { "<C-l>", "<C-w>l", desc = "Move to right window" },
+    { "<C-w>f", close_floating, desc = "Closes all floating windows" },
+    { "<S-h>", "<cmd>bprevious<CR>", desc = "Previous window" },
+    { "<S-l>", "<cmd>bnext<CR>", desc = "Next buffer" },
+    { "<S-q>", "<cmd>Bdelete!<CR>", desc = "Close buffer" },
+    { "<leader><C-s>", "<cmd>wa<CR>", desc = "Quick save all" },
+    { "<leader><leader>", "<cmd>w<CR>", desc = "Quick save" },
+    { "<leader>h", "<cmd>nohlsearch<CR>", desc = "Clear search highlighting" },
+    { "<leader>qq", "<cmd>confirm qa<CR>", desc = "Exit neovim" },
+    { "<leader>s", toggle_format, desc = "Toggle auto formatting" },
+  },
 
-  ["<C-Up>"] = { "<cmd>resize +2<CR>", "Grow window vertical" },
-  ["<C-Down>"] = { "<cmd>resize -2<CR>", "Shrink window vertical" },
-  ["<C-Left>"] = { "<cmd>vertical resize -2<CR>", "Shrink window horizontal" },
-  ["<C-Right>"] = { "<cmd>vertical resize +2<CR>", "Grow window horizontal" },
+  { -- Insert mode mappings
+    mode = "i",
+    { "<C-s>", "<cmd>w<CR>", desc = "Save" },
+    { "jk", "<ESC>", desc = "Exit insert mode" },
+  },
 
-  ["<S-l>"] = { "<cmd>bnext<CR>", "Next buffer" },
-  ["<S-h>"] = { "<cmd>bprevious<CR>", "Previous window" },
-  ["<S-q>"] = { "<cmd>Bdelete!<CR>", "Close buffer" },
+  { -- Visual mode mappings
+    mode = "v",
+    { "<", "<gv", desc = "Reduce indent" },
+    { ">", ">gv", desc = "Increase indent" },
+    { "@", ":MultiMacro<CR>", desc = "Run macro on selected lines" },
+  },
 
-  ["<leader>h"] = { "<cmd>nohlsearch<CR>", "Clear search highlighting" },
-  ["<leader><leader>"] = { "<cmd>w<CR>", "Quick save" },
-  ["<leader><C-s>"] = { "<cmd>wa<CR>", "Quick save all" },
-  ["<leader>s"] = { toggle_format, "Toggle auto formatting" },
-  ["<leader>v"] = { require("ehllie.utils").to_shell, "Open current project in a virtual shell if one exists" },
-  ["<leader>qq"] = { "<cmd>confirm qa<CR>", "Exit neovim" },
-  ["<C-w>f"] = { close_floating, "Closes all floating windows" },
+  { -- Command mode mappings
+    mode = "c",
+  },
+
+  { -- Terminal mode mappings
+    mode = "t",
+    { "<C-n>", "<C-\\><C-n>", desc = "Exit terminal mode" },
+  },
 })
-
--- Insert --
-register({
-  ["jk"] = { "<ESC>", "Exit insert mode" },
-  ["<C-s>"] = { "<cmd>w<CR>", "Save" },
-}, { mode = "i" })
-
--- Visual --
-register({
-  p = { [["_dP]], "Paste" }, -- Doesn't overwrite the clipboard with the replaced text
-  ["<"] = { "<gv", "Reduce indent" },
-  [">"] = { ">gv", "Increase indent" },
-  ["@"] = { ":MultiMacro<CR>", "Run macro on selected lines" },
-}, { mode = "v" })
-
--- Command --
-register({}, { mode = "c" })
-
--- Terminal --
-register({
-  ["<C-n>"] = { [[<C-\><C-n>]], "Exit terminal mode" },
-}, { mode = "t" })

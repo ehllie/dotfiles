@@ -3,7 +3,6 @@ return {
     "nvim-telescope/telescope.nvim",
     config = function()
       local actions = require("telescope.actions")
-      local builtin = require("telescope.builtin")
       local telescope = require("telescope")
       telescope.setup({
         defaults = {
@@ -36,40 +35,24 @@ return {
       })
 
       telescope.load_extension("undo")
-
-      require("which-key").register({
-        f = {
-          name = "Telescope",
-          f = { builtin.find_files, "Find files" },
-          t = { builtin.live_grep, "Live grep" },
-          b = { builtin.buffers, "Find buffers" },
-          h = { builtin.help_tags, "Neovim documentation" },
-          l = { builtin.diagnostics, "LSP diagnostics" },
-          a = { builtin.builtin, "Select a builtin picker" },
-          u = { telescope.extensions.undo.undo, "Undo tree" },
-        },
-      }, { prefix = "<leader>" })
+      telescope.load_extension("file_browser")
     end,
+    keys = {
+      { "<leader>f", group = "Telescope" },
+      { "<leader>fa", "<cmd>Telescope builtin<CR>", desc = "Select a builtin picker" },
+      { "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Find buffers" },
+      { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find files" },
+      { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Neovim documentation" },
+      { "<leader>fl", "<cmd>Telescope diagnostics<CR>", desc = "LSP diagnostics" },
+      { "<leader>ft", "<cmd>Telescope live_grep<CR>", desc = "Live grep" },
+      { "<leader>fu", "<cmd>Telescope undo undo<CR>", desc = "Undo tree" },
+      { "<leader>e", "<cmd>Telescope file_browser<CR>", desc = "File tree" },
+    },
     dependencies = {
       "folke/which-key.nvim",
       "nvim-lua/plenary.nvim",
       "debugloop/telescope-undo.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
     },
-  },
-  {
-    "ahmedkhalf/project.nvim",
-    config = function(_, opts)
-      require("project_nvim").setup(opts)
-      require("telescope").load_extension("projects")
-
-      require("which-key").register({ ["<leader>fp"] = { ":Telescope projects<CR>", "Find projects" } })
-    end,
-    opts = {
-      -- detection_methods = { "lsp", "pattern" }, -- NOTE: lsp detection will get annoying with multiple langs in one project
-      detection_methods = { "pattern" },
-      -- patterns used to detect root dir, when **"pattern"** is in detection_methods
-      patterns = { ".git", "Makefile", "package.json", "flake.nix" },
-    },
-    dependencies = { "telescope.nvim", "folke/which-key.nvim" },
   },
 }

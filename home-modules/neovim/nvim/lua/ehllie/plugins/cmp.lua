@@ -6,11 +6,11 @@ return {
   {
     "zbirenbaum/copilot.lua",
     event = { "VimEnter" },
-    config = function()
-      vim.defer_fn(function(opts)
+    config = function(_, opts)
+      vim.defer_fn(function()
         require("copilot").setup(opts)
-        require("which-key").register({
-          ["<leader>p"] = { "<cmd>Copilot panel<CR>", "Open copilot panel" },
+        require("which-key").add({
+          { "<leader>p", "<cmd>Copilot panel<CR>", desc = "Open copilot panel" },
         })
       end, 100)
     end,

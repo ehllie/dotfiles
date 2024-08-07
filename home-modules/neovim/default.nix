@@ -23,6 +23,10 @@ in
       inherit (pkgs) gcc;
       fontsize = if isLinux then 11 else 13;
     };
+    onChange = ''
+      # Clear the LuaJIT cache
+      rm -rf ${config.xdg.cacheHome}/.cache/nvim/luac/
+    '';
   };
 
   home = {

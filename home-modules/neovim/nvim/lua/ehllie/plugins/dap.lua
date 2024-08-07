@@ -68,28 +68,27 @@ return {
         utils.floating_win({ ratio = winsize })
       end, {})
 
-      require("which-key").register({
-        d = {
-          name = "Debug",
-          b = { dap.toggle_breakpoint, "Toggle breakpoint" },
-          c = { dap.continue, "Continue" },
-          i = { dap.step_into, "Step into" },
-          o = { dap.step_over, "Step over" },
-          O = { dap.step_out, "Step out" },
-          r = {
-            function()
-              dap.repl.toggle(utils.ui_dim_fraction(winsize), "FloatRepl")
-              vim.cmd("wincmd p")
-            end,
-            "Toggle repl",
-          },
-          l = { dap.run_last, "Run last" },
-          j = { vsdap.load_launchjs, "Load launch.js configurations" },
-          u = { toggle, "Toggle UI" },
-          t = { dap.terminate, "Terminate" },
-          e = { dapui.eval, "Evaluate variable" },
+      require("which-key").add({
+        { "<leader>d", group = "Debug" },
+        { "<leader>dO", dap.step_out, desc = "Step out" },
+        { "<leader>db", dap.toggle_breakpoint, desc = "Toggle breakpoint" },
+        { "<leader>dc", dap.continue, desc = "Continue" },
+        { "<leader>de", dapui.eval, desc = "Evaluate variable" },
+        { "<leader>di", dap.step_into, desc = "Step into" },
+        { "<leader>dj", vsdap.load_launchjs, desc = "Load launch.js configurations" },
+        { "<leader>dl", dap.run_last, desc = "Run last" },
+        { "<leader>do", dap.step_over, desc = "Step over" },
+        {
+          "<leader>dr",
+          function()
+            dap.repl.toggle(utils.ui_dim_fraction(winsize), "FloatRepl")
+            vim.cmd("wincmd p")
+          end,
+          desc = "Toggle repl",
         },
-      }, { prefix = "<leader>" })
+        { "<leader>dt", dap.terminate, desc = "Terminate" },
+        { "<leader>du", toggle, desc = "Toggle UI" },
+      })
     end,
     opts = {
       icons = { expanded = "▾", collapsed = "▸" },
@@ -153,9 +152,9 @@ return {
       local dappy = require("dap-python")
       dappy.setup("python")
       dappy.test_runner = "pytest"
-      require("which-key").register({
-        p = { dappy.test_method, "Test python method" },
-      }, { prefix = "<leader>d" })
+      require("which-key").add({
+        { "<leader>dp", dappy.test_method, desc = "Test python method" },
+      })
     end,
     dependencies = "mfussenegger/nvim-dap",
   },

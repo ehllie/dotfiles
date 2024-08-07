@@ -9,11 +9,9 @@ return {
 
       local on_attach = handlers.make_on_attach(function()
         return {
-          ["<leader>l"] = {
-            a = { "<cmd>RustLsp codeAction<CR>", "Rust code actions" },
-            m = { "<cmd>RustLsp expandMacro<CR>", "Expand macro" },
-          },
-          ["K"] = { "<cmd>RustLsp hover actions<CR>", "Rust hover actions" },
+          { "<leader>la", "<cmd>RustLsp codeAction<CR>", desc = "Rust code actions" },
+          { "<leader>lm", "<cmd>RustLsp expandMacro<CR>", desc = "Expand macro" },
+          { "K", "<cmd>RustLsp hover actions<CR>", desc = "Rust hover actions" },
         }
       end)
 

@@ -6,30 +6,27 @@ return {
   "kyazdani42/nvim-web-devicons",
   {
     "AndrewRadev/bufferize.vim",
-    config = function()
-      require("which-key").register({ ["<leader>Bm"] = { "<cmd>Bufferize messages<cr>", "Bufferize" } }, { mode = "n" })
-    end,
+    keys = {
+      { "<leader>Bm", "<cmd>Bufferize messages<cr>", desc = "Bufferize" },
+    },
     dependencies = "folke/which-key.nvim",
   },
   {
     "lambdalisue/suda.vim",
-    config = function()
-      require("which-key").register({ ["w!!"] = { "SudaWrite", "Write as superuser" } }, { mode = "c" })
-    end,
+    keys = {
+      { "w!!", "SudaWrite", desc = "Write as superuser", mode = "c" },
+    },
     dependencies = "folke/which-key.nvim",
   },
   {
     "NvChad/nvim-colorizer.lua",
-    config = function(_, opts)
-      require("colorizer").setup(opts)
-      require("which-key").register({
-        ["<leader>tc"] = { "<cmd>ColorizerToggle<CR>", "Toggle colorizer" },
-      })
-    end,
     opts = {
       user_default_options = {
         tailwind = true,
       },
+    },
+    keys = {
+      { "<leader>tc", "<cmd>ColorizerToggle<CR>", desc = "Toggle colorizer" },
     },
     dependencies = "folke/which-key.nvim",
   },
@@ -55,10 +52,6 @@ return {
     config = function(_, opts)
       local illuminate = require("illuminate")
       illuminate.configure(opts)
-      require("which-key").register({
-        ["<a-n>"] = { illuminate.goto_next_reference, "Next reference" },
-        ["<a-p>"] = { illuminate.goto_prev_reference, "Previous reference" },
-      })
     end,
     opts = {
       filetypes_denylist = { "alpha", "NvimTree" },
@@ -86,19 +79,13 @@ return {
     "kylechui/nvim-surround",
     config = true,
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    -- config = function()
-    --   require("nvim-surround").setup()
-    -- end,
   },
   {
     "ellisonleao/glow.nvim",
-    config = function(_, opts)
-      require("glow").setup(opts)
-      require("which-key").register({
-        ["<leader>m"] = { "<cmd>Glow<CR>", "Open preview in glow" },
-      })
-    end,
     opts = { border = "rounded", width = 80 },
+    keys = {
+      { "<leader>m", "<cmd>Glow<CR>", desc = "Open preview in glow" },
+    },
     dependencies = "folke/which-key.nvim",
   },
 }

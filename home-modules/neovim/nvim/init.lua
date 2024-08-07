@@ -116,7 +116,3 @@ require("lazy").setup("ehllie.plugins", {
   lockfile = "@repoDir@/lazy-lock.json",
 })
 require("ehllie.keymaps")
-
-if vim.g.neovide then
-  require("ehllie.neovide")
-end

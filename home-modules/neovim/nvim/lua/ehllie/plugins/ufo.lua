@@ -37,11 +37,9 @@ return {
       end
 
       local ufo = require("ufo")
-      require("which-key").register({
-        z = {
-          R = { ufo.openAllFolds, "Open all folds" },
-          M = { ufo.closeAllFolds, "Close all folds" },
-        },
+      require("which-key").add({
+        { "zM", ufo.closeAllFolds, desc = "Close all folds" },
+        { "zR", ufo.openAllFolds, desc = "Open all folds" },
       })
       ufo.setup({
         fold_virt_text_handler = handler,
