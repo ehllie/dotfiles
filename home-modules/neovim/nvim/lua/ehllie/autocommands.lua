@@ -3,7 +3,7 @@ local lsp_formatters = require("ehllie.plugins.lsp.handlers").can_format
 
 -- Use 'q' to quit from common plugins
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "lir" },
+  pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "lir", "bufferize" },
   callback = function()
     vim.cmd([[
       nnoremap <silent> <buffer> q :close<CR>
