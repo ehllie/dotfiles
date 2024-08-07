@@ -4,6 +4,12 @@ let
   inherit (pkgs.stdenv) isLinux;
   inherit (lib) optionals attrValues;
   inherit (config.home) homeDirectory;
+
+  codelldb_path = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+  codelldb = pkgs.runCommand "codelldb" { } ''
+    mkdir -p $out/bin
+    ln -s ${codelldb_path} $out/bin/codelldb
+  '';
 in
 {
   xdg.configFile.nvim = {
@@ -13,6 +19,7 @@ in
       nodejs = pkgs.nodejs;
       prettierToml = prettier-plugin-toml;
       repoDir = "${homeDirectory}/Code/dotfiles/home-modules/neovim/nvim";
+      codelldb = codelldb_path;
       inherit (pkgs) gcc;
       fontsize = if isLinux then 11 else 13;
     };
@@ -27,7 +34,6 @@ in
         ripgrep
         ripgrep-all
 
-
         # LuaJIT and luarocks
         luajit
 
@@ -39,6 +45,7 @@ in
         elixir-ls
         sqls
         tailwindcss-language-server
+        clang-tools
 
         # Linters
         clippy
@@ -49,7 +56,8 @@ in
         nixpkgs-fmt
         prisma-engines
         rustfmt
-        beautysh;
+        beautysh
+        ;
       inherit (pkgs.nodePackages)
         prettier
 
@@ -64,7 +72,9 @@ in
         svelte-language-server
         eslint;
 
-    }) ++ optionals isLinux (attrValues {
+    }) ++ [
+      codelldb
+    ] ++ optionals isLinux (attrValues {
       inherit (pkgs)
         # Clipboard integration tools
         xclip

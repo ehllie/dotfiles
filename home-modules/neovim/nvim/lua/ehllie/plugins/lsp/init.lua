@@ -13,11 +13,11 @@ local servers = {
   "svelte",
   "yamlls",
   "nil_ls",
-  "ccls",
   "elixirls",
   "nushell",
   "sqls",
   "gleam",
+  "clangd",
 }
 
 ---@type table<table>

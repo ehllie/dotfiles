@@ -21,6 +21,12 @@ return {
         "typescriptreact",
         "vue",
         "svelte",
+      }),
+      utils.transform_table(function(_, filetype)
+        return filetype, { "clangtidy" }
+      end, {
+        "c",
+        "cpp",
       })
     )
 

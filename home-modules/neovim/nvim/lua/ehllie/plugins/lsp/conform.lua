@@ -49,7 +49,11 @@ return {
           "graphql",
           "handlebars",
           "svelte",
-        }, "prettier")
+        }, "prettier"),
+        many_filetypes({
+          "c",
+          "cpp",
+        }, "clang-format")
       ),
       formatters = {
         black = {

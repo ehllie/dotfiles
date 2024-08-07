@@ -39,6 +39,29 @@ return {
         ui_funcs.restore()
       end
 
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "@codelldb@",
+          args = { "--port", "${port}" },
+        },
+      }
+
+      dap.configurations.c = {
+        {
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          terminal = "integrated",
+        },
+      }
+
+      dap.configurations.cpp = dap.configurations.c
+
       local winsize = 0.8
 
       vim.api.nvim_create_user_command("FloatRepl", function()

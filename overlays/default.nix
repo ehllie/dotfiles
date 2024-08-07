@@ -24,6 +24,7 @@ in
           neovim-unwrapped
           gleam
           ;
+
         nodePackages = prev.nodePackages //
           {
             inherit (unstable.nodePackages)
