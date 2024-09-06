@@ -77,6 +77,7 @@ in
         eslint;
 
     }) ++ [
+      pkgs.haskellPackages.cabal-fmt
       codelldb
     ] ++ optionals isLinux (attrValues {
       inherit (pkgs)

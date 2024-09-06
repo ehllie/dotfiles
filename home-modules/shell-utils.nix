@@ -5,7 +5,6 @@ let
   haskellPkgs = ps: attrValues
     {
       inherit (ps)
-        cabal-fmt
         fourmolu
         haskell-language-server;
     } ++ optionals isLinux (attrValues
