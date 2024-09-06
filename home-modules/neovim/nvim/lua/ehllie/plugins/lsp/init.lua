@@ -17,7 +17,7 @@ local servers = {
   "sqls",
   "svelte",
   "tailwindcss",
-  "tsserver",
+  "ts_ls",
   "yamlls",
 }
 
