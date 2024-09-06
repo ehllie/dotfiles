@@ -54,6 +54,24 @@ M.setup = function()
   })
 end
 
+---@alias wk_keymap (string[] | wk_keymap[])
+---@param mappings wk_keymap[]
+---@return string[]
+local function collect_keymaps(mappings)
+  ---@type string[]
+  local keys = {}
+  for _, mapping in ipairs(mappings) do
+    local key = mapping[1]
+    if type(key) == "string" then
+      keys[#keys + 1] = key
+    else
+      local inner_mappings = collect_keymaps(mappings)
+      table.move(inner_mappings, 1, #inner_mappings, #keys + 1, keys)
+    end
+  end
+  return keys
+end
+
 ---@param bufnr number
 ---@param extra? fun(): table
 ---@return nil
@@ -90,11 +108,19 @@ local function lsp_keymaps(bufnr, extra)
     { "gl", vim.diagnostic.open_float, desc = "Diagnostics" },
     { "gr", vim.lsp.buf.references, desc = "References" },
   }
+
+  local keymaps = extra and extra() or {}
+  local extra_keymaps = collect_keymaps(keymaps)
+  for _, keymap in ipairs(base) do
+    if not vim.tbl_contains(extra_keymaps, keymap[1]) then
+      table.insert(keymaps, keymap)
+    end
+  end
+
   require("which-key").add({
     {
       buffer = bufnr,
-      extra and extra() or {},
-      base,
+      keymaps,
     },
   })
 end
