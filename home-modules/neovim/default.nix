@@ -52,7 +52,6 @@ in
         clang-tools
 
         # Linters
-        clippy
         shellcheck
 
         # Formatters
