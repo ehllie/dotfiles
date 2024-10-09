@@ -72,7 +72,7 @@
           overlays = [ inputs.sops-nix.overlays.default ];
         };
 
-        packages.foundryvtt = pkgs.callPackage ./packages/foundry-vtt.nix { };
+        packages.foundryvtt = pkgs.callPackage ./packages/foundry-vtt { };
 
         devShells.default = pkgs.mkShell {
           name = "default-shell";
