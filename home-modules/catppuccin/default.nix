@@ -21,7 +21,7 @@ let
 in
 {
   programs = {
-    kitty.theme = "Catppuccin-${toWord flavour}";
+    kitty.themeFile = "Catppuccin-${toWord flavour}";
 
 
     alacritty.settings.colors = {

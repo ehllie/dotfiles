@@ -19,6 +19,7 @@ local servers = {
   "tailwindcss",
   "ts_ls",
   "yamlls",
+  "zls",
 }
 
 ---@type table<table>

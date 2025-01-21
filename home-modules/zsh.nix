@@ -20,6 +20,8 @@ in
     localVariables = {
       VI_MODE_RESET_PROMPT_ON_MODE_CHANGE = true;
       VI_MODE_SET_CURSOR = true;
+      ZVM_LAZY_KEYBINDINGS = false;
+      ZVM_INIT_MODE = "sourcing";
     };
 
     completionInit = ''
@@ -34,10 +36,6 @@ in
     initExtra = ''
       source ${zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
       source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-
-      if [ "$TMUX" = "" ]; then
-        exec tmux a
-      fi
     '';
   };
 

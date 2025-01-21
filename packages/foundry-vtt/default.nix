@@ -13,7 +13,7 @@ let
           ${name} cannot be downloaded automatically.
           Please go to https://foundryvtt.com/releases/download?build=${build}&platform=linux to download it yourself.
           Afterwards add it to the nix store with 
-            nix-store --add-fixed sha256 $HOME/Downloads/${name}
+            nix-store --add-fixed sha256 \$HOME/Downloads/${name}
         '';
       };
     in

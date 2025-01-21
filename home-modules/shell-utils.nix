@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (pkgs.stdenv) isLinux;
+  inherit (pkgs.stdenv) isLinux isDarwin;
   inherit (lib) optionals attrValues;
   haskellPkgs = ps: attrValues
     {
@@ -29,48 +29,55 @@ let
 in
 {
 
-  home.packages = attrValues
-    {
-      inherit (pkgs)
-        cabal-install
-        poetry
-        cargo
-        rustc
-        gcc
-        nodejs
-        jdk17
-        gleam
+  home = {
 
-        git
-        git-crypt
-        lazygit
-        cloudflared
-        gh
+    sessionVariables = {
+      KITTY_CONFIG_DIRECTORY = "${config.xdg.configHome}/kitty";
+    };
 
-        ffmpeg
-        imagemagick
-        cachix
-        wget
-        zip
-        unzip
+    packages = attrValues
+      {
+        inherit (pkgs)
+          cabal-install
+          poetry
+          cargo
+          rustc
+          gcc
+          nodejs
+          jdk17
+          gleam
 
-        erdtree
-        bottom
-        eza
-        bat
+          git
+          git-crypt
+          lazygit
+          cloudflared
+          gh
 
-        killall
-        glow
-        pandoc
-        jq
-        ;
-    } ++ [
-    pkgs.nodePackages.pnpm
-    (pkgs.ghc.withPackages haskellPkgs)
-    (pkgs.python3.withPackages pythonPkgs)
-  ] ++ optionals isLinux [
-    pkgs.lldb
-  ];
+          ffmpeg
+          imagemagick
+          cachix
+          wget
+          zip
+          unzip
+
+          erdtree
+          bottom
+          eza
+          bat
+
+          killall
+          glow
+          pandoc
+          jq
+          ;
+      } ++ [
+      pkgs.nodePackages.pnpm
+      (pkgs.ghc.withPackages haskellPkgs)
+      (pkgs.python3.withPackages pythonPkgs)
+    ] ++ optionals isLinux [
+      pkgs.lldb
+    ];
+  };
 
   programs = {
     atuin = {
@@ -96,15 +103,25 @@ in
 
       font = {
         size = 13;
-        name = "CaskaydiaCove Nerd Font";
+        name = "Cascadia Code";
       };
 
       extraConfig = ''
-        bold_font CaskaydiaCove NF Bold
-        italic_font CaskaydiaCove NF Italic
-        bold_italic_font CaskaydiaCove NF Bold Italic
+        bold_font Cascadia Code Bold
+        italic_font Cascadia Code Italic
+        bold_italic_font Cascadia Code Bold Italic
       '';
-    };
+
+      keybindings = {
+        # I handle tabs with tmux
+        "kitty_mod+t" = "no_op";
+        "kitty_mod+w" = "no_op";
+      };
+    } // (
+      if isDarwin then
+        { package = pkgs.writeTextDir "null" ""; }
+      else { }
+    );
 
     git = {
       enable = true;

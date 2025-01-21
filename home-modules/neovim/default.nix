@@ -50,6 +50,7 @@ in
         sqls
         tailwindcss-language-server
         clang-tools
+        pyright
 
         # Linters
         shellcheck
@@ -69,8 +70,6 @@ in
         yaml-language-server
         vscode-langservers-extracted
         prisma-language-server
-        pyright
-        volar
         typescript-language-server
         svelte-language-server
         eslint;
