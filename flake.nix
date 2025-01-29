@@ -7,11 +7,16 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nil.url = "github:oxalica/nil";
     darwin = {
-      url = "github:lnl7/nix-darwin/master";
+      url = "github:lnl7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # For using new modules before the realease of the next nixos version
+    home-manager-master = {
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ante = {
@@ -34,10 +39,6 @@
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    yazi = {
-      url = "github:sxyazi/yazi";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -71,6 +72,8 @@
           inherit system;
           overlays = [ inputs.sops-nix.overlays.default ];
         };
+
+        formatter = pkgs.nixpkgs-fmt;
 
         packages.foundryvtt = pkgs.callPackage ./packages/foundry-vtt { };
 
