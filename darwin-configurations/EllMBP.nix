@@ -9,7 +9,10 @@ in
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  system.stateVersion = 5;
+  system = {
+    stateVersion = 5;
+    primaryUser = "ellie";
+  };
 
   nix = {
     distributedBuilds = true;

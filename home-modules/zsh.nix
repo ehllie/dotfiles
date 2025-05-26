@@ -33,7 +33,7 @@ in
       unsetopt completealiases   # Include aliases.
     '';
 
-    initExtra = ''
+    initContent = ''
       source ${zsh-nix-shell}/share/zsh-nix-shell/nix-shell.plugin.zsh
       source ${zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
     '';

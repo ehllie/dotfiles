@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (pkgs.nodePackages) prettier-plugin-toml;
   inherit (pkgs.stdenv) isLinux;
   inherit (lib) optionals attrValues;
   inherit (config.home) homeDirectory;
@@ -17,7 +16,6 @@ in
     source = pkgs.substituteAllRec {
       src = ./nvim;
       nodejs = pkgs.nodejs;
-      prettierToml = prettier-plugin-toml;
       repoDir = "${homeDirectory}/Code/dotfiles/home-modules/neovim/nvim";
       codelldb = codelldb_path;
       inherit (pkgs) gcc;
@@ -69,7 +67,6 @@ in
         bash-language-server
         yaml-language-server
         vscode-langservers-extracted
-        prisma-language-server
         typescript-language-server
         svelte-language-server
         eslint;

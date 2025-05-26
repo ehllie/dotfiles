@@ -41,7 +41,6 @@ _G.store = {
   gcc = "@gcc@",
   node = "@nodejs@",
   prettier_svelte = "@prettierSvelte@",
-  prettier_toml = "@prettierToml@",
 }
 
 local CallQueue = {}

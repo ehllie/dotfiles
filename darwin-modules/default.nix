@@ -2,13 +2,12 @@
 
   imports = [
     ../overlays
-    ezModules.pam-reattach
   ];
 
   programs.zsh.enable = true;
-  security.pam = {
-    enablePamReattach = true;
-    enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local = {
+    reattach = true;
+    touchIdAuth = true;
   };
   nixpkgs.config = import ../nixpkgs-config.nix;
 
@@ -67,9 +66,9 @@
   };
 
   fonts = {
-    packages = with pkgs; [
-      cascadia-code
-      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    packages = [
+      pkgs.cascadia-code
+      pkgs.nerd-fonts.caskaydia-cove
     ];
   };
 
@@ -101,5 +100,4 @@
       "nixpkgs=${inputs.nixpkgs-darwin}"
     ];
   };
-  services.nix-daemon.enable = true;
 }

@@ -8,7 +8,7 @@ let
 in
 {
   programs = {
-    zsh.initExtra = lib.mkAfter ''
+    zsh.initContent = lib.mkAfter ''
       if [ "$TMUX" = "" ]; then
         tmux_attach() {
             BUFFER="tmux a"

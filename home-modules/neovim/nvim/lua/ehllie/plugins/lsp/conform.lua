@@ -20,7 +20,6 @@ return {
           python = { "black", "isort" },
           haskell = { "fourmolu" },
           cabal = { "cabal-fmt" },
-          toml = { "prettier_toml" },
 
           ["_"] = { "trim_whitespace", "trim_newlines" },
         },
@@ -58,14 +57,6 @@ return {
       formatters = {
         black = {
           prepend_args = { "--fast" },
-        },
-        prettier_toml = {
-          command = "prettier",
-          args = {
-            ("--plugin=%s/lib/node_modules/prettier-plugin-toml/lib/index.js"):format(store.prettier_toml),
-            "--stdin-filepath",
-            "$FILENAME",
-          },
         },
         isort = {
           prepend_args = { "--profile", "black" },
