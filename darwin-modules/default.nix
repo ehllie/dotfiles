@@ -46,7 +46,7 @@
       "parallels"
       "postgres-unofficial"
       "prismlauncher"
-      "protonmail-bridge"
+      "proton-mail-bridge"
       "protonvpn"
       "qbittorrent"
       "raycast"
@@ -61,6 +61,7 @@
       "vlc"
       "xiv-on-mac"
       "yacreader"
+      "zen-browser"
     ];
     onActivation.cleanup = "zap";
   };

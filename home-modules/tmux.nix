@@ -1,6 +1,10 @@
 { pkgs, config, lib, ... }:
 let
   inherit (pkgs) tmuxPlugins;
+  defaultCommand =
+    if pkgs.stdenv.isDarwin
+    then ''set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.zsh}/bin/zsh"''
+    else "";
 in
 {
   programs = {
@@ -25,6 +29,8 @@ in
 
       extraConfig = ''
         set-option -g status-position top
+        ${defaultCommand}
+        set-option -g default-shell "${pkgs.zsh}/bin/zsh"
 
         # Opens new windows in the current directory
         bind '"' split-window -c "#{pane_current_path}"
