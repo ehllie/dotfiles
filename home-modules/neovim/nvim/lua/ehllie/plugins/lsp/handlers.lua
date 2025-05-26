@@ -44,14 +44,6 @@ M.setup = function()
   }
 
   vim.diagnostic.config(config)
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-  })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-  })
 end
 
 ---@alias wk_keymap (string[] | wk_keymap[])
@@ -83,23 +75,47 @@ local function lsp_keymaps(bufnr, extra)
     {
       "<leader>lj",
       function()
-        vim.diagnostic.goto_next({ buffer = bufnr })
+        vim.diagnostic.jump({
+          buffer = bufnr,
+          count = -1,
+          float = true,
+        })
       end,
       desc = "Next diagnostic",
     },
     {
       "<leader>lk",
       function()
-        vim.diagnostic.goto_prev({ buffer = bufnr })
+        vim.diagnostic.jump({
+          buffer = bufnr,
+          count = 1,
+          float = true,
+        })
       end,
       desc = "Prev diagnostic",
     },
     { "<leader>ll", vim.lsp.codelens.run, desc = "Run codelens" },
     { "<leader>lq", vim.diagnostic.setloclist, desc = "Show all diagnostics" },
     { "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },
-    { "<leader>ls", vim.lsp.buf.signature_help, desc = "Signature" },
+    {
+      "<leader>ls",
+      function()
+        vim.lsp.buf.signature_help({
+          border = "rounded",
+        })
+      end,
+      desc = "Signature",
+    },
 
-    { "K", vim.lsp.buf.hover, desc = "Inspect" },
+    {
+      "K",
+      function()
+        vim.lsp.buf.hover({
+          border = "rounded",
+        })
+      end,
+      desc = "Inspect",
+    },
 
     { "g", group = "LSP info" },
     { "gD", vim.lsp.buf.declaration, desc = "Declaration" },
