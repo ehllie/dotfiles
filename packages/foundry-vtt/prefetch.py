@@ -32,7 +32,7 @@ def prefetch_build(
     cleanup: bool,
     progress: Progress,
 ) -> KnownBuild:
-    url = f"https://foundryvtt.com/releases/download?build={build}&platform=linux"
+    url = f"https://foundryvtt.com/releases/download?build={build}&platform=node"
     version = f"{major}.{build}"
     filename = f"FoundryVTT-{version}.zip"
     filepath = download_dir / filename
