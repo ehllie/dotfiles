@@ -1,4 +1,4 @@
-{ lib, pkgs, modulesPath, inputs, ezModules, ... }:
+{ lib, pkgs, modulesPath, ezModules, ... }:
 {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -36,7 +36,10 @@
   networking = {
     hostName = "hetzner0";
     useDHCP = true;
-    firewall.allowedUDPPorts = [ 24454 ]; # Simple Voice Chat
+    firewall = {
+      allowedTCPPorts = [ 80 443 ];
+      allowedUDPPorts = [ 24454 ]; # Simple Voice Chat
+    };
   };
 
   time.timeZone = "Europe/Frankfurt";
@@ -65,11 +68,30 @@
       ;
   };
 
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "acme@ehllie.xyz";
+  };
+
   services = {
     openssh = {
       enable = true;
       settings.PasswordAuthentication = false;
     };
+    nginx = {
+      enable = true;
+      virtualHosts = {
+        "vtt.ehllie.xyz" = {
+          forceSSL = true;
+          enableACME = true;
 
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:30000";
+          };
+          serverAliases = [ "www.vtt.ehllie.xyz" ];
+        };
+      };
+    };
   };
 }

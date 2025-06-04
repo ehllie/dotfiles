@@ -4,12 +4,12 @@ let
   group = "foundryvtt";
   dataDir = "/var/lib/foundryvtt";
 
-  foundryBuild = "344";
-  foundryMajor = "13";
+  foundryBuild = "343";
+  foundryMajor = "12";
   foundryVersion = "${foundryMajor}.${foundryBuild}";
   foundryZip = pkgs.requireFile rec {
-    sha256 = "1y0hssvmhb57p28nrkrsg7vqfb313n63zj01afn3ip93454avj76";
-    name = "FoundryVTT-Node-${foundryVersion}.zip";
+    sha256 = "11r3fl165lml3izr78igva9bq418749yqn66nq5hkg6a05zrav8b";
+    name = "FoundryVTT-${foundryVersion}.zip";
     message = ''
       ${name} cannot be downloaded automatically.
       Please go to https://foundryvtt.com/releases/download?build=${foundryBuild}&platform=node to download it yourself.
@@ -25,7 +25,7 @@ let
       unzip ${foundryZip} -d $out
     ''
   ;
-  mainPath = "main.js";
+  mainPath = "resources/app/main.js";
 in
 {
   environment.systemPackages = [ foundryPackage pkgs.nodejs ];
