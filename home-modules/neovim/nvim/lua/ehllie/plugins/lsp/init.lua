@@ -20,6 +20,7 @@ local servers = {
   "ts_ls",
   "yamlls",
   "zls",
+  "tinymist",
 }
 
 ---@type table<table>
