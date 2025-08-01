@@ -1,6 +1,7 @@
 keys:
   - &ellie age1v88s5yurnsje83q2xdnph6gwfjyq20gxlth9w5ddac9wyuj6rszqyl5hsf
   - &dell-builder age1t3l8398djcpphaz6sxfvlvj4r7law724fc6u7jxzcpcmykqzt3ds0n64hh
+  - &hetzner0 age1h2jfx5j9khz3estzq7jd7jsfkv5xwtyexx8vvaqeqcyrl2zucuvswnhpfx
 
 creation_rules:
   - path_regex: sops/builder/tunnel-credentials$
@@ -8,3 +9,13 @@ creation_rules:
       - age:
           - *ellie
           - *dell-builder
+  - path_regex: sops/firefly.json
+    key_groups:
+      - age:
+          - *ellie
+          - *hetzner0
+  - path_regex: sops/hetzner0.yaml
+    key_groups:
+      - age:
+          - *ellie
+          - *hetzner0
