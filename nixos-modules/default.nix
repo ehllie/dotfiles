@@ -1,184 +1,41 @@
-{ inputs, lib, modulesPath, pkgs, ... }:
-let
-  inherit (lib) attrValues;
-  systemPackages = attrValues {
-    inherit (pkgs)
-      bash
-      coreutils
-      fido2luks
-      home-manager
-      pulseaudio
-      usbutils
-      zsh;
-  };
-in
-
-{
-  time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_IE.UTF-8";
-  console.keyMap = "pl";
-  fileSystems."/" = { device = "/dev/vg1/root"; fsType = "ext4"; };
-  swapDevices = [{ device = "/dev/vg1/swap"; }];
-  virtualisation.docker.enable = true;
-  systemd.services.upower.enable = true;
-  hardware.bluetooth.enable = true;
-
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ./xmonad.nix
-    ../overlays
-  ];
-
-  nixpkgs.config = import ../nixpkgs-config.nix;
-
-  environment = {
-    pathsToLink = [ "/share/zsh" ];
-    inherit systemPackages;
+{ pkgs, lib, inputs, ... }: {
+  i18n = {
+    defaultLocale = "en_IE.UTF-8";
+    extraLocales = [
+      "en_GB.UTF-8/UTF-8"
+      "en_CA.UTF-8/UTF-8"
+      "pl_PL.UTF-8/UTF-8"
+    ];
   };
 
   nix = {
     extraOptions = "experimental-features = nix-command flakes";
-
-    settings = {
-      trusted-users = [ "@wheel" ];
-      trusted-substituters = [ "https://nix-community.cachix.org" ];
-      extra-substituters = [ "https://nix-community.cachix.org" ];
-      extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
-    };
-
+    registry.nixpkgs.flake = inputs.nixpkgs;
     gc = {
       automatic = true;
-      dates = "daily";
+      dates = "weekly";
       options = "--delete-older-than 7d";
     };
-
-    registry.nixpkgs.flake = inputs.nixpkgs;
-
     nixPath = [
       "nixpkgs=${inputs.nixpkgs}"
     ];
   };
 
-  fonts.packages = [
-    pkgs.cascadia-code
-    pkgs.nerd-fonts.caskaydia-cove
-  ];
-
-  networking = {
-    networkmanager.enable = true;
-
-    firewall = {
-      allowPing = true;
-      enable = true;
-    };
+  environment.systemPackages = lib.attrValues {
+    inherit (pkgs)
+      git
+      neovim
+      tmux
+      wget
+      ;
   };
 
-  services.timesyncd = {
-    enable = true;
-    servers = [ "pl.pool.ntp.org" ];
-  };
-
-  users.users.ellie = {
-    isNormalUser = true;
-    home = "/home/ellie";
-    description = "Elizabeth";
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
-    initialPassword = "password"; # Change this asap obv
-  };
-
-  security = {
-    rtkit.enable = true;
-
-    sudo = {
-      enable = true;
-      wheelNeedsPassword = true;
-      extraRules = [{
-        groups = [ "wheel" ];
-        commands = builtins.map
-          (command: { inherit command; options = [ "NOPASSWD" ]; })
-          [ "${pkgs.systemd}/bin/shutdown" "${pkgs.systemd}/bin/reboot" ];
-      }];
-    };
-  };
-
-  system = {
-    stateVersion = "22.05";
-    autoUpgrade.enable = true;
-    autoUpgrade.allowReboot = true;
-    autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
-  };
-
-
-  boot = {
-    blacklistedKernelModules = [ "pcspkr" ];
-    plymouth.enable = true;
-
-    loader = {
-      efi.canTouchEfiVariables = true;
-      timeout = 0;
-
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 3;
-      };
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
 
   services = {
-    blueman.enable = true;
-    thermald.enable = true;
-    upower.enable = true;
-    udisks2.enable = true;
-    openssh.enable = true;
-
-    xserver = {
-      gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
-      desktopManager.xterm.enable = false;
-      excludePackages = [ pkgs.xterm ];
-      layout = "pl";
-
-      libinput = {
-        enable = true;
-        touchpad.naturalScrolling = true;
-      };
-    };
-
-    gnome = {
-      gnome-keyring.enable = true;
-      at-spi2-core.enable = true;
-    };
-
-    avahi = {
+    openssh = {
       enable = true;
-      nssmdns = true;
-    };
-
-    dbus = {
-      enable = true;
-      packages = [ pkgs.dconf ];
-    };
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      wireplumber.enable = true;
-    };
-
-    printing = {
-      enable = true;
-      drivers = [ pkgs.brlaser ];
-    };
-  };
-
-  programs = {
-    dconf.enable = true;
-    _1password.enable = true;
-
-    _1password-gui = {
-      enable = true;
-      polkitPolicyOwners = [ "ellie" ];
+      settings.PasswordAuthentication = false;
     };
   };
 

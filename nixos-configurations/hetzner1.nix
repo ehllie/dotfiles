@@ -6,6 +6,7 @@ in
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ezModules.foundry-vtt
+    ezModules.partitions-by-label
     ezModules.firefly-iii
     inputs.sops-nix.nixosModules.default
   ];
@@ -22,24 +23,8 @@ in
     ];
   };
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/79136d92-c8e9-4bb3-83f3-6c4cf33ace32";
-      fsType = "ext4";
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/7793-2667";
-      fsType = "vfat";
-    };
-  };
-
-  swapDevices = [{
-    device = "/dev/disk/by-uuid/218337e4-3f20-46c2-8422-e81762af1d80";
-  }];
-
   networking = {
-    hostName = "hetzner0";
+    hostName = "hetzner1";
     useDHCP = true;
     firewall = {
       allowedTCPPorts = [ 80 443 ];
@@ -47,9 +32,9 @@ in
     };
   };
 
-  time.timeZone = "Europe/Frankfurt";
-  system.stateVersion = "23.11";
-  nixpkgs.hostPlatform = "aarch64-linux";
+  time.timeZone = "America/New_York";
+  system.stateVersion = "25.05";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   sops.secrets = {
     cloudflare-certificate = {

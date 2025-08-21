@@ -61,10 +61,6 @@
       ezConfigs = {
         root = ./.;
         globalArgs = { inherit inputs; };
-        nixos.hosts = {
-          hetzner0.importDefault = false;
-          dell-builder.importDefault = false;
-        };
         darwin.hosts.EllMBP.userHomeModules = [ "root" ];
         home.users.root.importDefault = false;
       };
