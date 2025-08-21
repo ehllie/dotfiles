@@ -1,4 +1,4 @@
-{ ezModules, lib, inputs, ... }:
+{ ezModules, lib, inputs, pkgs, ... }:
 {
   imports = lib.attrValues
     {
@@ -17,8 +17,20 @@
         ;
     };
 
-  nixpkgs.config = import ../nixpkgs-config.nix;
-  xdg.configFile."nixpkgs/config.nix".source = ../nixpkgs-config.nix;
+  nix = {
+    package = pkgs.nix;
+    extraOptions = "experimental-features = nix-command flakes";
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    gc = {
+      automatic = true;
+      frequency = "monthly";
+      options = "--delete-older-than 7d";
+    };
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs}"
+    ];
+  };
+
+  nixpkgs.config.allowUnfree = true;
   programs.home-manager.enable = true;
-  services.ollama.enable = true;
 }

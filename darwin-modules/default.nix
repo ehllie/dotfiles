@@ -1,4 +1,4 @@
-{ pkgs, inputs, ezModules, ... }: {
+{ pkgs, inputs, ... }: {
 
   imports = [
     ../overlays
@@ -9,7 +9,7 @@
     reattach = true;
     touchIdAuth = true;
   };
-  nixpkgs.config = import ../nixpkgs-config.nix;
+  nixpkgs.config.allowUnfree = true;
 
   homebrew = {
     enable = true;
@@ -24,6 +24,7 @@
       "betterdisplay"
       "blackhole-2ch"
       "bruno"
+      "caffeine"
       "calibre"
       "chatterino"
       "dbeaver-community"
@@ -31,6 +32,7 @@
       "docker"
       "gimp"
       "istat-menus"
+      "jellyfin"
       "jordanbaird-ice"
       "keycastr"
       "kitty"
