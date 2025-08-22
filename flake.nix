@@ -41,6 +41,19 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vanilla-plus = {
+      url = "github:ehllie/vanilla-plus";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nix-minecraft.follows = "nix-minecraft";
+        parts.follows = "flake-parts";
+        ez-configs.follows = "ez-configs";
+      };
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake

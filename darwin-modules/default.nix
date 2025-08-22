@@ -62,7 +62,7 @@
       "vlc"
       "xiv-on-mac"
       "yacreader"
-      "zen-browser"
+      "zen"
     ];
     onActivation.cleanup = "zap";
   };

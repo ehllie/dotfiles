@@ -1,4 +1,4 @@
-{ modulesPath, ezModules, config, inputs, ... }:
+{ modulesPath, ezModules, config, inputs, pkgs, ... }:
 let
   secrets = config.sops.secrets;
 in
@@ -8,6 +8,7 @@ in
     ezModules.foundry-vtt
     ezModules.partitions-by-label
     ezModules.firefly-iii
+    ezModules.mc-server
     inputs.sops-nix.nixosModules.default
   ];
 
@@ -68,6 +69,12 @@ in
         ${config.services.firefly-iii.virtualHost} = cloudflareSSL;
 
         ${config.services.firefly-iii-data-importer.virtualHost} = cloudflareSSL;
+
+        "modpack.ehllie.xyz" = {
+          locations."/" = {
+            root = pkgs.vanilla-plus-manifest;
+          };
+        } // cloudflareSSL;
 
         "vtt.ehllie.xyz" = {
           locations."/" = {
