@@ -38,8 +38,8 @@
           difficulty = "hard";
           white-list = true;
           motd = "1702 Roomies Server";
-          view-distance = 20;
-          simulation-distance = 14;
+          view-distance = 26;
+          simulation-distance = 16;
         };
         whitelist = {
           Ellie_eh = "fdfb210e-c03b-4e6a-bb9d-cb647786c4a5";
@@ -48,6 +48,7 @@
           # UnlockedWifi42 = "a1504016-bb4c-4eda-9758-bed6c493891a";
           # Razentic12 = "35b16250-5264-4e9f-9e55-5dea17277b4f";
           # danipenguin = "d1fd607d-3bc9-49cd-83fd-469414ae3289";
+          Nesrya = "4a292903-0613-4617-8709-7997fba357e8";
           fadingroses = "8b9648b5-10de-45fd-b503-731919e701d9";
         };
       };
