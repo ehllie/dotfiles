@@ -38,6 +38,8 @@ end, { nargs = 0, range = true })
 
 wk.add({
   { -- Normal mode mappings
+    { "j", "gj", desc = "Move down by display line" },
+    { "k", "gk", desc = "Move up by display line" },
     { "<C-Down>", "<cmd>resize -2<CR>", desc = "Shrink window vertical" },
     { "<C-Left>", "<cmd>vertical resize -2<CR>", desc = "Shrink window horizontal" },
     { "<C-Right>", "<cmd>vertical resize +2<CR>", desc = "Grow window horizontal" },
