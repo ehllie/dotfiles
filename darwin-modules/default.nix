@@ -54,6 +54,7 @@
       "rwts-pdfwriter"
       "shadow"
       "signal"
+      "skim"
       "slack"
       "spotify"
       "steam"
