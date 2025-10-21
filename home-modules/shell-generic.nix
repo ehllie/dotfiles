@@ -27,6 +27,9 @@ in
       ls = "eza";
       cat = "bat -pp";
       tree = "erd --layout inverted --icons --human";
+      # https://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
+      # register sudo as alias to allow using other aliases with sudo
+      sudo = "sudo ";
     } // (
       if isDarwin then
         { inherit darwinSwitch; }
