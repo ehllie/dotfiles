@@ -1,9 +1,30 @@
-{ inputs, pkgs, ... }:
-let
-  unstable-pkgs = import inputs.nixpkgs-unstable { inherit (pkgs.stdenv) system; };
-  inherit (unstable-pkgs.darwin) linux-builder;
-in
+{ inputs, ezModules, ... }:
 {
+
+  imports = [
+    ezModules.qemu-virt
+    inputs.nix-rosetta-builder.darwinModules.default
+  ];
+
+  virtualisation.qemu = {
+    enable = true;
+    guests.test = {
+      guestConfiguration = inputs.self.nixosConfigurations.test;
+      extraModules = [{
+        virtualisation = {
+          forwardPorts = [{
+            from = "host";
+            host.port = 2222;
+            guest.port = 22;
+          }];
+          sharedDirectories.shows = {
+            target = "/mnt/shows";
+            source = "/Users/ellie/Movies/Shows";
+          };
+        };
+      }];
+    };
+  };
 
   users.users.root.home = "/var/root";
 
@@ -14,22 +35,24 @@ in
     primaryUser = "ellie";
   };
 
+  nix-rosetta-builder = {
+    enable = true;
+    cores = 10;
+    permitNonRootSshAccess = true;
+  };
+
+
   nix = {
     distributedBuilds = true;
 
-    buildMachines = [{
-      hostName = "builder.ehllie.xyz";
-      sshUser = "builder";
-      system = "x86_64-linux";
-      supportedFeatures = [ "kvm" "benchmark" "big-parallel" ];
-      publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1mekdFaTJBTk5wdENta3h2ZXJSckdvWFY5R2Z2MWtya2ZtdElRbXV2NjAgcm9vdEBuaXhvcwo=";
-      sshKey = "/etc/nix/dell-builder_ed25519";
-      maxJobs = 8;
-    }];
-
-    linux-builder = {
-      package = linux-builder;
-      enable = true;
-    };
+    buildMachines = [ ];
+    # linux-builder = {
+    #   enable = true;
+    #   # systems = [ "aarch64-linux" "x86_64-linux" ];
+    #   # config = {
+    #   #   virtualisation.cores = 10;
+    #   #   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+    #   # };
+    # };
   };
 }
