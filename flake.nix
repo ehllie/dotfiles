@@ -54,6 +54,10 @@
         ez-configs.follows = "ez-configs";
       };
     };
+    nix-rosetta-builder = {
+      url = "github:cpick/nix-rosetta-builder?ref=5cf6aa1f3f2fbb70443d33b5ef7779b7c7063392";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake
