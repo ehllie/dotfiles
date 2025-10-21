@@ -31,23 +31,6 @@ return {
     dependencies = "folke/which-key.nvim",
   },
   {
-    "lukas-reineke/indent-blankline.nvim",
-    opts = {
-      char = "▏",
-      show_trailing_blankline_indent = false,
-      show_first_indent_level = true,
-      use_treesitter = true,
-      show_current_context = true,
-      buftype_exclude = { "terminal", "nofile" },
-      filetype_exclude = {
-        "NvimTree",
-        "help",
-        "packer",
-      },
-    },
-    tag = "v2.20.8",
-  },
-  {
     "RRethy/vim-illuminate",
     config = function(_, opts)
       local illuminate = require("illuminate")
@@ -79,13 +62,5 @@ return {
     "kylechui/nvim-surround",
     config = true,
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
-  },
-  {
-    "ellisonleao/glow.nvim",
-    opts = { border = "rounded", width = 80 },
-    keys = {
-      { "<leader>m", "<cmd>Glow<CR>", desc = "Open preview in glow" },
-    },
-    dependencies = "folke/which-key.nvim",
   },
 }
