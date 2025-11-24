@@ -1,4 +1,4 @@
-{ inputs, ezModules, ... }:
+{ inputs, ezModules, pkgs, ... }:
 {
 
   imports = [
@@ -41,18 +41,6 @@
     permitNonRootSshAccess = true;
   };
 
+  nix.distributedBuilds = true;
 
-  nix = {
-    distributedBuilds = true;
-
-    buildMachines = [ ];
-    # linux-builder = {
-    #   enable = true;
-    #   # systems = [ "aarch64-linux" "x86_64-linux" ];
-    #   # config = {
-    #   #   virtualisation.cores = 10;
-    #   #   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-    #   # };
-    # };
-  };
 }

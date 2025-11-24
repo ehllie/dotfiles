@@ -3,6 +3,7 @@
   imports = lib.attrValues
     {
       inherit (ezModules)
+        jellyfin
         # alacritty
         builder-ssh
         catppuccin

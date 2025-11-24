@@ -22,3 +22,7 @@ creation_rules:
           - *ellie
           - *hetzner0
           - *hetzner1
+  - path_regex: sops/jackett.json$
+    key_groups:
+      - age:
+          - *ellie
