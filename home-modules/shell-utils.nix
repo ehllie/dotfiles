@@ -1,31 +1,41 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (pkgs.stdenv) isLinux isDarwin;
   inherit (lib) optionals attrValues;
-  haskellPkgs = ps: attrValues
-    {
+  haskellPkgs =
+    ps:
+    attrValues {
       inherit (ps)
         fourmolu
-        haskell-language-server;
-    } ++ optionals isLinux (attrValues
-    {
+        haskell-language-server
+        ;
+    }
+    ++ optionals isLinux (attrValues {
       inherit (ps)
         xmonad
         xmonad-contrib
         xmonad-extras
-        taffybar;
+        taffybar
+        ;
     });
 
-
-  pythonPkgs = ps: attrValues {
-    inherit (ps)
-      black
-      flake8
-      isort
-      mypy
-      pynvim
-      debugpy;
-  };
+  pythonPkgs =
+    ps:
+    attrValues {
+      inherit (ps)
+        black
+        flake8
+        isort
+        mypy
+        pynvim
+        debugpy
+        ;
+    };
 in
 {
 
@@ -35,11 +45,10 @@ in
       KITTY_CONFIG_DIRECTORY = "${config.xdg.configHome}/kitty";
     };
 
-    packages = attrValues
-      {
+    packages =
+      attrValues {
         inherit (pkgs)
           cabal-install
-          poetry
           cargo
           rustc
           gcc
@@ -70,13 +79,15 @@ in
           pandoc
           jq
           ;
-      } ++ [
-      pkgs.nodePackages.pnpm
-      (pkgs.ghc.withPackages haskellPkgs)
-      (pkgs.python3.withPackages pythonPkgs)
-    ] ++ optionals isLinux [
-      pkgs.lldb
-    ];
+      }
+      ++ [
+        pkgs.nodePackages.pnpm
+        (pkgs.ghc.withPackages haskellPkgs)
+        (pkgs.python3.withPackages pythonPkgs)
+      ]
+      ++ optionals isLinux [
+        pkgs.lldb
+      ];
   };
 
   programs = {
@@ -117,11 +128,8 @@ in
         "kitty_mod+t" = "no_op";
         "kitty_mod+w" = "no_op";
       };
-    } // (
-      if isDarwin then
-        { package = pkgs.writeTextDir "null" ""; }
-      else { }
-    );
+    }
+    // (if isDarwin then { package = pkgs.writeTextDir "null" ""; } else { });
 
     git = {
       enable = true;

@@ -13,6 +13,11 @@ return {
     end
 
     conform.setup({
+      format_after_save = function(bufnr)
+        if vim.g.auto_format then
+          return { async = true, bufnr = bufnr }
+        end
+      end,
       formatters_by_ft = vim.tbl_deep_extend(
         "force",
         {
@@ -81,6 +86,9 @@ return {
         },
       },
     })
+    (function()
+      vim.g.auto_format = not vim.g.auto_format
+    end)
 
     -- Convert a table of aucmd patterns into a single pattern,
     -- that matches when none of the patterns match.
@@ -95,8 +103,8 @@ return {
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
       pattern = "*",
       callback = function(args)
-        ---@diagnostic disable-next-line: undefined-field, need-check-nil
-        if do_auto_format and re:match_str(args.file) then
+        local conform = require("conform")
+        if vim.g.auto_format then
           conform.format({
             async = true,
             bufnr = args.bufnr,

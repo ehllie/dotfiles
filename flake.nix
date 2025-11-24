@@ -14,17 +14,10 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # For using new modules before the realease of the next nixos version
+    # For using new modules before the release of the next nixos version
     home-manager-master = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ante = {
-      url = "github:jfecher/ante";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        parts.follows = "flake-parts";
-      };
     };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -58,53 +51,88 @@
       url = "github:cpick/nix-rosetta-builder?ref=5cf6aa1f3f2fbb70443d33b5ef7779b7c7063392";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
-
-  outputs = inputs: inputs.flake-parts.lib.mkFlake
-    { inherit inputs; }
-    {
-      imports = [
-        inputs.ez-configs.flakeModule
-      ];
-
-      systems = [
-        "aarch64-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
-
-      # see https://github.com/ehllie/ez-configs/blob/main/README.md
-      ezConfigs = {
-        root = ./.;
-        globalArgs = { inherit inputs; };
-        darwin.hosts.EllMBP.userHomeModules = [ "root" ];
-        home.users.root.importDefault = false;
-      };
-
-      perSystem = { pkgs, lib, system, ... }: {
-
-        _module.args.pkgs = import inputs.nixpkgs {
-          inherit system;
-          overlays = [ inputs.sops-nix.overlays.default ];
-        };
-
-        formatter = pkgs.nixpkgs-fmt;
-
-        packages.foundryvtt = pkgs.callPackage ./packages/foundry-vtt { };
-
-        devShells.default = pkgs.mkShell {
-          name = "default-shell";
-          packages = lib.attrValues {
-            inherit (pkgs)
-              age
-              cloudflared
-              nixos-rebuild
-              sops
-              ssh-to-age
-              ;
-          };
-        };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs-unstable";
       };
     };
+  };
+
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { lib, ... }:
+      let
+        inherit (lib) init last;
+        inherit (inputs.nixvim.lib.nixvim) listToUnkeyedAttrs;
+        extraLib.nixvim = {
+          lazyMapping = mapping: listToUnkeyedAttrs (init mapping) // (last mapping);
+        };
+      in
+      {
+        imports = [
+          inputs.ez-configs.flakeModule
+        ];
+
+        systems = [
+          "aarch64-linux"
+          "x86_64-linux"
+          "aarch64-darwin"
+          "x86_64-darwin"
+        ];
+
+        # see https://github.com/ehllie/ez-configs/blob/main/README.md
+        ezConfigs = {
+          root = ./.;
+          globalArgs = { inherit inputs extraLib; };
+          darwin.hosts.EllMBP.userHomeModules = [ "root" ];
+          home.users.root.importDefault = false;
+        };
+
+        perSystem =
+          {
+            pkgs,
+            lib,
+            system,
+            ...
+          }:
+          {
+
+            _module.args.pkgs = import inputs.nixpkgs {
+              inherit system;
+              overlays = [
+                inputs.sops-nix.overlays.default
+                inputs.nixvim.overlays.default
+              ];
+            };
+
+            formatter = pkgs.nixpkgs-fmt;
+
+            packages = rec {
+              foundryvtt = pkgs.callPackage ./packages/foundry-vtt { };
+              nixvim = pkgs.nixvim.makeNixvimWithModule {
+                module = ./neovim-modules;
+                extraSpecialArgs = { inherit extraLib; };
+
+              };
+              default = nixvim;
+            };
+
+            devShells.default = pkgs.mkShell {
+              name = "default-shell";
+              packages = lib.attrValues {
+                inherit (pkgs)
+                  age
+                  cloudflared
+                  nixos-rebuild
+                  sops
+                  ssh-to-age
+                  ;
+              };
+            };
+          };
+      }
+    );
 }
