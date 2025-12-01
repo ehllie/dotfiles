@@ -56,6 +56,7 @@ in
 
           }
           (enableDefaults [
+            "gleam"
             "nil_ls"
             "lua_ls"
             "tinymist"
