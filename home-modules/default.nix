@@ -1,22 +1,27 @@
-{ ezModules, lib, inputs, pkgs, ... }:
 {
-  imports = lib.attrValues
-    {
-      inherit (ezModules)
-        jellyfin
-        # alacritty
-        builder-ssh
-        catppuccin
-        neovim
-        # nushell
-        shell-generic
-        shell-utils
-        tmux
-        xdg
-        yazi
-        zsh
-        ;
-    };
+  ezModules,
+  lib,
+  inputs,
+  pkgs,
+  ...
+}:
+{
+  imports = lib.attrValues {
+    inherit (ezModules)
+      jellyfin
+      # alacritty
+      builder-ssh
+      catppuccin
+      neovim
+      # nushell
+      shell-generic
+      shell-utils
+      tmux
+      xdg
+      yazi
+      zsh
+      ;
+  };
 
   nix = {
     package = pkgs.nix;

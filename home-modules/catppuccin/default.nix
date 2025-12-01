@@ -4,14 +4,19 @@ let
   inherit (lib) mkIf;
   flavour = "frappe";
   palette =
-    if flavour == "latte" then import ./latte.nix
-    else if flavour == "frappe" then import ./frappe.nix
-    else if flavour == "macchiato" then import ./macchiato.nix
-    else import ./mocha.nix;
+    if flavour == "latte" then
+      import ./latte.nix
+    else if flavour == "frappe" then
+      import ./frappe.nix
+    else if flavour == "macchiato" then
+      import ./macchiato.nix
+    else
+      import ./mocha.nix;
 
   escapedPalette = lib.mapAttrs (_: color: lib.strings.escapeShellArg color) palette;
 
-  toWord = str:
+  toWord =
+    str:
     let
       chars = lib.strings.stringToCharacters str;
       head = builtins.head chars;
@@ -22,7 +27,6 @@ in
 {
   programs = {
     kitty.themeFile = "Catppuccin-${toWord flavour}";
-
 
     alacritty.settings.colors = {
       primary = {
@@ -106,8 +110,14 @@ in
       };
 
       indexed_colors = [
-        { index = 16; color = palette.peach; }
-        { index = 17; color = palette.rosewater; }
+        {
+          index = 16;
+          color = palette.peach;
+        }
+        {
+          index = 17;
+          color = palette.rosewater;
+        }
       ];
     };
 

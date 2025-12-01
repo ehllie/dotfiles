@@ -1,5 +1,15 @@
-{ config, inputs, lib, modulesPath, pkgs, ezModules, ... }:
-let inherit (config.sops.secrets) tunnel-credentials; in
+{
+  config,
+  inputs,
+  lib,
+  modulesPath,
+  pkgs,
+  ezModules,
+  ...
+}:
+let
+  inherit (config.sops.secrets) tunnel-credentials;
+in
 {
   imports = [
     inputs.sops-nix.nixosModules.default
@@ -9,13 +19,18 @@ let inherit (config.sops.secrets) tunnel-credentials; in
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-
   swapDevices = [
     { device = "/dev/disk/by-uuid/0c6eec1f-335f-448f-b5cc-85edd7f3018a"; }
   ];
 
   boot = {
-    initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "usb_storage"
+      "sd_mod"
+      "rtsx_pci_sdmmc"
+    ];
     kernelModules = [ "kvm-intel" ];
 
     loader = {
@@ -39,7 +54,6 @@ let inherit (config.sops.secrets) tunnel-credentials; in
   powerManagement.cpuFreqGovernor = "performance";
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_IE.UTF-8";
-
 
   sops.secrets.tunnel-credentials = {
     owner = "cloudflared";

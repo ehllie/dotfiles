@@ -1,23 +1,27 @@
-{ config, osConfig, lib, ... }:
+{
+  config,
+  osConfig,
+  lib,
+  ...
+}:
 let
-  replaceShellVars = builtins.replaceStrings
-    [ "$HOME" "$USER" ]
-    [ config.home.homeDirectory config.home.username ];
+  replaceShellVars =
+    builtins.replaceStrings
+      [ "$HOME" "$USER" ]
+      [ config.home.homeDirectory config.home.username ];
 
-  systemPaths = builtins.filter builtins.isString (builtins.split ":" osConfig.environment.systemPath);
+  systemPaths = builtins.filter builtins.isString (
+    builtins.split ":" osConfig.environment.systemPath
+  );
   envPaths = builtins.map replaceShellVars (systemPaths ++ config.home.sessionPath);
   escapedPath = builtins.toJSON envPaths;
 
-  sessionVariables = builtins.mapAttrs
-    (_: builtins.toString)
-    config.home.sessionVariables;
+  sessionVariables = builtins.mapAttrs (_: builtins.toString) config.home.sessionVariables;
 
   skipAliases = [
     "ls" # nushell has a better version of ls built in
   ];
-  aliases = lib.filterAttrs
-    (name: _: ! (builtins.elem name skipAliases))
-    config.home.shellAliases;
+  aliases = lib.filterAttrs (name: _: !(builtins.elem name skipAliases)) config.home.shellAliases;
 in
 {
   programs.nushell = {
@@ -30,9 +34,7 @@ in
     };
 
     extraConfig = lib.concatStringsSep "\n" (
-      lib.mapAttrsToList
-        (name: value: "alias ${name} = ${value}")
-        aliases
+      lib.mapAttrsToList (name: value: "alias ${name} = ${value}") aliases
     );
   };
 }

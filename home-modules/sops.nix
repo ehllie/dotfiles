@@ -1,4 +1,10 @@
-{ pkgs, config, lib, inputs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}:
 let
   ssh-to-age = "${pkgs.ssh-to-age}/bin/ssh-to-age";
   op = "${pkgs._1password-cli}/bin/op";

@@ -1,4 +1,10 @@
-{ pkgs, lib, inputs, ... }: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
   i18n = {
     defaultLocale = "en_IE.UTF-8";
     extraLocales = [

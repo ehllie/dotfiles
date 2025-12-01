@@ -104,7 +104,7 @@
               ];
             };
 
-            formatter = pkgs.nixpkgs-fmt;
+            formatter = pkgs.nixfmt-tree;
 
             packages = rec {
               foundryvtt = pkgs.callPackage ./packages/foundry-vtt { };

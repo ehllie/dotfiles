@@ -2,7 +2,8 @@
 let
   inherit (pkgs)
     zsh-nix-shell
-    zsh-vi-mode;
+    zsh-vi-mode
+    ;
 in
 {
   programs.zsh = {

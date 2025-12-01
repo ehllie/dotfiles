@@ -1,7 +1,11 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) types;
-
 
   cfg = config.virtualisation.qemu;
 
@@ -14,18 +18,21 @@ let
     extraModules = lib.mkOption rec {
       type = types.listOf types.deferredModule;
       default = [
-        ({ modulesPath, ... }: {
-          imports = [
-            (modulesPath + "/profiles/qemu-guest.nix")
-            (modulesPath + "/virtualisation/qemu-vm.nix")
-          ];
+        (
+          { modulesPath, ... }:
+          {
+            imports = [
+              (modulesPath + "/profiles/qemu-guest.nix")
+              (modulesPath + "/virtualisation/qemu-vm.nix")
+            ];
 
-          virtualisation = {
-            qemu.guestAgent.enable = true;
-            host.pkgs = pkgs;
-            graphics = lib.mkDefault false;
-          };
-        })
+            virtualisation = {
+              qemu.guestAgent.enable = true;
+              host.pkgs = pkgs;
+              graphics = lib.mkDefault false;
+            };
+          }
+        )
       ];
 
       apply = modules: modules ++ default;
@@ -38,18 +45,21 @@ let
       description = "User to own the VM working directory.";
     };
 
-
   };
 
-  mkDaemon = guest: { guestConfiguration, extraModules, user }:
+  mkDaemon =
+    guest:
+    {
+      guestConfiguration,
+      extraModules,
+      user,
+    }:
     let
       newConfig = guestConfiguration.extendModules {
         modules = extraModules;
       };
       hostname =
-        if newConfig.config.networking ? hostName
-        then newConfig.config.networking.hostName
-        else guest;
+        if newConfig.config.networking ? hostName then newConfig.config.networking.hostName else guest;
     in
     {
       script = ''
@@ -97,21 +107,21 @@ in
     system.activationScripts.preActivation.text = ''
       mkdir -p ${cfg.workdirPath}
       mkdir -p ${cfg.ioLogPath}
-    '' + lib.concatStringsSep
-      "\n"
-      (map
-        (guest:
-          let
-            workdir = "${cfg.workdirPath}/${guest}";
-            logdir = "${cfg.ioLogPath}/${guest}";
-          in
-          ''
-            mkdir -p ${workdir}
-            mkdir -p ${logdir}
-            chown -R ${cfg.guests.${guest}.user} ${workdir}
-            chown -R ${cfg.guests.${guest}.user} ${logdir}
-          '')
-        (builtins.attrNames cfg.guests)
-      );
+    ''
+    + lib.concatStringsSep "\n" (
+      map (
+        guest:
+        let
+          workdir = "${cfg.workdirPath}/${guest}";
+          logdir = "${cfg.ioLogPath}/${guest}";
+        in
+        ''
+          mkdir -p ${workdir}
+          mkdir -p ${logdir}
+          chown -R ${cfg.guests.${guest}.user} ${workdir}
+          chown -R ${cfg.guests.${guest}.user} ${logdir}
+        ''
+      ) (builtins.attrNames cfg.guests)
+    );
   };
 }

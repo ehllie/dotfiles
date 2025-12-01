@@ -15,8 +15,14 @@ let
 
   diagnostics = listToUnkeyedAttrs [ "diagnostics" ] // {
     sources = [ "nvim_diagnostic" ];
-    sections = [ "error" "warn" ];
-    symbols = { error = " "; warn = " "; };
+    sections = [
+      "error"
+      "warn"
+    ];
+    symbols = {
+      error = " ";
+      warn = " ";
+    };
     always_visible = true;
   };
 
@@ -45,7 +51,11 @@ let
   '';
 
   diff = listToUnkeyedAttrs [ "diff" ] // {
-    symbols = { added = " "; modified = " "; removed = " "; };
+    symbols = {
+      added = " ";
+      modified = " ";
+      removed = " ";
+    };
     cond = hideInWidth;
     source = diffSource;
   };
@@ -56,7 +66,6 @@ let
     end
   '';
 
-
 in
 {
   plugins.lualine = {
@@ -64,13 +73,25 @@ in
     settings = {
       options = {
         globalstatus = true;
-        component_separators = { left = ""; right = ""; };
+        component_separators = {
+          left = "";
+          right = "";
+        };
       };
       sections = {
         lualine_a = [ "mode" ];
         lualine_b = [ (listToUnkeyedAttrs [ "b:gitsigns_head" ] // { icon = ""; }) ];
-        lualine_c = [ macroRecording diagnostics filename ];
-        lualine_x = [ diff spaces "encoding" "filetype" ];
+        lualine_c = [
+          macroRecording
+          diagnostics
+          filename
+        ];
+        lualine_x = [
+          diff
+          spaces
+          "encoding"
+          "filetype"
+        ];
         lualine_y = [ "location" ];
         lualine_z = [ "progress" ];
       };

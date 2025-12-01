@@ -3,7 +3,8 @@ let
   inherit (config.xdg)
     cacheHome
     configHome
-    dataHome;
+    dataHome
+    ;
 in
 {
   xdg = {

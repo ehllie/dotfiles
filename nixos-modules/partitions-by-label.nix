@@ -8,11 +8,16 @@
     "/boot" = {
       device = "/dev/disk/by-label/NIX_BOOT";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
     };
   };
 
-  swapDevices = [{
-    device = "/dev/disk/by-label/NIX_SWAP";
-  }];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-label/NIX_SWAP";
+    }
+  ];
 }

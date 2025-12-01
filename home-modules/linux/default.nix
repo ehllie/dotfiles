@@ -21,12 +21,17 @@ let
       vlc
       discord
       spectacle
-      prismlauncher;
+      prismlauncher
+      ;
     inherit protonmail-cli;
   };
 in
 {
-  imports = [ ./taffybar ./xmonad ./rofi.nix ];
+  imports = [
+    ./taffybar
+    ./xmonad
+    ./rofi.nix
+  ];
   services.gpg-agent.enable = true;
 
   programs.ssh.extraConfig = ''

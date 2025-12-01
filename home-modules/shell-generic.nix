@@ -1,9 +1,13 @@
-{ config, osConfig, pkgs, ... }:
+{
+  config,
+  osConfig,
+  pkgs,
+  ...
+}:
 let
   inherit (osConfig.networking) hostName;
   inherit (pkgs.stdenv) isDarwin isLinux;
   inherit (config.home) username;
-
 
   homeSwitch = "home-manager switch --flake '.#${username}@${hostName}'";
   nixosSwitch = "nixos-rebuild switch --flake '.#${hostName}'";
@@ -30,12 +34,14 @@ in
       # https://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
       # register sudo as alias to allow using other aliases with sudo
       sudo = "sudo ";
-    } // (
+    }
+    // (
       if isDarwin then
         { inherit darwinSwitch; }
       else if isLinux then
         { inherit nixosSwitch; }
-      else { }
+      else
+        { }
     );
 
     sessionVariables = {
@@ -44,7 +50,6 @@ in
       SOPS_AGE_KEY_FILE = config.xdg.configHome + "/sops/keys/age/keys.txt";
     };
   };
-
 
   xdg.configFile."powershell/Microsoft.PowerShell_profile.ps1".text = ''
     Invoke-Expression (&starship init powershell)

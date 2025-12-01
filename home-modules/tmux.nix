@@ -1,10 +1,16 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   inherit (pkgs) tmuxPlugins;
   defaultCommand =
-    if pkgs.stdenv.isDarwin
-    then ''set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.zsh}/bin/zsh"''
-    else "";
+    if pkgs.stdenv.isDarwin then
+      ''set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.zsh}/bin/zsh"''
+    else
+      "";
 in
 {
   programs = {
@@ -91,7 +97,7 @@ in
           plugin = tmuxPlugins.tmux-fzf;
           extraConfig = ''
 
-            '';
+          '';
         }
       ];
     };

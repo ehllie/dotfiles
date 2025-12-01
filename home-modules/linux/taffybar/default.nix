@@ -2,7 +2,8 @@
 let
   inherit (pkgs.haskellPackages)
     status-notifier-item
-    callCabal2nix;
+    callCabal2nix
+    ;
 in
 {
   services.taffybar = {

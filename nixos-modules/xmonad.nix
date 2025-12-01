@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = [ pkgs.xcompmgr ];
   gtk.iconCache.enable = true;
   security.polkit.enable = true;

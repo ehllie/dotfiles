@@ -1,4 +1,10 @@
-{ modulesPath, ezModules, config, inputs, ... }:
+{
+  modulesPath,
+  ezModules,
+  config,
+  inputs,
+  ...
+}:
 let
   secrets = config.sops.secrets;
 in
@@ -34,15 +40,20 @@ in
     };
   };
 
-  swapDevices = [{
-    device = "/dev/disk/by-uuid/218337e4-3f20-46c2-8422-e81762af1d80";
-  }];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/218337e4-3f20-46c2-8422-e81762af1d80";
+    }
+  ];
 
   networking = {
     hostName = "hetzner0";
     useDHCP = true;
     firewall = {
-      allowedTCPPorts = [ 80 443 ];
+      allowedTCPPorts = [
+        80
+        443
+      ];
       allowedUDPPorts = [ 24454 ]; # Simple Voice Chat
     };
   };
@@ -90,7 +101,8 @@ in
             proxyPass = "http://127.0.0.1:30000";
           };
           serverAliases = [ "www.vtt.ehllie.xyz" ];
-        } // cloudflareSSL;
+        }
+        // cloudflareSSL;
       };
   };
 }

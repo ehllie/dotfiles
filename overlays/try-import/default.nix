@@ -1,6 +1,11 @@
 let
-  tryImport = { stdenvNoCC, haskellPackages }:
-    args@{ src, default ? "false", ... }:
+  tryImport =
+    { stdenvNoCC, haskellPackages }:
+    args@{
+      src,
+      default ? "false",
+      ...
+    }:
     let
       valid = stdenvNoCC.mkDerivation {
         name = if args ? name then args.name else baseNameOf (toString args.src);

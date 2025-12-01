@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
 
   cfg = config.security.pam;
   # Copied from "security.pam.enableSudoTouchIdAuth"
-  mkSudoPamReattachScript = isEnabled:
+  mkSudoPamReattachScript =
+    isEnabled:
     let
       modulePath = "/opt/homebrew/lib/pam/pam_reattach.so";
       file = "/etc/pam.d/sudo";
@@ -11,17 +17,22 @@ let
       sed = "${pkgs.gnused}/bin/sed";
     in
     ''
-      ${if isEnabled then ''
-        if ! grep '${modulePath}' ${file} > /dev/null; then
-          ${sed} -i '2i\
-        auth       optional       ${modulePath} # nix-darwin: ${option} 
-          ' ${file}
-        fi
-      '' else ''
-        if grep '${option}' ${file} > /dev/null; then
-          ${sed} -i '/${option}/d' ${file}
-        fi
-      ''}
+      ${
+        if isEnabled then
+          ''
+            if ! grep '${modulePath}' ${file} > /dev/null; then
+              ${sed} -i '2i\
+            auth       optional       ${modulePath} # nix-darwin: ${option} 
+              ' ${file}
+            fi
+          ''
+        else
+          ''
+            if grep '${option}' ${file} > /dev/null; then
+              ${sed} -i '/${option}/d' ${file}
+            fi
+          ''
+      }
     '';
 in
 {

@@ -1,4 +1,9 @@
-{ lib, modulesPath, pkgs, ... }:
+{
+  lib,
+  modulesPath,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) attrValues;
   systemPackages = attrValues {
@@ -9,7 +14,8 @@ let
       home-manager
       pulseaudio
       usbutils
-      zsh;
+      zsh
+      ;
   };
 in
 
@@ -24,7 +30,6 @@ in
     ../overlays
   ];
 
-
   environment = {
     pathsToLink = [ "/share/zsh" ];
     inherit systemPackages;
@@ -35,7 +40,9 @@ in
       trusted-users = [ "@wheel" ];
       trusted-substituters = [ "https://nix-community.cachix.org" ];
       extra-substituters = [ "https://nix-community.cachix.org" ];
-      extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
     };
   };
 
@@ -62,7 +69,11 @@ in
     isNormalUser = true;
     home = "/home/ellie";
     description = "Elizabeth";
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+    ];
     initialPassword = "password"; # Change this asap obv
   };
 
@@ -72,12 +83,21 @@ in
     sudo = {
       enable = true;
       wheelNeedsPassword = true;
-      extraRules = [{
-        groups = [ "wheel" ];
-        commands = builtins.map
-          (command: { inherit command; options = [ "NOPASSWD" ]; })
-          [ "${pkgs.systemd}/bin/shutdown" "${pkgs.systemd}/bin/reboot" ];
-      }];
+      extraRules = [
+        {
+          groups = [ "wheel" ];
+          commands =
+            builtins.map
+              (command: {
+                inherit command;
+                options = [ "NOPASSWD" ];
+              })
+              [
+                "${pkgs.systemd}/bin/shutdown"
+                "${pkgs.systemd}/bin/reboot"
+              ];
+        }
+      ];
     };
   };
 
@@ -87,7 +107,6 @@ in
     autoUpgrade.allowReboot = true;
     autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
   };
-
 
   boot = {
     blacklistedKernelModules = [ "pcspkr" ];

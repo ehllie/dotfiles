@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (pkgs) tryImport;
   secrets = tryImport { src = ../secrets; };
@@ -14,7 +19,13 @@ in
 
     initrd = {
       kernelModules = [ "dm-snapshot" ];
-      availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "usb_storage"
+        "sd_mod"
+        "rtsx_pci_sdmmc"
+      ];
 
       luks = {
         fido2Support = enable;

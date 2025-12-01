@@ -1,4 +1,9 @@
-{ inputs, ezModules, pkgs, ... }:
+{
+  inputs,
+  ezModules,
+  pkgs,
+  ...
+}:
 {
 
   imports = [
@@ -10,19 +15,23 @@
     enable = true;
     guests.test = {
       guestConfiguration = inputs.self.nixosConfigurations.test;
-      extraModules = [{
-        virtualisation = {
-          forwardPorts = [{
-            from = "host";
-            host.port = 2222;
-            guest.port = 22;
-          }];
-          sharedDirectories.shows = {
-            target = "/mnt/shows";
-            source = "/Users/ellie/Movies/Shows";
+      extraModules = [
+        {
+          virtualisation = {
+            forwardPorts = [
+              {
+                from = "host";
+                host.port = 2222;
+                guest.port = 22;
+              }
+            ];
+            sharedDirectories.shows = {
+              target = "/mnt/shows";
+              source = "/Users/ellie/Movies/Shows";
+            };
           };
-        };
-      }];
+        }
+      ];
     };
   };
 

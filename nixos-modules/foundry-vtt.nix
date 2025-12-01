@@ -17,18 +17,21 @@ let
         nix-store --add-fixed sha256 \$HOME/Downloads/${name}
     '';
   };
-  foundryPackage = pkgs.runCommand "foundryvtt-${foundryVersion}"
-    {
-      nativeBuildInputs = [ pkgs.unzip ];
-    }
-    ''
-      unzip ${foundryZip} -d $out
-    ''
-  ;
+  foundryPackage =
+    pkgs.runCommand "foundryvtt-${foundryVersion}"
+      {
+        nativeBuildInputs = [ pkgs.unzip ];
+      }
+      ''
+        unzip ${foundryZip} -d $out
+      '';
   mainPath = "resources/app/main.js";
 in
 {
-  environment.systemPackages = [ foundryPackage pkgs.nodejs ];
+  environment.systemPackages = [
+    foundryPackage
+    pkgs.nodejs
+  ];
   # networking.firewall.allowedUDPPorts = [ 30000 ];
 
   users = {

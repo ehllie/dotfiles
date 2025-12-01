@@ -1,4 +1,11 @@
-{ modulesPath, ezModules, config, inputs, pkgs, ... }:
+{
+  modulesPath,
+  ezModules,
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 let
   secrets = config.sops.secrets;
 in
@@ -28,7 +35,10 @@ in
     hostName = "hetzner1";
     useDHCP = true;
     firewall = {
-      allowedTCPPorts = [ 80 443 ];
+      allowedTCPPorts = [
+        80
+        443
+      ];
       allowedUDPPorts = [ 24454 ]; # Simple Voice Chat
     };
   };
@@ -74,7 +84,8 @@ in
           locations."/" = {
             root = pkgs.vanilla-plus-manifest;
           };
-        } // cloudflareSSL;
+        }
+        // cloudflareSSL;
 
         "vtt.ehllie.xyz" = {
           locations."/" = {
@@ -82,7 +93,8 @@ in
             proxyPass = "http://127.0.0.1:30000";
           };
           serverAliases = [ "www.vtt.ehllie.xyz" ];
-        } // cloudflareSSL;
+        }
+        // cloudflareSSL;
       };
   };
 }

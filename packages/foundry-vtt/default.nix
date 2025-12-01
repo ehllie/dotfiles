@@ -1,8 +1,17 @@
-{ requireFile, unzip, runCommand }:
+{
+  requireFile,
+  unzip,
+  runCommand,
+}:
 let
   buildInfos = builtins.fromJSON (builtins.readFile ./builds.json);
 
-  buildFoundryVTT = { build, major, sha256 ? "" }:
+  buildFoundryVTT =
+    {
+      build,
+      major,
+      sha256 ? "",
+    }:
     let
       version = "${major}.${build}";
       name = "foundryvtt-${version}";
@@ -26,12 +35,9 @@ let
         unzip ${zipFile} -d $out
       '';
 
-  allBuilds = builtins.mapAttrs
-    (build: info:
-      buildFoundryVTT (info // { inherit build; })
-    )
-    buildInfos;
+  allBuilds = builtins.mapAttrs (
+    build: info: buildFoundryVTT (info // { inherit build; })
+  ) buildInfos;
 in
 
 allBuilds."331"
-
