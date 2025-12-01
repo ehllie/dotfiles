@@ -24,7 +24,7 @@
     registry.nixpkgs.flake = inputs.nixpkgs;
     gc = {
       automatic = true;
-      frequency = "monthly";
+      dates = "monthly";
       options = "--delete-older-than 7d";
     };
     nixPath = [

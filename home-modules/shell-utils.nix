@@ -133,7 +133,7 @@ in
 
     git = {
       enable = true;
-      extraConfig = {
+      settings = {
         init.defaultBranch = "main";
         merge.conflictStyle = "diff3";
       };

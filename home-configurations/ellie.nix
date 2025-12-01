@@ -9,8 +9,8 @@ in
     homeDirectory = if isDarwin then "/Users/ellie" else "/home/ellie";
   };
 
-  programs.git = {
-    userName = "Elizabeth Paź";
-    userEmail = "me@ehllie.xyz";
+  programs.git.settings.user = {
+    name = "Elizabeth Paź";
+    email = "me@ehllie.xyz";
   };
 }
