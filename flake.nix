@@ -14,7 +14,6 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # For using new modules before the release of the next nixos version
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -122,7 +121,6 @@
                 inherit (pkgs)
                   age
                   cloudflared
-                  nixos-rebuild
                   sops
                   ssh-to-age
                   ;
