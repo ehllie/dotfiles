@@ -1,12 +1,12 @@
 {
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-label/NIX_ROOT";
+      device = "/dev/disk/by-label/NIXROOT";
       fsType = "ext4";
     };
 
     "/boot" = {
-      device = "/dev/disk/by-label/NIX_BOOT";
+      device = "/dev/disk/by-label/NIXBOOT";
       fsType = "vfat";
       options = [
         "fmask=0022"
@@ -14,10 +14,4 @@
       ];
     };
   };
-
-  swapDevices = [
-    {
-      device = "/dev/disk/by-label/NIX_SWAP";
-    }
-  ];
 }

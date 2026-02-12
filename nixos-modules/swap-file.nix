@@ -1,0 +1,7 @@
+{
+  swapDevices = [
+    {
+      device = "/.swapfile";
+    }
+  ];
+}

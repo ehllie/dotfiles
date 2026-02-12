@@ -3,6 +3,7 @@ keys:
   - &dell-builder age1t3l8398djcpphaz6sxfvlvj4r7law724fc6u7jxzcpcmykqzt3ds0n64hh
   - &hetzner0 age1h2jfx5j9khz3estzq7jd7jsfkv5xwtyexx8vvaqeqcyrl2zucuvswnhpfx
   - &hetzner1 age1h3230pllhyc96sn3wq078p2edmefy5a0kd4088en8yp8j3pjvgms99aajx
+  - &hetzner2 age1hpuqjzytr4v56v4fd2e8ps39x04mdn08psxjgd0urz6mpvyxka5q8eqang
 
 creation_rules:
   - path_regex: sops/builder/tunnel-credentials$
@@ -22,6 +23,7 @@ creation_rules:
           - *ellie
           - *hetzner0
           - *hetzner1
+          - *hetzner2
   - path_regex: sops/jackett.json$
     key_groups:
       - age:
