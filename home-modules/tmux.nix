@@ -32,6 +32,7 @@ in
       mouse = true;
       newSession = true;
       terminal = "tmux-256color";
+      resizeAmount = 3;
 
       extraConfig = ''
         set-option -g status-position top
@@ -42,6 +43,11 @@ in
         bind '"' split-window -c "#{pane_current_path}"
         bind % split-window -h -c "#{pane_current_path}"
         bind c new-window -c "#{pane_current_path}"
+
+        bind-key h select-pane -L
+        bind-key j select-pane -D
+        bind-key k select-pane -U
+        bind-key l select-pane -R
 
       '';
 
