@@ -1,15 +1,91 @@
-{ lib, ... }:
+{
+  lib,
+  extraLib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib.nixvim) mkRaw;
+  inherit (extraLib.nixvim) lazyMapping;
 in
 {
+  extraPlugins = [
+    pkgs.vimPlugins.codecompanion-history-nvim
+  ];
   plugins = {
     friendly-snippets.enable = true;
     blink-cmp-copilot.enable = true;
     copilot-lua = {
       enable = true;
-      settings.filetypes = {
-        oil = false;
+      settings = {
+        filetypes = {
+          oil = false;
+        };
+        copilot_model = "gpt-5-mini";
+      };
+    };
+    codecompanion = {
+      enable = true;
+      lazyLoad.settings = {
+        cmd = [
+          "CodeCompanion"
+          "CodeCompanionActions"
+          "CodeCompanionChat"
+          "CodeCompanionCmd"
+          "CodeCompanionHistory"
+          "CodeCompanionSummaries"
+        ];
+        keys = map lazyMapping [
+          [
+            "<leader>Ca"
+            "<cmd>CodeCompanionActions<cr>"
+            {
+              desc = "CodeCompanion Actions";
+            }
+          ]
+          [
+            "<leader>Ch"
+            "<cmd>CodeCompanionHistory<cr>"
+            {
+              desc = "CodeCompanion History";
+            }
+          ]
+          [
+            "<leader>CC"
+            "<cmd>CodeCompanionChat toggle<cr>"
+            {
+              desc = "CodeCompanion Chat";
+            }
+          ]
+          [
+            "<leader>Cs"
+            "<cmd>CodeCompanionSummaries<cr>"
+            {
+              desc = "CodeCompanion Summaries";
+            }
+          ]
+          [
+            "<leader>Cm"
+            "<cmd>CodeCompanionCmd<cr>"
+            {
+              desc = "CodeCompanion Command";
+            }
+          ]
+        ];
+        before = mkRaw "function() require('lz.n').trigger_load('telescope.nvim') end";
+      };
+      settings = {
+        display.action_palette.provider = "telescope";
+        interactions = {
+          chat.adapter = {
+            name = "copilot";
+            model = "gpt-5-mini";
+          };
+        };
+        extensions.history = {
+          enabled = true;
+          opts.expiration_days = 0;
+        };
       };
     };
     lspkind = {
@@ -86,16 +162,16 @@ in
             "fallback"
           ];
 
-          "<up>" = [
+          "<c-u>" = [
             "scroll_documentation_up"
             "fallback"
           ];
-          "<down>" = [
+          "<c-d>" = [
             "scroll_documentation_down"
             "fallback"
           ];
 
-          "c-s" = [
+          "<c-s>" = [
             "show_signature"
             "hide_signature"
             "fallback"

@@ -1,3 +1,7 @@
+{ extraLib, ... }:
+let
+  inherit (extraLib.nixvim) lazyMapping;
+in
 {
 
   colorscheme = "catppuccin";
@@ -13,6 +17,31 @@
     notify.enable = true;
     scrollview.enable = true;
     gitsigns.enable = true;
+    trouble = {
+      enable = true;
+      lazyLoad.settings = {
+        cmd = "Trouble";
+        keys = map lazyMapping [
+          [
+            "<leader>ts"
+            "<cmd>Trouble symbols toggle<cr>"
+            { desc = "Toggle LSP symbols with Trouble"; }
+          ]
+          [
+            "<leader>td"
+            "<cmd>Trouble diagnostics toggle<cr>"
+            { desc = "Toggle LSP diagnostics with Trouble"; }
+          ]
+          [
+            "<leader>tt"
+            "<cmd>Trouble todo toggle<cr>"
+            { desc = "Toggle TODOs with Trouble"; }
+          ]
+        ];
+
+      };
+    };
+    todo-comments.enable = true;
 
     noice = {
       enable = true;

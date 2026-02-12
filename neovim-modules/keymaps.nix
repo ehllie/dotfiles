@@ -119,11 +119,6 @@ in
           action = "<esc>";
           options.desc = "Exit insert mode";
         }
-        {
-          key = "<c-s>";
-          action = "<cmd>w<cr>";
-          options.desc = "Save file";
-        }
       ]
     ]
     [
@@ -138,6 +133,11 @@ in
           key = ">";
           action = ">gv";
           options.desc = "Indent right";
+        }
+        {
+          key = "p";
+          action = ''"_dP'';
+          options.desc = "Paste without overwriting register";
         }
       ]
 

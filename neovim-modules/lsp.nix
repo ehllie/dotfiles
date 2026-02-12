@@ -56,6 +56,8 @@ in
 
           }
           (enableDefaults [
+            "tombi"
+            "bashls"
             "gleam"
             "nil_ls"
             "lua_ls"

@@ -2,7 +2,7 @@
 let
   inherit (lib.nixvim) mkRaw;
   concatAttrs = lib.foldAttrs (item: _: item) null;
-  manyFiletypes = fileTypes: formatter: lib.genAttrs fileTypes (_: formatter);
+  manyFiletypes = fileTypes: formatter: lib.genAttrs fileTypes (_: [ formatter ]);
 in
 {
   plugins.conform-nvim = {
@@ -31,6 +31,8 @@ in
           ];
           rust = [ "rustfmt" ];
           typst = [ "typstyle" ];
+          gleam = [ "gleam" ];
+          toml = [ "tombi" ];
           _ = [
             "trim_whitespace"
             "trim_newlines"
