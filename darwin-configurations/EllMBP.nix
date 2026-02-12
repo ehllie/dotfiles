@@ -11,30 +11,6 @@
     inputs.nix-rosetta-builder.darwinModules.default
   ];
 
-  virtualisation.qemu = {
-    enable = true;
-    guests.test = {
-      guestConfiguration = inputs.self.nixosConfigurations.test;
-      extraModules = [
-        {
-          virtualisation = {
-            forwardPorts = [
-              {
-                from = "host";
-                host.port = 2222;
-                guest.port = 22;
-              }
-            ];
-            sharedDirectories.shows = {
-              target = "/mnt/shows";
-              source = "/Users/ellie/Movies/Shows";
-            };
-          };
-        }
-      ];
-    };
-  };
-
   users.users.root.home = "/var/root";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
@@ -44,12 +20,14 @@
     primaryUser = "ellie";
   };
 
+  nix.distributedBuilds = true;
   nix-rosetta-builder = {
     enable = true;
     cores = 10;
     permitNonRootSshAccess = true;
   };
-
-  nix.distributedBuilds = true;
+  # Enable this if rosetta-builder fails to build.
+  # It needs to be bootstrapped with the linux-builder from nixpkgs binary cache
+  # nix.linux-builder.enable = true;
 
 }
