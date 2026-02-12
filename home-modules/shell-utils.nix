@@ -81,7 +81,6 @@ in
           ;
       }
       ++ [
-        pkgs.nodePackages.pnpm
         (pkgs.ghc.withPackages haskellPkgs)
         (pkgs.python3.withPackages pythonPkgs)
       ]
