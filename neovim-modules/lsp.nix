@@ -56,13 +56,17 @@ in
 
           }
           (enableDefaults [
-            "tombi"
-            "bashls"
-            "gleam"
-            "nil_ls"
-            "lua_ls"
-            "tinymist"
             "basedpyright"
+            "bashls"
+            "eslint"
+            "gleam"
+            "lua_ls"
+            "nil_ls"
+            "protols"
+            "svelte"
+            "tailwindcss"
+            "tinymist"
+            "tombi"
           ]);
     };
 

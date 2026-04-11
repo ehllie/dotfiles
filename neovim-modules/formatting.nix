@@ -67,6 +67,7 @@ in
         (manyFiletypes [
           "c"
           "cpp"
+          "proto"
         ] "clang-format")
       ];
 
