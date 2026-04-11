@@ -22,12 +22,12 @@
 
   nix.distributedBuilds = true;
   nix-rosetta-builder = {
-    enable = true;
+    enable = false;
     cores = 10;
     permitNonRootSshAccess = true;
   };
   # Enable this if rosetta-builder fails to build.
   # It needs to be bootstrapped with the linux-builder from nixpkgs binary cache
-  # nix.linux-builder.enable = true;
+  nix.linux-builder.enable = true;
 
 }

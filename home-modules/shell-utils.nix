@@ -2,11 +2,13 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
-  inherit (pkgs.stdenv) isLinux isDarwin;
+  inherit (pkgs.stdenv) isLinux isDarwin system;
   inherit (lib) optionals attrValues;
+  unstablePkgs = import inputs.nixpkgs-unstable { inherit system; };
   haskellPkgs =
     ps:
     attrValues {
@@ -151,6 +153,7 @@ in
 
     direnv = {
       enable = true;
+      package = unstablePkgs.direnv;
       enableZshIntegration = true;
       enableNushellIntegration = true;
       nix-direnv.enable = true;
