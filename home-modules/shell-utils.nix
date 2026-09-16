@@ -80,6 +80,7 @@ in
           glow
           pandoc
           jq
+          nurl
           ;
       }
       ++ [
@@ -153,7 +154,6 @@ in
 
     direnv = {
       enable = true;
-      package = unstablePkgs.direnv;
       enableZshIntegration = true;
       enableNushellIntegration = true;
       nix-direnv.enable = true;
