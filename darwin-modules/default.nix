@@ -15,17 +15,26 @@
   homebrew = {
     enable = true;
     brews = [
-      "jackett"
+      {
+        name = "jackett";
+        restart_service = "changed";
+      }
+      # {
+      #   name = "rconroy293/seventeenlands/seventeenlands";
+      #   restart_service = "changed";
+      #   trusted = true;
+      # }
     ];
     casks = [
       "1password"
       "1password-cli"
-      "adobe-acrobat-pro"
+      "adobe-acrobat-reader"
       "aldente"
       "anki"
       "anydesk"
       "betterdisplay"
       "blackhole-2ch"
+      "blood-on-the-clocktower-online"
       "bruno"
       "caffeine"
       "calibre"
@@ -44,8 +53,9 @@
       "noTunes"
       "nvidia-geforce-now"
       "obsidian"
-      "postgres-unofficial"
+      "postgres-app"
       "prismlauncher"
+      "proton-drive"
       "proton-mail"
       "protonvpn"
       "qbittorrent"
@@ -58,6 +68,7 @@
       "spotify"
       "steam"
       "teamviewer"
+      "thaw"
       "via"
       "vlc"
       "xiv-on-mac"
