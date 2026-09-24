@@ -1,7 +1,10 @@
 {
   dependencies.ripgrep.enable = true;
   plugins = {
-    treesitter-context.enable = true;
+    treesitter-context = {
+      enable = true;
+      settings.max_lines = 5;
+    };
     treesitter-textobjects = {
       enable = true;
       settings = {
