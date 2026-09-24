@@ -10,6 +10,7 @@ let
     });
 in
 {
+  dependencies.rust-analyzer.packageFallback = true;
   plugins = {
     lsp = {
       enable = true;
@@ -53,6 +54,35 @@ in
               autoEvalInputs = true;
             };
             lua_ls.settings.workspace.checkThirdParty = false;
+            tailwindcss = {
+              filetypes = [
+                "rust"
+                "html"
+                "svelte"
+                "vue"
+                "css"
+                "scss"
+                "less"
+                "javascript"
+                "javascriptreact"
+                "typescript"
+                "typescriptreact"
+              ];
+              extraOptions.settings = {
+                tailwindCSS = {
+                  includeLanguages = {
+                    rust = "html";
+                    "*.rs" = "html";
+                  };
+                  experimental = {
+                    classRegex = [
+                      "class:([^=]*)="
+                      ''class=\\("([^"]*)"''
+                    ];
+                  };
+                };
+              };
+            };
 
           }
           (enableDefaults [
@@ -67,32 +97,41 @@ in
             "tailwindcss"
             "tinymist"
             "tombi"
+            "wgsl_analyzer"
           ]);
     };
 
     rustaceanvim = {
       enable = true;
+      settings = {
+        dap.autoload_configuration = true;
+        server = {
+          standalone = false;
 
-      settings.default_settings.rust-analyzer = {
-        cargo = {
-          allFeatures = true;
-          loadOutDirsFromCheck = true;
-          runBuildScripts = true;
-        };
-        checkOnSave = {
-          allFeatures = true;
-          command = "clippy";
-          extraArgs = [ "--no-deps" ];
-        };
-        procMacro = {
-          enable = true;
-          ignored = [
-            "async-trait"
-            "napi-derive"
-            "async_recursion"
-          ];
-        };
+          default_settings.rust-analyzer = {
+            cargo = {
+              allFeatures = true;
+              loadOutDirsFromCheck = true;
+              runBuildScripts = true;
+            };
 
+            check = {
+              command = "clippy";
+              extraArgs = [ "--no-deps" ];
+            };
+            checkOnSave = true;
+
+            procMacro = {
+              enable = true;
+              # ignored = listToUnkeyedAttrs [
+              #   "async-trait"
+              #   "napi-derive"
+              #   "async_recursion"
+              # ];
+            };
+
+          };
+        };
       };
 
     };
