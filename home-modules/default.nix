@@ -19,6 +19,7 @@
       tmux
       xdg
       yazi
+      opencode
       zsh
       ;
   };

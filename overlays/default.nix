@@ -13,6 +13,10 @@ let
 in
 {
   nixpkgs.overlays = [
+    # Allow importing packages from nixpkgs-unstable under pkgs.unstable
+    (_: prev: {
+      inherit unstable;
+    })
     (import ./discord.nix)
     (import ./substitute-all-rec)
     (import ./try-import)
