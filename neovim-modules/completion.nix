@@ -21,73 +21,72 @@ in
         filetypes = {
           oil = false;
         };
-        copilot_model = "gpt-5-mini";
       };
     };
-    codecompanion = {
-      enable = true;
-      lazyLoad.settings = {
-        cmd = [
-          "CodeCompanion"
-          "CodeCompanionActions"
-          "CodeCompanionChat"
-          "CodeCompanionCmd"
-          "CodeCompanionHistory"
-          "CodeCompanionSummaries"
-        ];
-        keys = map lazyMapping [
-          [
-            "<leader>Ca"
-            "<cmd>CodeCompanionActions<cr>"
-            {
-              desc = "CodeCompanion Actions";
-            }
-          ]
-          [
-            "<leader>Ch"
-            "<cmd>CodeCompanionHistory<cr>"
-            {
-              desc = "CodeCompanion History";
-            }
-          ]
-          [
-            "<leader>CC"
-            "<cmd>CodeCompanionChat toggle<cr>"
-            {
-              desc = "CodeCompanion Chat";
-            }
-          ]
-          [
-            "<leader>Cs"
-            "<cmd>CodeCompanionSummaries<cr>"
-            {
-              desc = "CodeCompanion Summaries";
-            }
-          ]
-          [
-            "<leader>Cm"
-            "<cmd>CodeCompanionCmd<cr>"
-            {
-              desc = "CodeCompanion Command";
-            }
-          ]
-        ];
-        before = mkRaw "function() require('lz.n').trigger_load('telescope.nvim') end";
-      };
-      settings = {
-        display.action_palette.provider = "telescope";
-        interactions = {
-          chat.adapter = {
-            name = "copilot";
-            model = "gpt-5-mini";
-          };
-        };
-        extensions.history = {
-          enabled = true;
-          opts.expiration_days = 0;
-        };
-      };
-    };
+    # codecompanion = {
+    #   enable = true;
+    #   lazyLoad.settings = {
+    #     cmd = [
+    #       "CodeCompanion"
+    #       "CodeCompanionActions"
+    #       "CodeCompanionChat"
+    #       "CodeCompanionCmd"
+    #       "CodeCompanionHistory"
+    #       "CodeCompanionSummaries"
+    #     ];
+    #     keys = map lazyMapping [
+    #       [
+    #         "<leader>Ca"
+    #         "<cmd>CodeCompanionActions<cr>"
+    #         {
+    #           desc = "CodeCompanion Actions";
+    #         }
+    #       ]
+    #       [
+    #         "<leader>Ch"
+    #         "<cmd>CodeCompanionHistory<cr>"
+    #         {
+    #           desc = "CodeCompanion History";
+    #         }
+    #       ]
+    #       [
+    #         "<leader>CC"
+    #         "<cmd>CodeCompanionChat toggle<cr>"
+    #         {
+    #           desc = "CodeCompanion Chat";
+    #         }
+    #       ]
+    #       [
+    #         "<leader>Cs"
+    #         "<cmd>CodeCompanionSummaries<cr>"
+    #         {
+    #           desc = "CodeCompanion Summaries";
+    #         }
+    #       ]
+    #       [
+    #         "<leader>Cm"
+    #         "<cmd>CodeCompanionCmd<cr>"
+    #         {
+    #           desc = "CodeCompanion Command";
+    #         }
+    #       ]
+    #     ];
+    #     before = mkRaw "function() require('lz.n').trigger_load('telescope.nvim') end";
+    #   };
+    #   settings = {
+    #     display.action_palette.provider = "telescope";
+    #     # interactions = {
+    #     #   chat.adapter = {
+    #     #     name = "copilot";
+    #     #     model = "gpt-5-mini";
+    #     #   };
+    #     # };
+    #     extensions.history = {
+    #       enabled = true;
+    #       opts.expiration_days = 0;
+    #     };
+    #   };
+    # };
     lspkind = {
       enable = true;
       cmp.enable = false;
