@@ -1,7 +1,4 @@
-{ inputs, pkgs, ... }:
-let
-  unstable-pkgs = import inputs.nixpkgs-unstable { inherit (pkgs) system; };
-in
+{ pkgs, ... }:
 {
   networking.firewall.allowedTCPPorts = [
     80
@@ -9,7 +6,7 @@ in
     3000
   ];
   services.actual = {
-    package = unstable-pkgs.actual-server;
+    package = pkgs.unstable.actual-server;
     enable = true;
     openFirewall = true;
     settings = {
