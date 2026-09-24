@@ -1,7 +1,7 @@
-{ ... }:
 {
   imports = [
     ./completion.nix
+    ./debugger.nix
     ./editing.nix
     ./folding.nix
     ./formatting.nix
@@ -13,6 +13,7 @@
     ./visual.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
   plugins.lz-n.enable = true;
   clipboard.register = "unnamedplus";
   luaLoader.enable = true;
@@ -35,6 +36,7 @@
     scrolloff = 8;
     shiftwidth = 2;
     showmode = false;
+    showtabline = 0;
     sidescrolloff = 8;
     signcolumn = "yes";
     smartcase = true;
