@@ -26,7 +26,7 @@
 
   nix = {
     package = pkgs.nix;
-    extraOptions = "experimental-features = nix-command flakes";
+    extraOptions = "experimental-features = nix-command flakes pipe-operators";
     registry.nixpkgs.flake = inputs.nixpkgs;
     gc = {
       automatic = true;
