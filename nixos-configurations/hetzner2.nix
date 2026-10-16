@@ -17,9 +17,12 @@ in
     ezModules.ssh-keys
     ezModules.actual-budget
     inputs.sops-nix.nixosModules.default
+    ../overlays
   ];
 
   boot = {
+
+    kernel.sysctl."vm.mmap_rnd_bits" = 18; # https://github.com/nixos/nixpkgs/issues/513512
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules = [

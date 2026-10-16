@@ -53,6 +53,10 @@
         # nixpkgs.follows = "nixpkgs";
       };
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -69,6 +73,7 @@
       {
         imports = [
           inputs.ez-configs.flakeModule
+          inputs.treefmt-nix.flakeModule
         ];
 
         systems = [
@@ -95,6 +100,10 @@
           }:
           {
 
+            treefmt = {
+              programs.nixfmt.enable = true;
+            };
+
             _module.args.pkgs = import inputs.nixpkgs {
               inherit system;
               overlays = [
@@ -102,8 +111,6 @@
                 inputs.nixvim.overlays.default
               ];
             };
-
-            formatter = pkgs.nixfmt-tree;
 
             packages = rec {
               foundryvtt = pkgs.callPackage ./packages/foundry-vtt { };
