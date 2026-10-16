@@ -3,6 +3,75 @@ let
   inherit (lib.nixvim) mkRaw;
   concatAttrs = lib.foldAttrs (item: _: item) null;
   manyFiletypes = fileTypes: formatter: lib.genAttrs fileTypes (_: [ formatter ]);
+  pre_treefmt = concatAttrs [
+    {
+      nix = [ "nixfmt" ];
+      lua = [ "stylua" ];
+      python = [
+        "black"
+        "isort"
+      ];
+      rust = [ "rustfmt" ];
+      typst = [ "typstyle" ];
+      gleam = [ "gleam" ];
+      toml = [ "tombi" ];
+      _ = [
+        "trim_whitespace"
+        "trim_newlines"
+      ];
+    }
+    (manyFiletypes [
+      "bash"
+      "csh"
+      "ksh"
+      "sh"
+      "zsh"
+    ] "beautysh")
+    (manyFiletypes [
+      "javascript"
+      "javascriptreact"
+      "typescript"
+      "typescriptreact"
+      "vue"
+      "css"
+      "scss"
+      "less"
+      "html"
+      "json"
+      "jsonc"
+      "yaml"
+      "markdown"
+      "markdown.mdx"
+      "graphql"
+      "handlebars"
+      "svelte"
+    ] "prettier")
+    (manyFiletypes [
+      "c"
+      "cpp"
+      "proto"
+    ] "clang-format")
+
+  ];
+
+  append_treefmt = builtins.mapAttrs (
+    _ft: formatters:
+    if builtins.elem "treefmt" formatters then formatters else formatters ++ [ "treefmt" ]
+  );
+
+  usedFormaters = builtins.attrValues pre_treefmt |> builtins.concatLists |> lib.unique;
+
+  nonTreefmtCondition = mkRaw ''
+    function(self, ctx)
+
+    end
+
+  '';
+  treefmtCondition = mkRaw ''
+    function(self, ctx)
+    end
+  '';
+
 in
 {
   plugins.conform-nvim = {
@@ -21,57 +90,14 @@ in
         end
       '';
 
-      formatters_by_ft = concatAttrs [
-        {
-          nix = [ "nixfmt" ];
-          lua = [ "stylua" ];
-          python = [
-            "black"
-            "isort"
-          ];
-          rust = [ "rustfmt" ];
-          typst = [ "typstyle" ];
-          gleam = [ "gleam" ];
-          toml = [ "tombi" ];
-          _ = [
-            "trim_whitespace"
-            "trim_newlines"
-          ];
-        }
-        (manyFiletypes [
-          "bash"
-          "csh"
-          "ksh"
-          "sh"
-          "zsh"
-        ] "beautysh")
-        (manyFiletypes [
-          "javascript"
-          "javascriptreact"
-          "typescript"
-          "typescriptreact"
-          "vue"
-          "css"
-          "scss"
-          "less"
-          "html"
-          "json"
-          "jsonc"
-          "yaml"
-          "markdown"
-          "markdown.mdx"
-          "graphql"
-          "handlebars"
-          "svelte"
-        ] "prettier")
-        (manyFiletypes [
-          "c"
-          "cpp"
-          "proto"
-        ] "clang-format")
-      ];
+      formatters_by_ft = pre_treefmt;
 
       formatters = {
+        # treefmt.command = mkRaw ''
+        #   function(ctx)
+        #
+        #   end
+        # '';
         isort.prepend_args = [
           "--profile"
           "black"
