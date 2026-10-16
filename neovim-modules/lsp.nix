@@ -97,6 +97,7 @@ in
             "tailwindcss"
             "tinymist"
             "tombi"
+            "ts_ls"
             "wgsl_analyzer"
           ]);
     };
@@ -114,6 +115,10 @@ in
               loadOutDirsFromCheck = true;
               runBuildScripts = true;
             };
+
+            files.excludeDirs = [
+              ".devenv"
+            ];
 
             check = {
               command = "clippy";
